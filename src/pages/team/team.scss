@@ -1,0 +1,20 @@
+.team-container {
+  padding-top: 100px;
+}
+.team-header {
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 80px;
+  padding: 0 24px;
+  position: fixed;
+  background-color: #00897B;
+  top: 0;
+  left: 0;
+  z-index: 2;
+
+  .icon {
+    width: 48px;
+    height: 48px;
+  }
+}

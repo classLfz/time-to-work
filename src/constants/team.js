@@ -1,0 +1,1 @@
+export const UPDATE_TEAM_MAP = 'UPDATE_TEAM_MAP'

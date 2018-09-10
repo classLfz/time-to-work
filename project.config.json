@@ -1,0 +1,41 @@
+{
+	"miniprogramRoot": "./dist",
+	"projectname": "time-to-work-taro",
+	"description": "time to work.",
+	"appid": "",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "update test",
+					"pathName": "pages/index/index"
+				}
+			]
+		}
+	}
+}

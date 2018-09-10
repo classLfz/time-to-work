@@ -1,0 +1,1 @@
+export const UPDATE_STAFF_MAP = 'UPDATE_STAFF_MAP'

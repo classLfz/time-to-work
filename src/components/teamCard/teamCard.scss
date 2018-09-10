@@ -1,0 +1,24 @@
+.team-card-container {
+  margin-bottom: 24px;
+
+  .team-name {
+    font-size: 42px;
+    font-weight: bold;
+  }
+
+  .team-item {
+    width: 100%;
+    margin: 8px 0;
+    line-height: 60px;
+  }
+}
+.worker-card {
+  display: inline-block;
+  margin: 8px 8px;
+  color: #5cadff;
+  font-size: 32px;
+
+  &:first-of-type {
+    margin-left: 8px;
+  }
+}
