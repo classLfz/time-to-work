@@ -96,18 +96,18 @@
   version "0.7.0"
   resolved "https://r.cnpmjs.org/@sindresorhus/is/download/@sindresorhus/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
 
-"@tarojs/async-await@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/async-await/download/@tarojs/async-await-1.0.0-beta.25.tgz#a73ddcd222998fe770d4faf3c2fb96266a74a943"
+"@tarojs/async-await@^1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/async-await/download/@tarojs/async-await-1.0.0-beta.26.tgz#8253197d65eb20c288b07d9db9c112a74c43a862"
   dependencies:
     promise-polyfill "^7.1.2"
     regenerator-runtime "^0.11.1"
 
-"@tarojs/cli@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/cli/download/@tarojs/cli-1.0.0-beta.25.tgz#8405afa291e565304cec910b995c10ec48dffb39"
+"@tarojs/cli@^1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/cli/download/@tarojs/cli-1.0.0-beta.26.tgz#da7c60ca2717c9f0c6267a4537f37cda3e1aa4a3"
   dependencies:
-    "@tarojs/transformer-wx" "1.0.0-beta.25"
+    "@tarojs/transformer-wx" "1.0.0-beta.26"
     autoprefixer "^8.4.1"
     babel-core "^6.26.3"
     babel-generator "^6.26.1"
@@ -132,7 +132,7 @@
     minimatch "^3.0.4"
     ora "^2.0.0"
     postcss "^6.0.22"
-    postcss-pxtransform "1.0.0-beta.25"
+    postcss-pxtransform "1.0.0-beta.26"
     postcss-url "^7.3.2"
     prop-types "^15.6.2"
     resolve "^1.6.0"
@@ -142,9 +142,9 @@
     vinyl "^2.1.0"
     vinyl-fs "^3.0.2"
 
-"@tarojs/components@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/components/download/@tarojs/components-1.0.0-beta.25.tgz#6e6e5451bd745cd46f55f69d0938e958f98dead8"
+"@tarojs/components@^1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/components/download/@tarojs/components-1.0.0-beta.26.tgz#0e2fe856f0f495137a2366e11acb63d5d20fcb64"
   dependencies:
     classnames "^2.2.5"
     nervjs "^1.3.0"
@@ -152,78 +152,78 @@
     react "16.3.0"
     weui "^1.1.2"
 
-"@tarojs/plugin-babel@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/plugin-babel/download/@tarojs/plugin-babel-1.0.0-beta.25.tgz#cc3732f5f33ec194165edce1cf858d98a7c8cdb0"
+"@tarojs/plugin-babel@^1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/plugin-babel/download/@tarojs/plugin-babel-1.0.0-beta.26.tgz#54107575656ade360015ca306a67ca7599eb31cf"
   dependencies:
     babel-core "^6.26.0"
 
-"@tarojs/plugin-csso@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/plugin-csso/download/@tarojs/plugin-csso-1.0.0-beta.25.tgz#9a77d212326c96f86c58c4c36c49c8d1ed6a9b6f"
+"@tarojs/plugin-csso@^1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/plugin-csso/download/@tarojs/plugin-csso-1.0.0-beta.26.tgz#2dd916700048f75d5d1e3179eae79f80fae12be3"
   dependencies:
     csso "^3.5.0"
 
-"@tarojs/plugin-sass@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/plugin-sass/download/@tarojs/plugin-sass-1.0.0-beta.25.tgz#952107887a8a6e381c85ff2955b3751fe7fe5b95"
+"@tarojs/plugin-sass@^1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/plugin-sass/download/@tarojs/plugin-sass-1.0.0-beta.26.tgz#bf66904fde696bb68992b83edcd67fd2b0725ee2"
   dependencies:
     node-sass "^4.8.3"
 
-"@tarojs/plugin-uglifyjs@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/plugin-uglifyjs/download/@tarojs/plugin-uglifyjs-1.0.0-beta.25.tgz#3e57cef228f1467f239dd5d6c1f0823e7cfb62de"
+"@tarojs/plugin-uglifyjs@^1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/plugin-uglifyjs/download/@tarojs/plugin-uglifyjs-1.0.0-beta.26.tgz#f9754e56a9314267d4731009034195478100a79c"
   dependencies:
     uglify-js "^3.3.24"
 
-"@tarojs/redux-h5@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/redux-h5/download/@tarojs/redux-h5-1.0.0-beta.25.tgz#006d0cfe18d0fbb49f5b23c7c9747301d6b1a774"
+"@tarojs/redux-h5@^1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/redux-h5/download/@tarojs/redux-h5-1.0.0-beta.26.tgz#13fcab663fd2de7eda7a8b520b13bfed9cb560a9"
   dependencies:
-    "@tarojs/taro-h5" "1.0.0-beta.25"
+    "@tarojs/taro-h5" "1.0.0-beta.26"
     hoist-non-react-statics "^2.5.0"
     invariant "^2.2.4"
     loose-envify "^1.1.0"
     prop-types "^15.6.1"
     redux "^4.0.0"
 
-"@tarojs/redux@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/redux/download/@tarojs/redux-1.0.0-beta.25.tgz#8b205ec1639202ee8c7a280d73214433335dae0a"
+"@tarojs/redux@^1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/redux/download/@tarojs/redux-1.0.0-beta.26.tgz#a284e762812a9108e8443a55ec4e416dc9415609"
   dependencies:
-    "@tarojs/utils" "1.0.0-beta.25"
+    "@tarojs/utils" "1.0.0-beta.26"
 
-"@tarojs/router@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/router/download/@tarojs/router-1.0.0-beta.25.tgz#31e0127c61c957f67d3a5252e184499bc5da9946"
+"@tarojs/router@^1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/router/download/@tarojs/router-1.0.0-beta.26.tgz#d98151bfddfada7f206fbec55b74926688a1d255"
   dependencies:
-    "@tarojs/taro-h5" "1.0.0-beta.25"
+    "@tarojs/taro-h5" "1.0.0-beta.26"
 
-"@tarojs/taro-h5@1.0.0-beta.25", "@tarojs/taro-h5@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/taro-h5/download/@tarojs/taro-h5-1.0.0-beta.25.tgz#b54406560564f198b3e7537e1c07e2ce84247ba6"
+"@tarojs/taro-h5@1.0.0-beta.26", "@tarojs/taro-h5@^1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/taro-h5/download/@tarojs/taro-h5-1.0.0-beta.26.tgz#087df0cc0db5986ad6788b44155c9a3b25e8b23a"
   dependencies:
-    "@tarojs/taro" "1.0.0-beta.25"
+    "@tarojs/taro" "1.0.0-beta.26"
     jsonp-retry "^1.0.3"
     mobile-detect "^1.4.2"
     whatwg-fetch "^2.0.4"
 
-"@tarojs/taro-weapp@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/taro-weapp/download/@tarojs/taro-weapp-1.0.0-beta.25.tgz#7a043eacffe17ae5655a3def8aa7306881c53de5"
+"@tarojs/taro-weapp@^1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/taro-weapp/download/@tarojs/taro-weapp-1.0.0-beta.26.tgz#84ec664621c1953c1f8053b439c1e038388630ca"
   dependencies:
-    "@tarojs/taro" "1.0.0-beta.25"
-    "@tarojs/utils" "1.0.0-beta.25"
+    "@tarojs/taro" "1.0.0-beta.26"
+    "@tarojs/utils" "1.0.0-beta.26"
     lodash "^4.17.10"
     prop-types "^15.6.1"
 
-"@tarojs/taro@1.0.0-beta.25", "@tarojs/taro@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/taro/download/@tarojs/taro-1.0.0-beta.25.tgz#b9fddefd5c4331d6815e3e5475ff59b0d5ba6830"
+"@tarojs/taro@1.0.0-beta.26", "@tarojs/taro@^1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/taro/download/@tarojs/taro-1.0.0-beta.26.tgz#b3e19a4a2662323a5a849fce89aed1ffb3d5dd26"
 
-"@tarojs/transformer-wx@1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/transformer-wx/download/@tarojs/transformer-wx-1.0.0-beta.25.tgz#78e4f6e159291fae88302015f4a82b24333dec74"
+"@tarojs/transformer-wx@1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/transformer-wx/download/@tarojs/transformer-wx-1.0.0-beta.26.tgz#e76777603d60ff7c2121942e82a346fa44a3f57c"
   dependencies:
     "@babel/code-frame" "^7.0.0-beta.44"
     babel-core "^6.26.3"
@@ -237,13 +237,13 @@
     lodash "^4.17.5"
     typescript "^3.0.1"
 
-"@tarojs/utils@1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/utils/download/@tarojs/utils-1.0.0-beta.25.tgz#3d7ed4ce485f27bdc2f99732fecc0b91d2441154"
+"@tarojs/utils@1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/utils/download/@tarojs/utils-1.0.0-beta.26.tgz#be3757c3f8b25729795c24eb9791472a9af390fe"
 
-"@tarojs/webpack-runner@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/@tarojs/webpack-runner/download/@tarojs/webpack-runner-1.0.0-beta.25.tgz#7fbad26e937cd214ae8e16412a1a7a86e6160e89"
+"@tarojs/webpack-runner@^1.0.0-beta.26":
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/@tarojs/webpack-runner/download/@tarojs/webpack-runner-1.0.0-beta.26.tgz#dd2e9c6e28fbc3d6e9fbb5bb499e331d953862c0"
   dependencies:
     autoprefixer "^8.6.4"
     babel-core "^6.26.0"
@@ -266,8 +266,8 @@
     ora "^2.1.0"
     postcss-csso "^3.0.0"
     postcss-loader "^2.1.3"
-    postcss-plugin-constparse "1.0.0-beta.25"
-    postcss-pxtransform "1.0.0-beta.25"
+    postcss-plugin-constparse "1.0.0-beta.26"
+    postcss-pxtransform "1.0.0-beta.26"
     resolve-url-loader "^2.3.0"
     sass-loader "^7.0.3"
     style-loader "^0.21.0"
@@ -286,8 +286,8 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^16.4.8":
-  version "16.4.13"
-  resolved "https://r.cnpmjs.org/@types/react/download/@types/react-16.4.13.tgz#1385f5dc3486aa493849a32ccce626a817543e28"
+  version "16.4.14"
+  resolved "https://r.cnpmjs.org/@types/react/download/@types/react-16.4.14.tgz#47c604c8e46ed674bbdf4aabf82b34b9041c6a04"
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -296,141 +296,142 @@
   version "1.13.6"
   resolved "https://r.cnpmjs.org/@types/webpack-env/download/@types/webpack-env-1.13.6.tgz#128d1685a7c34d31ed17010fc87d6a12c1de6976"
 
-"@webassemblyjs/ast@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/ast/download/@webassemblyjs/ast-1.5.13.tgz#81155a570bd5803a30ec31436bc2c9c0ede38f25"
+"@webassemblyjs/ast@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/ast/download/@webassemblyjs/ast-1.7.6.tgz#3ef8c45b3e5e943a153a05281317474fef63e21e"
   dependencies:
-    "@webassemblyjs/helper-module-context" "1.5.13"
-    "@webassemblyjs/helper-wasm-bytecode" "1.5.13"
-    "@webassemblyjs/wast-parser" "1.5.13"
-    debug "^3.1.0"
+    "@webassemblyjs/helper-module-context" "1.7.6"
+    "@webassemblyjs/helper-wasm-bytecode" "1.7.6"
+    "@webassemblyjs/wast-parser" "1.7.6"
     mamacro "^0.0.3"
 
-"@webassemblyjs/floating-point-hex-parser@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/floating-point-hex-parser/download/@webassemblyjs/floating-point-hex-parser-1.5.13.tgz#29ce0baa97411f70e8cce68ce9c0f9d819a4e298"
+"@webassemblyjs/floating-point-hex-parser@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/floating-point-hex-parser/download/@webassemblyjs/floating-point-hex-parser-1.7.6.tgz#7cb37d51a05c3fe09b464ae7e711d1ab3837801f"
 
-"@webassemblyjs/helper-api-error@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/helper-api-error/download/@webassemblyjs/helper-api-error-1.5.13.tgz#e49b051d67ee19a56e29b9aa8bd949b5b4442a59"
+"@webassemblyjs/helper-api-error@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/helper-api-error/download/@webassemblyjs/helper-api-error-1.7.6.tgz#99b7e30e66f550a2638299a109dda84a622070ef"
 
-"@webassemblyjs/helper-buffer@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/helper-buffer/download/@webassemblyjs/helper-buffer-1.5.13.tgz#873bb0a1b46449231137c1262ddfd05695195a1e"
+"@webassemblyjs/helper-buffer@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/helper-buffer/download/@webassemblyjs/helper-buffer-1.7.6.tgz#ba0648be12bbe560c25c997e175c2018df39ca3e"
+
+"@webassemblyjs/helper-code-frame@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/helper-code-frame/download/@webassemblyjs/helper-code-frame-1.7.6.tgz#5a94d21b0057b69a7403fca0c253c3aaca95b1a5"
   dependencies:
-    debug "^3.1.0"
+    "@webassemblyjs/wast-printer" "1.7.6"
 
-"@webassemblyjs/helper-code-frame@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/helper-code-frame/download/@webassemblyjs/helper-code-frame-1.5.13.tgz#1bd2181b6a0be14e004f0fe9f5a660d265362b58"
+"@webassemblyjs/helper-fsm@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/helper-fsm/download/@webassemblyjs/helper-fsm-1.7.6.tgz#ae1741c6f6121213c7a0b587fb964fac492d3e49"
+
+"@webassemblyjs/helper-module-context@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/helper-module-context/download/@webassemblyjs/helper-module-context-1.7.6.tgz#116d19a51a6cebc8900ad53ca34ff8269c668c23"
   dependencies:
-    "@webassemblyjs/wast-printer" "1.5.13"
-
-"@webassemblyjs/helper-fsm@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/helper-fsm/download/@webassemblyjs/helper-fsm-1.5.13.tgz#cdf3d9d33005d543a5c5e5adaabf679ffa8db924"
-
-"@webassemblyjs/helper-module-context@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/helper-module-context/download/@webassemblyjs/helper-module-context-1.5.13.tgz#dc29ddfb51ed657655286f94a5d72d8a489147c5"
-  dependencies:
-    debug "^3.1.0"
     mamacro "^0.0.3"
 
-"@webassemblyjs/helper-wasm-bytecode@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/helper-wasm-bytecode/download/@webassemblyjs/helper-wasm-bytecode-1.5.13.tgz#03245817f0a762382e61733146f5773def15a747"
+"@webassemblyjs/helper-wasm-bytecode@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/helper-wasm-bytecode/download/@webassemblyjs/helper-wasm-bytecode-1.7.6.tgz#98e515eaee611aa6834eb5f6a7f8f5b29fefb6f1"
 
-"@webassemblyjs/helper-wasm-section@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/helper-wasm-section/download/@webassemblyjs/helper-wasm-section-1.5.13.tgz#efc76f44a10d3073b584b43c38a179df173d5c7d"
+"@webassemblyjs/helper-wasm-section@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/helper-wasm-section/download/@webassemblyjs/helper-wasm-section-1.7.6.tgz#783835867bdd686df7a95377ab64f51a275e8333"
   dependencies:
-    "@webassemblyjs/ast" "1.5.13"
-    "@webassemblyjs/helper-buffer" "1.5.13"
-    "@webassemblyjs/helper-wasm-bytecode" "1.5.13"
-    "@webassemblyjs/wasm-gen" "1.5.13"
-    debug "^3.1.0"
+    "@webassemblyjs/ast" "1.7.6"
+    "@webassemblyjs/helper-buffer" "1.7.6"
+    "@webassemblyjs/helper-wasm-bytecode" "1.7.6"
+    "@webassemblyjs/wasm-gen" "1.7.6"
 
-"@webassemblyjs/ieee754@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/ieee754/download/@webassemblyjs/ieee754-1.5.13.tgz#573e97c8c12e4eebb316ca5fde0203ddd90b0364"
+"@webassemblyjs/ieee754@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/ieee754/download/@webassemblyjs/ieee754-1.7.6.tgz#c34fc058f2f831fae0632a8bb9803cf2d3462eb1"
   dependencies:
-    ieee754 "^1.1.11"
+    "@xtuc/ieee754" "^1.2.0"
 
-"@webassemblyjs/leb128@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/leb128/download/@webassemblyjs/leb128-1.5.13.tgz#ab52ebab9cec283c1c1897ac1da833a04a3f4cee"
+"@webassemblyjs/leb128@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/leb128/download/@webassemblyjs/leb128-1.7.6.tgz#197f75376a29f6ed6ace15898a310d871d92f03b"
   dependencies:
-    long "4.0.0"
+    "@xtuc/long" "4.2.1"
 
-"@webassemblyjs/utf8@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/utf8/download/@webassemblyjs/utf8-1.5.13.tgz#6b53d2cd861cf94fa99c1f12779dde692fbc2469"
+"@webassemblyjs/utf8@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/utf8/download/@webassemblyjs/utf8-1.7.6.tgz#eb62c66f906af2be70de0302e29055d25188797d"
 
-"@webassemblyjs/wasm-edit@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/wasm-edit/download/@webassemblyjs/wasm-edit-1.5.13.tgz#c9cef5664c245cf11b3b3a73110c9155831724a8"
+"@webassemblyjs/wasm-edit@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/wasm-edit/download/@webassemblyjs/wasm-edit-1.7.6.tgz#fa41929160cd7d676d4c28ecef420eed5b3733c5"
   dependencies:
-    "@webassemblyjs/ast" "1.5.13"
-    "@webassemblyjs/helper-buffer" "1.5.13"
-    "@webassemblyjs/helper-wasm-bytecode" "1.5.13"
-    "@webassemblyjs/helper-wasm-section" "1.5.13"
-    "@webassemblyjs/wasm-gen" "1.5.13"
-    "@webassemblyjs/wasm-opt" "1.5.13"
-    "@webassemblyjs/wasm-parser" "1.5.13"
-    "@webassemblyjs/wast-printer" "1.5.13"
-    debug "^3.1.0"
+    "@webassemblyjs/ast" "1.7.6"
+    "@webassemblyjs/helper-buffer" "1.7.6"
+    "@webassemblyjs/helper-wasm-bytecode" "1.7.6"
+    "@webassemblyjs/helper-wasm-section" "1.7.6"
+    "@webassemblyjs/wasm-gen" "1.7.6"
+    "@webassemblyjs/wasm-opt" "1.7.6"
+    "@webassemblyjs/wasm-parser" "1.7.6"
+    "@webassemblyjs/wast-printer" "1.7.6"
 
-"@webassemblyjs/wasm-gen@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/wasm-gen/download/@webassemblyjs/wasm-gen-1.5.13.tgz#8e6ea113c4b432fa66540189e79b16d7a140700e"
+"@webassemblyjs/wasm-gen@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/wasm-gen/download/@webassemblyjs/wasm-gen-1.7.6.tgz#695ac38861ab3d72bf763c8c75e5f087ffabc322"
   dependencies:
-    "@webassemblyjs/ast" "1.5.13"
-    "@webassemblyjs/helper-wasm-bytecode" "1.5.13"
-    "@webassemblyjs/ieee754" "1.5.13"
-    "@webassemblyjs/leb128" "1.5.13"
-    "@webassemblyjs/utf8" "1.5.13"
+    "@webassemblyjs/ast" "1.7.6"
+    "@webassemblyjs/helper-wasm-bytecode" "1.7.6"
+    "@webassemblyjs/ieee754" "1.7.6"
+    "@webassemblyjs/leb128" "1.7.6"
+    "@webassemblyjs/utf8" "1.7.6"
 
-"@webassemblyjs/wasm-opt@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/wasm-opt/download/@webassemblyjs/wasm-opt-1.5.13.tgz#147aad7717a7ee4211c36b21a5f4c30dddf33138"
+"@webassemblyjs/wasm-opt@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/wasm-opt/download/@webassemblyjs/wasm-opt-1.7.6.tgz#fbafa78e27e1a75ab759a4b658ff3d50b4636c21"
   dependencies:
-    "@webassemblyjs/ast" "1.5.13"
-    "@webassemblyjs/helper-buffer" "1.5.13"
-    "@webassemblyjs/wasm-gen" "1.5.13"
-    "@webassemblyjs/wasm-parser" "1.5.13"
-    debug "^3.1.0"
+    "@webassemblyjs/ast" "1.7.6"
+    "@webassemblyjs/helper-buffer" "1.7.6"
+    "@webassemblyjs/wasm-gen" "1.7.6"
+    "@webassemblyjs/wasm-parser" "1.7.6"
 
-"@webassemblyjs/wasm-parser@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/wasm-parser/download/@webassemblyjs/wasm-parser-1.5.13.tgz#6f46516c5bb23904fbdf58009233c2dd8a54c72f"
+"@webassemblyjs/wasm-parser@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/wasm-parser/download/@webassemblyjs/wasm-parser-1.7.6.tgz#84eafeeff405ad6f4c4b5777d6a28ae54eed51fe"
   dependencies:
-    "@webassemblyjs/ast" "1.5.13"
-    "@webassemblyjs/helper-api-error" "1.5.13"
-    "@webassemblyjs/helper-wasm-bytecode" "1.5.13"
-    "@webassemblyjs/ieee754" "1.5.13"
-    "@webassemblyjs/leb128" "1.5.13"
-    "@webassemblyjs/utf8" "1.5.13"
+    "@webassemblyjs/ast" "1.7.6"
+    "@webassemblyjs/helper-api-error" "1.7.6"
+    "@webassemblyjs/helper-wasm-bytecode" "1.7.6"
+    "@webassemblyjs/ieee754" "1.7.6"
+    "@webassemblyjs/leb128" "1.7.6"
+    "@webassemblyjs/utf8" "1.7.6"
 
-"@webassemblyjs/wast-parser@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/wast-parser/download/@webassemblyjs/wast-parser-1.5.13.tgz#5727a705d397ae6a3ae99d7f5460acf2ec646eea"
+"@webassemblyjs/wast-parser@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/wast-parser/download/@webassemblyjs/wast-parser-1.7.6.tgz#ca4d20b1516e017c91981773bd7e819d6bd9c6a7"
   dependencies:
-    "@webassemblyjs/ast" "1.5.13"
-    "@webassemblyjs/floating-point-hex-parser" "1.5.13"
-    "@webassemblyjs/helper-api-error" "1.5.13"
-    "@webassemblyjs/helper-code-frame" "1.5.13"
-    "@webassemblyjs/helper-fsm" "1.5.13"
-    long "^3.2.0"
+    "@webassemblyjs/ast" "1.7.6"
+    "@webassemblyjs/floating-point-hex-parser" "1.7.6"
+    "@webassemblyjs/helper-api-error" "1.7.6"
+    "@webassemblyjs/helper-code-frame" "1.7.6"
+    "@webassemblyjs/helper-fsm" "1.7.6"
+    "@xtuc/long" "4.2.1"
     mamacro "^0.0.3"
 
-"@webassemblyjs/wast-printer@1.5.13":
-  version "1.5.13"
-  resolved "https://r.cnpmjs.org/@webassemblyjs/wast-printer/download/@webassemblyjs/wast-printer-1.5.13.tgz#bb34d528c14b4f579e7ec11e793ec50ad7cd7c95"
+"@webassemblyjs/wast-printer@1.7.6":
+  version "1.7.6"
+  resolved "https://r.cnpmjs.org/@webassemblyjs/wast-printer/download/@webassemblyjs/wast-printer-1.7.6.tgz#a6002c526ac5fa230fe2c6d2f1bdbf4aead43a5e"
   dependencies:
-    "@webassemblyjs/ast" "1.5.13"
-    "@webassemblyjs/wast-parser" "1.5.13"
-    long "^3.2.0"
+    "@webassemblyjs/ast" "1.7.6"
+    "@webassemblyjs/wast-parser" "1.7.6"
+    "@xtuc/long" "4.2.1"
+
+"@xtuc/ieee754@^1.2.0":
+  version "1.2.0"
+  resolved "https://r.cnpmjs.org/@xtuc/ieee754/download/@xtuc/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
+
+"@xtuc/long@4.2.1":
+  version "4.2.1"
+  resolved "https://r.cnpmjs.org/@xtuc/long/download/@xtuc/long-4.2.1.tgz#5c85d662f76fa1d34575766c5dcd6615abcd30d8"
 
 abbrev@1:
   version "1.1.1"
@@ -460,8 +461,8 @@ acorn@^3.0.4:
   resolved "https://r.cnpmjs.org/acorn/download/acorn-3.3.0.tgz#45e37fb39e8da3f25baee3ff5369e2bb5f22017a"
 
 acorn@^5.0.0, acorn@^5.5.0, acorn@^5.6.2:
-  version "5.7.2"
-  resolved "https://r.cnpmjs.org/acorn/download/acorn-5.7.2.tgz#91fa871883485d06708800318404e72bfb26dcc5"
+  version "5.7.3"
+  resolved "https://r.cnpmjs.org/acorn/download/acorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
 
 adjust-sourcemap-loader@^1.1.0:
   version "1.2.0"
@@ -1132,9 +1133,9 @@ babel-plugin-transform-jsx-stylesheet@^0.6.5:
   dependencies:
     camelcase "^3.0.0"
 
-babel-plugin-transform-jsx-to-stylesheet@^1.0.0-beta.25:
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/babel-plugin-transform-jsx-to-stylesheet/download/babel-plugin-transform-jsx-to-stylesheet-1.0.0-beta.25.tgz#b4466ef662989313032aafc8ceba710c958926e9"
+babel-plugin-transform-jsx-to-stylesheet@^1.0.0-beta.26:
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/babel-plugin-transform-jsx-to-stylesheet/download/babel-plugin-transform-jsx-to-stylesheet-1.0.0-beta.26.tgz#972b30f240d77c7c8adf4b380cc8269e0d243d01"
 
 babel-plugin-transform-object-rest-spread@^6.26.0:
   version "6.26.0"
@@ -1755,9 +1756,13 @@ combined-stream@1.0.6, combined-stream@~1.0.5, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@2.17.x, commander@^2.15.0, commander@~2.17.1:
+commander@2.17.x, commander@~2.17.1:
   version "2.17.1"
   resolved "https://r.cnpmjs.org/commander/download/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
+
+commander@^2.15.0:
+  version "2.18.0"
+  resolved "https://r.cnpmjs.org/commander/download/commander-2.18.0.tgz#2bf063ddee7c7891176981a2cc798e5754bc6970"
 
 commander@~2.13.0:
   version "2.13.0"
@@ -2088,17 +2093,23 @@ date-now@^0.1.4:
   version "0.1.4"
   resolved "https://r.cnpmjs.org/date-now/download/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
 
-debug@*, debug@^3.1.0:
-  version "3.1.0"
-  resolved "https://r.cnpmjs.org/debug/download/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+debug@*:
+  version "4.0.0"
+  resolved "https://r.cnpmjs.org/debug/download/debug-4.0.0.tgz#ef7592a30b1c5e05a78e96926df2e6b36b5544e7"
   dependencies:
-    ms "2.0.0"
+    ms "^2.1.1"
 
 debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.6, debug@^2.6.8, debug@^2.6.9:
   version "2.6.9"
   resolved "https://r.cnpmjs.org/debug/download/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   dependencies:
     ms "2.0.0"
+
+debug@^3.1.0:
+  version "3.2.4"
+  resolved "https://r.cnpmjs.org/debug/download/debug-3.2.4.tgz#82123737c51afbe9609a2b5dfe9664e7487171f0"
+  dependencies:
+    ms "^2.1.1"
 
 decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
@@ -2356,8 +2367,8 @@ ejs@^2.5.9, ejs@^2.6.1:
   resolved "https://r.cnpmjs.org/ejs/download/ejs-2.6.1.tgz#498ec0d495655abc6f23cd61868d926464071aa0"
 
 electron-to-chromium@^1.3.47:
-  version "1.3.63"
-  resolved "https://r.cnpmjs.org/electron-to-chromium/download/electron-to-chromium-1.3.63.tgz#6485f5f4f3375358aa8fa23c2029ada208483b8d"
+  version "1.3.65"
+  resolved "https://r.cnpmjs.org/electron-to-chromium/download/electron-to-chromium-1.3.65.tgz#0655c238e45fea7e0e0e81fd0cac62b8186129c2"
 
 elliptic@^6.0.0:
   version "6.4.1"
@@ -2441,11 +2452,11 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://r.cnpmjs.org/escape-string-regexp/download/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
 
-eslint-config-taro@^1.0.0-beta.25:
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/eslint-config-taro/download/eslint-config-taro-1.0.0-beta.25.tgz#8d98615bebc9e10e681c2e76209420a038b5aa0d"
+eslint-config-taro@^1.0.0-beta.26:
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/eslint-config-taro/download/eslint-config-taro-1.0.0-beta.26.tgz#5927d4bb49884683266ab29f3d24a50cc63d8c3c"
   dependencies:
-    eslint-plugin-taro "1.0.0-beta.25"
+    eslint-plugin-taro "1.0.0-beta.26"
 
 eslint-import-resolver-node@^0.3.1:
   version "0.3.2"
@@ -2486,9 +2497,9 @@ eslint-plugin-react@^7.8.2:
     jsx-ast-utils "^2.0.1"
     prop-types "^15.6.2"
 
-eslint-plugin-taro@1.0.0-beta.25, eslint-plugin-taro@^1.0.0-beta.25:
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/eslint-plugin-taro/download/eslint-plugin-taro-1.0.0-beta.25.tgz#a33f210e32747a7e1e6af22975ef65e72e426af1"
+eslint-plugin-taro@1.0.0-beta.26, eslint-plugin-taro@^1.0.0-beta.26:
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/eslint-plugin-taro/download/eslint-plugin-taro-1.0.0-beta.26.tgz#0866b0db72f57e6f6fabb31fec78e3905e8ba986"
   dependencies:
     has "^1.0.1"
 
@@ -3384,7 +3395,7 @@ icss-utils@^2.1.0:
   dependencies:
     postcss "^6.0.1"
 
-ieee754@^1.1.11, ieee754@^1.1.4:
+ieee754@^1.1.4:
   version "1.1.12"
   resolved "https://r.cnpmjs.org/ieee754/download/ieee754-1.1.12.tgz#50bf24e5b9c8bb98af4964c941cdb0918da7b60b"
 
@@ -3927,8 +3938,8 @@ keyv@3.0.0:
     json-buffer "3.0.0"
 
 killable@^1.0.0:
-  version "1.0.0"
-  resolved "https://r.cnpmjs.org/killable/download/killable-1.0.0.tgz#da8b84bd47de5395878f95d64d02f2449fe05e6b"
+  version "1.0.1"
+  resolved "https://r.cnpmjs.org/killable/download/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"
 
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
   version "3.2.2"
@@ -4177,14 +4188,6 @@ log-symbols@^2.2.0:
 loglevel@^1.4.1:
   version "1.6.1"
   resolved "https://r.cnpmjs.org/loglevel/download/loglevel-1.6.1.tgz#e0fc95133b6ef276cdc8887cdaf24aa6f156f8fa"
-
-long@4.0.0:
-  version "4.0.0"
-  resolved "https://r.cnpmjs.org/long/download/long-4.0.0.tgz#9a7b71cfb7d361a194ea555241c92f7468d5bf28"
-
-long@^3.2.0:
-  version "3.2.0"
-  resolved "https://r.cnpmjs.org/long/download/long-3.2.0.tgz#d821b7138ca1cb581c172990ef14db200b5c474b"
 
 loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.1:
   version "1.4.0"
@@ -4463,8 +4466,8 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
     minimist "0.0.8"
 
 mobile-detect@^1.4.2:
-  version "1.4.2"
-  resolved "https://r.cnpmjs.org/mobile-detect/download/mobile-detect-1.4.2.tgz#d45ffff8d0a641aeecbc35a15d88149a34a18350"
+  version "1.4.3"
+  resolved "https://r.cnpmjs.org/mobile-detect/download/mobile-detect-1.4.3.tgz#e436a3839f5807dd4d3cd4e081f7d3a51ffda2dd"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -4480,6 +4483,10 @@ move-concurrently@^1.0.1:
 ms@2.0.0:
   version "2.0.0"
   resolved "https://r.cnpmjs.org/ms/download/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
+
+ms@^2.1.1:
+  version "2.1.1"
+  resolved "https://r.cnpmjs.org/ms/download/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
 
 multicast-dns-service-types@^1.1.0:
   version "1.1.0"
@@ -4530,8 +4537,8 @@ natural-compare@^1.4.0:
   resolved "https://r.cnpmjs.org/natural-compare/download/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
 
 needle@^2.2.1:
-  version "2.2.2"
-  resolved "https://r.cnpmjs.org/needle/download/needle-2.2.2.tgz#1120ca4c41f2fcc6976fd28a8968afe239929418"
+  version "2.2.3"
+  resolved "https://r.cnpmjs.org/needle/download/needle-2.2.3.tgz#c1b04da378cd634d8befe2de965dc2cfb0fd65ca"
   dependencies:
     debug "^2.1.2"
     iconv-lite "^0.4.4"
@@ -5202,9 +5209,9 @@ postcss-modules-values@^1.3.0:
     icss-replace-symbols "^1.1.0"
     postcss "^6.0.1"
 
-postcss-plugin-constparse@1.0.0-beta.25:
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/postcss-plugin-constparse/download/postcss-plugin-constparse-1.0.0-beta.25.tgz#791c1d8bf51f16020b6333dbd80fd1dbcefec291"
+postcss-plugin-constparse@1.0.0-beta.26:
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/postcss-plugin-constparse/download/postcss-plugin-constparse-1.0.0-beta.26.tgz#c024600f2ba030a4b6cbd6b7bd2462d91087c6a5"
   dependencies:
     postcss "^6.0.22"
 
@@ -5215,9 +5222,9 @@ postcss-pxtorem@^4.0.1:
     object-assign "^4.1.0"
     postcss "^5.2.10"
 
-postcss-pxtransform@1.0.0-beta.25:
-  version "1.0.0-beta.25"
-  resolved "https://r.cnpmjs.org/postcss-pxtransform/download/postcss-pxtransform-1.0.0-beta.25.tgz#51d75e9cc926801dace40284e8f80fc973340ac7"
+postcss-pxtransform@1.0.0-beta.26:
+  version "1.0.0-beta.26"
+  resolved "https://r.cnpmjs.org/postcss-pxtransform/download/postcss-pxtransform-1.0.0-beta.26.tgz#4ead303b84b0e31fd92820a840c90975ccd3ebde"
   dependencies:
     postcss "^6.0.16"
     postcss-pxtorem "^4.0.1"
@@ -5742,8 +5749,8 @@ resolve-options@^1.1.0:
     value-or-function "^3.0.0"
 
 resolve-url-loader@^2.3.0:
-  version "2.3.0"
-  resolved "https://r.cnpmjs.org/resolve-url-loader/download/resolve-url-loader-2.3.0.tgz#e1b37034d48f22f8cfb9f04c026faaa070fdaf26"
+  version "2.3.1"
+  resolved "https://r.cnpmjs.org/resolve-url-loader/download/resolve-url-loader-2.3.1.tgz#b462fc7a78a22baf3ee462568d8ff5d766f7f1da"
   dependencies:
     adjust-sourcemap-loader "^1.1.0"
     camelcase "^4.1.0"
@@ -6162,8 +6169,8 @@ spdx-expression-parse@^3.0.0:
     spdx-license-ids "^3.0.0"
 
 spdx-license-ids@^3.0.0:
-  version "3.0.0"
-  resolved "https://r.cnpmjs.org/spdx-license-ids/download/spdx-license-ids-3.0.0.tgz#7a7cd28470cc6d3a1cfe6d66886f6bc430d3ac87"
+  version "3.0.1"
+  resolved "https://r.cnpmjs.org/spdx-license-ids/download/spdx-license-ids-3.0.1.tgz#e2a303236cac54b04031fa7a5a79c7e701df852f"
 
 spdy-transport@^2.0.18:
   version "2.1.0"
@@ -6945,14 +6952,13 @@ webpack-sources@^1.1.0, webpack-sources@^1.2.0:
     source-map "~0.6.1"
 
 webpack@^4.14.0:
-  version "4.17.2"
-  resolved "https://r.cnpmjs.org/webpack/download/webpack-4.17.2.tgz#49feb20205bd15f0a5f1fe0a12097d5d9931878d"
+  version "4.18.0"
+  resolved "https://r.cnpmjs.org/webpack/download/webpack-4.18.0.tgz#7dafaaf309c12e63080d3960fba7ed94afdcbe84"
   dependencies:
-    "@webassemblyjs/ast" "1.5.13"
-    "@webassemblyjs/helper-module-context" "1.5.13"
-    "@webassemblyjs/wasm-edit" "1.5.13"
-    "@webassemblyjs/wasm-opt" "1.5.13"
-    "@webassemblyjs/wasm-parser" "1.5.13"
+    "@webassemblyjs/ast" "1.7.6"
+    "@webassemblyjs/helper-module-context" "1.7.6"
+    "@webassemblyjs/wasm-edit" "1.7.6"
+    "@webassemblyjs/wasm-parser" "1.7.6"
     acorn "^5.6.2"
     acorn-dynamic-import "^3.0.0"
     ajv "^6.1.0"
@@ -6989,7 +6995,11 @@ weui@^1.1.2:
   version "1.1.3"
   resolved "https://r.cnpmjs.org/weui/download/weui-1.1.3.tgz#0f0899bb61bb2ec603b2648367a8139298f81514"
 
-whatwg-fetch@>=0.10.0, whatwg-fetch@^2.0.4:
+whatwg-fetch@>=0.10.0:
+  version "3.0.0"
+  resolved "https://r.cnpmjs.org/whatwg-fetch/download/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
+
+whatwg-fetch@^2.0.4:
   version "2.0.4"
   resolved "https://r.cnpmjs.org/whatwg-fetch/download/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
 

@@ -52,18 +52,18 @@ export default class TeamEdit extends Component {
       leaderSelected: staffNameList.indexOf(leader)
     })
   }
-
-  componentWillUnmount() {
-    Taro.eventCenter.off('jobChange')
-  }
-
+  /**
+   * 展示岗位名称输入框
+   */
   showAddJob () {
     this.setState({
       addJob: true
     })
   }
-
-  handleJobChange (e) {
+  /**
+   * 处理岗位的修改
+   */
+  handleJobChange () {
     let newTeamData = JSON.parse(JSON.stringify(this.state.teamData))
     if (e.delete) {
       delete newTeamData.jobs[e.delete]
@@ -78,8 +78,10 @@ export default class TeamEdit extends Component {
       teamData: newTeamData
     })
   }
-
-  addJob (e) {
+  /**
+   * 添加岗位
+   */
+  addJob () {
     const newJobName = e.detail.value || ''
     if (newJobName) {
       let newTeamData = JSON.parse(JSON.stringify(this.state.teamData))
@@ -89,21 +91,30 @@ export default class TeamEdit extends Component {
         workers: []
       }
       this.setState({
-        teamData: newTeamData
+        teamData: {}
       })
+      setTimeout(() => {
+        this.setState({
+          teamData: newTeamData
+        })
+      }, 100)
     }
     this.setState({
       addJob: false
     })
   }
-
+  /**
+   * 处理负责人的选择
+   */
   handleLeaderPick (e) {
     this.setState({
       leaderSelected: e.detail.value
     })
   }
-
-  submit (e) {
+  /**
+   * 提交表单
+   */
+  submit () {
     const formData = e.detail.value
     let newTeamMap = JSON.parse(JSON.stringify(this.props.team.teamMap))
     if (formData.name !== this.state.teamName) {
@@ -119,7 +130,9 @@ export default class TeamEdit extends Component {
     this.props.updateTeamMap(newTeamMap)
     Taro.navigateBack({ delta: 1 })
   }
-
+  /**
+   * 删除该团队
+   */
   delete () {
     Taro.showModal({
       title: '操作不可逆',
@@ -141,6 +154,7 @@ export default class TeamEdit extends Component {
     const leader = staffNameList[this.state.leaderSelected]
     const teamData = this.state.teamData || {}
     const jobs = teamData.jobs || {}
+    const jobKeys = Object.keys(jobs)
     const jobListCards = Object.keys(jobs).sort(naturalSort).map(job => {
       return (
         <JobCard

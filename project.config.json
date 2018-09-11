@@ -2,7 +2,7 @@
 	"miniprogramRoot": "./dist",
 	"projectname": "time-to-work-taro",
 	"description": "time to work.",
-	"appid": "",
+	"appid": "wxf86e268347415e47",
 	"setting": {
 		"urlCheck": true,
 		"es6": false,
