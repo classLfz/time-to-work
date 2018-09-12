@@ -62,8 +62,9 @@ export default class TeamEdit extends Component {
   }
   /**
    * 处理岗位的修改
+   * @param {Object} e 事件
    */
-  handleJobChange () {
+  handleJobChange (e) {
     let newTeamData = JSON.parse(JSON.stringify(this.state.teamData))
     if (e.delete) {
       delete newTeamData.jobs[e.delete]
@@ -80,8 +81,9 @@ export default class TeamEdit extends Component {
   }
   /**
    * 添加岗位
+   * @param {Object} blur事件
    */
-  addJob () {
+  addJob (e) {
     const newJobName = e.detail.value || ''
     if (newJobName) {
       let newTeamData = JSON.parse(JSON.stringify(this.state.teamData))
@@ -113,8 +115,9 @@ export default class TeamEdit extends Component {
   }
   /**
    * 提交表单
+   * @param {Object} 事件
    */
-  submit () {
+  submit (e) {
     const formData = e.detail.value
     let newTeamMap = JSON.parse(JSON.stringify(this.props.team.teamMap))
     if (formData.name !== this.state.teamName) {

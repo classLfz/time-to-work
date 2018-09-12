@@ -122,10 +122,6 @@ export default class JobCard extends Component {
     })
   }
 
-  printProps () {
-    console.log(this.props)
-  }
-
   render () {
     const jobName = this.state.jobName
     const jobData = this.state.jobData
@@ -196,8 +192,6 @@ export default class JobCard extends Component {
             {staffList}
           </View>
         </AtFloatLayout>
-
-        <View onClick={this.printProps}>test</View>
       </View>
     )
   }
