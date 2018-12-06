@@ -27,7 +27,7 @@ export default class History extends Component {
     const history = Taro.getStorageSync('history') || {}
     this.setState({
       historyKeyList: Object.keys(history).sort((i1, i2) => {
-        return parseInt(i1) < parseInt(i2)
+        return parseInt(i2) - parseInt(i1)
       })
     })
   }

@@ -37,7 +37,6 @@ export default class Setting extends Component {
     Taro.showActionSheet({
       itemList: this.state.intervalList,
       success: (res) => {
-        console.log(res)
         const select = this.state.intervalList[res.tapIndex]
         Taro.setStorageSync('allotInterval', select)
         this.setState({

@@ -1,12 +1,12 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtIcon } from 'taro-ui'
 
 import TeamCard from '../../components/teamCard/teamCard'
 
 import './team.scss'
-import addTeamIcon from '../../images/add_people_white.png'
+// import addTeamIcon from '../../images/add_people_white.png'
 
 @connect(({ team }) => ({
   team

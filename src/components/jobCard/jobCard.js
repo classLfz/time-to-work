@@ -128,10 +128,10 @@ export default class JobCard extends Component {
     const workers = jobData.workers || []
     const workerList = workers.map(worker => {
       return (
-        <Text className='worker-card' key={worker} name={staff}>{worker}</Text>
+        <Text className='worker-card' key={worker} name={worker}>{worker}</Text>
       )
     })
-    const staffMap = this.props.staff.staffMap || {}
+    const staffMap = this.props.staff ? this.props.staff.staffMap : {}
     const staffList = Object.keys(staffMap).map(staff => {
       return (
         <View className='tag' key={staff}>

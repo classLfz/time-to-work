@@ -111,7 +111,7 @@ class App extends Component {
         })
         let history = Taro.getStorageInfoSync('history')
         let historyKeys = Object.keys(history).sort((i1, i2) => {
-          return parseInt(i1) > parseInt(i2)
+          return parseInt(i1) - parseInt(i2)
         })
         let count = 100
         for (let i = 0; i < count && i < historyKeys.length; i++) {
@@ -124,7 +124,6 @@ class App extends Component {
         title: '清除存储容量出错',
         icon: 'none'
       })
-      console.log(e)
     }
   }
 

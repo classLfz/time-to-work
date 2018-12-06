@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Button, Image } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 
 import { connect } from '@tarojs/redux'
@@ -111,11 +111,15 @@ export default class Index extends Component {
     const allotIntervalTime = this.state.allotIntervalTime
     if (allotIntervalTime !== 0) {
       let history = Taro.getStorageSync('history') || {}
+      if (Object.keys(history).length === 0) {
+        this.allot()
+        return
+      }
       const now = (new Date()).getTime()
       let historyKeys = Object.keys(history).sort((i1, i2) => {
-        return parseInt(i1) > parseInt(i2)
+        return parseInt(i2) - parseInt(i1)
       })
-      if (historyKeys[historyKeys.length - 1] + allotIntervalTime > now) {
+      if (historyKeys[0] + allotIntervalTime > now) {
         Taro.showModal({
           title: '警告',
           content: '未超过限制时间，是否强制进行分配',

@@ -1,12 +1,12 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Image } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtIcon } from 'taro-ui'
 
 import StaffCard from './staffCard'
 
 import './staff.scss'
-import addStaffIcon from '../../images/add_people_white.png'
+// import addStaffIcon from '../../images/add_people_white.png'
 
 @connect(({ staff }) => ({
   staff

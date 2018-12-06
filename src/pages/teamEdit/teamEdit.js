@@ -157,7 +157,6 @@ export default class TeamEdit extends Component {
     const leader = staffNameList[this.state.leaderSelected]
     const teamData = this.state.teamData || {}
     const jobs = teamData.jobs || {}
-    const jobKeys = Object.keys(jobs)
     const jobListCards = Object.keys(jobs).sort(naturalSort).map(job => {
       return (
         <JobCard

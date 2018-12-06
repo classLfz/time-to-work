@@ -1,5 +1,5 @@
 {
-	"miniprogramRoot": "./dist",
+	"miniprogramRoot": "dist/",
 	"projectname": "time-to-work-taro",
 	"description": "time to work.",
 	"appid": "wxf86e268347415e47",
