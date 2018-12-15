@@ -5,6 +5,7 @@ export default function (teamMap, staffMap) {
       message: '请先添加团队'
     }
   }
+  let staffMapBackup = JSON.parse(JSON.stringify(staffMap))
   // 去除休息or请假人员
   for (let staff in staffMap) {
     if (staffMap[staff].rest || staffMap[staff].leave) {
@@ -29,6 +30,12 @@ export default function (teamMap, staffMap) {
       jobs[job].workers.forEach(worker => {
         delete staffMap[worker]
       })
+      // 作弊人员
+      if (jobs[job].cheatWorkers) {
+        jobs[job].cheatWorkers.forEach(worker => {
+          delete staffMap[worker]
+        })
+      }
     }
   }
   for (let team in teamMap) {
@@ -44,7 +51,20 @@ export default function (teamMap, staffMap) {
     for (let job in jobs) {
       // 职位休息or人员达标
       if (jobs[job].rest || jobs[job].num <= jobs[job].workers.length) continue
+      let cheatIndex = 0
       while (jobs[job].num > jobs[job].workers.length) {
+        // 安排作弊人员
+        let cheatWorkers = jobs[job].cheatWorkers
+        if (cheatWorkers
+            && cheatWorkers.length > 0
+            && cheatWorkers[cheatIndex]
+            && staffMapBackup[cheatWorkers[cheatIndex]]
+            && !staffMapBackup[cheatWorkers[cheatIndex]].rest
+            && !staffMapBackup[cheatWorkers[cheatIndex]].leave) {
+          jobs[job].workers.push(cheatWorkers[cheatIndex])
+          cheatIndex++
+          continue
+        }
         let staffKeys = Object.keys(staffMap)
         if (staffKeys.length <= 0) break
         let index = parseInt(Math.random() * staffKeys.length)
