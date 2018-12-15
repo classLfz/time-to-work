@@ -68,7 +68,8 @@ export default class TeamCreate extends Component {
       newTeamData.jobs[newJobName] = {
         num: 1,
         rest: false,
-        workers: []
+        workers: [],
+        cheatWorkers: []
       }
       this.setState({
         teamData: newTeamData
@@ -93,8 +94,8 @@ export default class TeamCreate extends Component {
    */
   handleJobChange (e) {
     let newTeamData = JSON.parse(JSON.stringify(this.state.teamData))
-    if (e.delete) {
-      delete newTeamData.jobs[e.delete]
+    if (e.deleteKey) {
+      delete newTeamData.jobs[e.deleteKey]
     }
     if (e.oldName) {
       delete newTeamData.jobs[e.oldName]

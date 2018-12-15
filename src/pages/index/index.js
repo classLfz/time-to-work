@@ -119,7 +119,7 @@ export default class Index extends Component {
       let historyKeys = Object.keys(history).sort((i1, i2) => {
         return parseInt(i2) - parseInt(i1)
       })
-      if (historyKeys[0] + allotIntervalTime > now) {
+      if (parseInt(historyKeys[0]) + allotIntervalTime > now) {
         Taro.showModal({
           title: '警告',
           content: '未超过限制时间，是否强制进行分配',
@@ -129,7 +129,9 @@ export default class Index extends Component {
             }
           }
         })
+        return
       }
+      this.allot()
     } else {
       this.allot()
     }

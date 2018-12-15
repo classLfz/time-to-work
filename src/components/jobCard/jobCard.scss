@@ -5,6 +5,15 @@
   padding: 24px;
   color: #17233d;
 }
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cheat-btn {
+  width: 48px;
+  height: 24px;
+}
 .operator-btn {
   display: inline-flex;
 }

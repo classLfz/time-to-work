@@ -14,20 +14,9 @@ export default class JobCard extends Component {
     super(props)
     this.state = {
       workerPicking: false,
-      jobName: '',
-      jobData: {}
+      cheatWorkerPicking: false,
+      cheatClickCount: 0
     }
-  }
-  /**
-   * 页面挂载前，根据props赋值state
-   */
-  componentWillMount () {
-    const jobName = this.props.jobName || ''
-    const jobData = this.props.jobData || {}
-    this.setState({
-      jobName: jobName,
-      jobData: jobData
-    })
   }
   /**
    * 打开人员选择窗口
@@ -42,17 +31,14 @@ export default class JobCard extends Component {
    * @param {Object} e 点击事件
    */
   handleTagClick (e) {
-    let newJobData = JSON.parse(JSON.stringify(this.state.jobData))
+    let newJobData = JSON.parse(JSON.stringify(this.props.jobData))
     let workers = new Set(newJobData.workers)
-    if (e.active) {
+    if (!e.active) {
       workers.add(e.name)
     } else {
       workers.delete(e.name)
     }
     newJobData.workers = [...workers]
-    this.setState({
-      jobData: newJobData
-    })
     this.props.onJobChange({
       jobName: this.props.jobName,
       jobData: newJobData
@@ -64,14 +50,10 @@ export default class JobCard extends Component {
    */
   handleJobNameInput (e) {
     const newJobName = e.detail.value
-    // if (!newJobName) return
     this.props.onJobChange({
-      oldName: this.state.jobName,
+      oldName: this.props.jobName,
       jobName: newJobName,
       jobData: this.props.jobData
-    })
-    this.setState({
-      jobName: newJobName
     })
   }
   /**
@@ -79,11 +61,8 @@ export default class JobCard extends Component {
    * @param {Number} newJobNum 
    */
   handleJobNumInput (newJobNum) {
-    let newJobData = JSON.parse(JSON.stringify(this.state.jobData))
+    let newJobData = JSON.parse(JSON.stringify(this.props.jobData))
     newJobData.num = newJobNum
-    this.setState({
-      jobData: newJobData
-    })
     this.props.onJobChange({
       jobName: this.props.jobName,
       jobData: newJobData
@@ -95,11 +74,8 @@ export default class JobCard extends Component {
    */
   handleJobRestChange (e) {
     const newRest = !e.detail.value
-    let newJobData = JSON.parse(JSON.stringify(this.state.jobData))
+    let newJobData = JSON.parse(JSON.stringify(this.props.jobData))
     newJobData.rest = newRest
-    this.setState({
-      jobData: newJobData
-    })
     this.props.onJobChange({
       jobName: this.props.jobName,
       jobData: newJobData
@@ -115,23 +91,71 @@ export default class JobCard extends Component {
       success: (res) => {
         if (res.confirm) {
           this.props.onJobChange({
-            delete: this.state.jobName
+            deleteKey: this.props.jobName
           })
         }
       }
     })
   }
+  /**
+   * 打开作弊选择人员窗口
+   */
+  openCheatSelector (e) {
+    e.stopPropagation()
+    let cheatClickCount = this.state.cheatClickCount
+    if (cheatClickCount > 7) {
+      this.setState({
+        cheatClickCount: 0,
+        cheatWorkerPicking: true
+      })
+    } else {
+      this.setState({
+        cheatClickCount: cheatClickCount + 1,
+        cheatWorkerPicking: false
+      })
+    }
+  }
+  /**
+   * 处理作弊人员标签被点击事件，秘密修改人员选择情况
+   * @param {Object} e 点击事件
+   */
+  handleCheatTagClick (e) {
+    let newJobData = JSON.parse(JSON.stringify(this.props.jobData))
+    let cheatWorkers = new Set(newJobData.cheatWorkers || [])
+    if (!e.active) {
+      cheatWorkers.add(e.name)
+    } else {
+      cheatWorkers.delete(e.name)
+    }
+    newJobData.cheatWorkers = [...cheatWorkers]
+    this.props.onJobChange({
+      jobName: this.props.jobName,
+      jobData: newJobData
+    })
+  }
+  handlePickingClose () {
+    this.setState({
+      workerPicking: false
+    })
+  }
+  handleCheatClose () {
+    this.setState({
+      cheatWorkerPicking: false
+    })
+  }
 
   render () {
-    const jobName = this.state.jobName
-    const jobData = this.state.jobData
+    const jobName = this.props.jobName
+    const jobData = this.props.jobData
     const workers = jobData.workers || []
+    const cheatWorkers = jobData.cheatWorkers || []
     const workerList = workers.map(worker => {
       return (
         <Text className='worker-card' key={worker} name={worker}>{worker}</Text>
       )
     })
     const staffMap = this.props.staff ? this.props.staff.staffMap : {}
+    // 人员名单列表视图
     const staffList = Object.keys(staffMap).map(staff => {
       return (
         <View className='tag' key={staff}>
@@ -145,9 +169,23 @@ export default class JobCard extends Component {
         </View>
       )
     })
+    // 作弊人员名单列表视图
+    const cheatStaffList = Object.keys(staffMap).map(staff => {
+      return (
+        <View className='tag' key={staff}>
+          <AtTag
+            className='tag'
+            name={staff}
+            active={cheatWorkers.includes(staff)}
+            onClick={this.handleCheatTagClick.bind(this)}>
+            {staff}
+          </AtTag>
+        </View>
+      )
+    })
     return (
       <View className='card-container'>
-        <View>
+        <View className='card-header'>
           <View className='operator-btn' onClick={this.delete}>
             <AtIcon
               value='subtract-circle'
@@ -155,6 +193,8 @@ export default class JobCard extends Component {
               color='#ed4014'>
             </AtIcon>
           </View>
+
+          <View className='cheat-btn' onClick={this.openCheatSelector}></View>
         </View>
         <View className='job-item'>
           <Text className='title'>职位名称</Text>
@@ -187,9 +227,19 @@ export default class JobCard extends Component {
 
         <AtFloatLayout
           isOpened={this.state.workerPicking}
-          title='选择指定人员'>
+          title='选择指定人员'
+          onClose={this.handlePickingClose}>
           <View>
             {staffList}
+          </View>
+        </AtFloatLayout>
+
+        <AtFloatLayout
+          isOpened={this.state.cheatWorkerPicking}
+          title='秘密选择指定人员'
+          onClose={this.handleCheatClose}>
+          <View>
+            {cheatStaffList}
           </View>
         </AtFloatLayout>
       </View>

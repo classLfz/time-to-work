@@ -66,13 +66,14 @@ export default class TeamEdit extends Component {
    */
   handleJobChange (e) {
     let newTeamData = JSON.parse(JSON.stringify(this.state.teamData))
-    if (e.delete) {
-      delete newTeamData.jobs[e.delete]
+    if (e.deleteKey) {
+      delete newTeamData.jobs[e.deleteKey]
     }
     if (e.oldName) {
       delete newTeamData.jobs[e.oldName]
     }
     if (e.jobName && e.jobData) {
+      delete newTeamData.jobs[e.jobName]
       newTeamData.jobs[e.jobName] = e.jobData
     }
     this.setState({
@@ -157,12 +158,14 @@ export default class TeamEdit extends Component {
     const leader = staffNameList[this.state.leaderSelected]
     const teamData = this.state.teamData || {}
     const jobs = teamData.jobs || {}
+    const staff = this.props.staff
     const jobListCards = Object.keys(jobs).sort(naturalSort).map(job => {
       return (
         <JobCard
           key={job}
           jobName={job}
           jobData={jobs[job]}
+          staff={staff}
           onJobChange={this.handleJobChange} />
       )
     })
