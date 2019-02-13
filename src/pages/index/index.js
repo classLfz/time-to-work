@@ -12,7 +12,15 @@ import allot from './allot.js'
 import TeamCard from '../../components/teamCard/teamCard'
 import IntroCard from './introCard'
 
-import './index.scss'
+switch (process.env.TARO_ENV) {
+  case 'weapp':
+    require('./index.scss')
+    break
+
+  case 'h5':
+    require('./index-h5.scss')
+    break
+}
 
 @connect(({ team, staff }) => ({
   team,
@@ -28,7 +36,7 @@ import './index.scss'
 
 export default class Index extends Component {
   config = {
-    navigationBarTitleText: '该干活了',
+    navigationBarTitleText: '分配工作',
     navigationBarBackgroundColor: '#5E35B1',
     navigationBarTextStyle: 'white'
   }
@@ -71,9 +79,10 @@ export default class Index extends Component {
       allotAndArchive: allotAndArchive,
       allotIntervalTime: this.state.intervalMap[allotInterval]
     })
+    if (process.env.TARO_ENV === 'h5') return
     Taro.getClipboardData().then(e => {
       let data = e.data
-      if (/^该干活了/.test(data)) {
+      if (/^分配工作/.test(data)) {
         Taro.showModal({
           title: '检测到自动导入内容',
           content: '是否将粘贴板内容进行自动导入？',
@@ -198,10 +207,13 @@ export default class Index extends Component {
       })
       return
     }
-    let outStr = '你们该干活了：\n'
+    let outStr = '分配好工作了：\n'
     for (let team in teamAlloted) {
       let teamData = teamAlloted[team]
-      outStr += `\n#\n团队：${team}\n负责人：${teamData.leader || ''}\n`
+      outStr += `\n#\n团队：${team}\n`
+      if (teamData.needLeader) {
+        outStr += `负责人：${teamData.leader || ''}\n`
+      }
       let jobs = teamData.jobs
       for (let job in jobs) {
         let jobData = jobs[job]
@@ -264,34 +276,36 @@ export default class Index extends Component {
         <View hidden={!hideIntro}>
           {teamListCards}
         </View>
-        <View className='operator'>
-          <View className='icon-btn' onClick={this.decideToAllot}>
-            <AtIcon
-              value='play'
-              size='42'
-              color='#0D47A1'>
-            </AtIcon>
-          </View>
-          <View className='icon-btn' onClick={this.reset}>
-            <AtIcon
-              value='stop'
-              size='40'
-              color='#004D40'>
-            </AtIcon>
-          </View>
-          <View className='icon-btn' onClick={this.copy}>
-            <AtIcon
-              value='download'
-              size='38'
-              color='#FF6D00'>
-            </AtIcon>
-          </View>
-          <View className='icon-btn' onClick={this.archive}>
-            <AtIcon
-              value='star'
-              size='38'
-              color='#C51162'>
-            </AtIcon>
+        <View className='operator-box'>
+          <View className='operator'>
+            <View className='icon-btn' onClick={this.decideToAllot}>
+              <AtIcon
+                value='play'
+                size='40'
+                color='#0D47A1'>
+              </AtIcon>
+            </View>
+            <View className='icon-btn' onClick={this.reset}>
+              <AtIcon
+                value='stop'
+                size='40'
+                color='#004D40'>
+              </AtIcon>
+            </View>
+            <View className='icon-btn' onClick={this.copy}>
+              <AtIcon
+                value='download'
+                size='40'
+                color='#FF6D00'>
+              </AtIcon>
+            </View>
+            <View className='icon-btn' onClick={this.archive}>
+              <AtIcon
+                value='star'
+                size='40'
+                color='#C51162'>
+              </AtIcon>
+            </View>
           </View>
         </View>
       </View>

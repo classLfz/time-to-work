@@ -1,4 +1,4 @@
-# time-to-work(该干活了)
+# time-to-work(分配工作)
 
 一款随机分配工作的小工具。使用[Taro](https://taro.aotu.io)以及[taro-ui](http://taro-ui.aotu.io)编写。
 

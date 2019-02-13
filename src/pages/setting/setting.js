@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Switch} from '@tarojs/components'
+import { View, Text, Switch} from '@tarojs/components'
 
 import './setting.scss'
 
@@ -48,7 +48,7 @@ export default class Setting extends Component {
   /**
    * 保存分配后复制选择
    */
-  handleAllotAndCopyChange (e) {
+  allotAndCopyChange (e) {
     e.stopPropagation()
     Taro.setStorageSync('allotAndCopy', e.detail.value)
     this.setState({
@@ -58,7 +58,7 @@ export default class Setting extends Component {
   /**
    * 保存分配后归档选择
    */
-  handleAllotAndSaveChange (e) {
+  allotAndSaveChange (e) {
     e.stopPropagation()
     Taro.setStorageSync('allotAndArchive', e.detail.value)
     this.setState({
@@ -71,19 +71,23 @@ export default class Setting extends Component {
     const allotAndCopy = this.state.allotAndCopy
     return (
       <View className='setting-container'>
-        <View class="setting-item" onClick={this.openTimeSheet}>
+        <View class='setting-item' onClick={this.openTimeSheet}>
           <Text>分配时间间隔</Text>
           <Text>{this.state.allotInterval}</Text>
         </View>
 
         <View className='setting-item'>
           <Text>分配后复制到粘贴板</Text>
-          <Switch checked={allotAndCopy} onChange={this.handleAllotAndCopyChange} />
+          <Switch checked={allotAndCopy} onChange={this.allotAndCopyChange} />
         </View>
 
         <View className='setting-item'>
           <Text>分配后归档</Text>
-          <Switch checked={allotAndArchive} onChange={this.handleAllotAndSaveChange} />
+          <Switch checked={allotAndArchive} onChange={this.allotAndSaveChange} />
+        </View>
+
+        <View className='setting-notify'>
+          使用过程如遇到不合理的地方，请发送邮件到 classlfz@qq.com 告知。其他问题，请勿发邮件打扰，谢谢~
         </View>
       </View>
     )

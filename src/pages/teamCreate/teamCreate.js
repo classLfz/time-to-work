@@ -8,7 +8,15 @@ import { connect } from '@tarojs/redux'
 import { updateTeamMap } from '../../actions/team'
 import { naturalSort } from '../../utils'
 
-import './teamCreate.scss'
+switch (process.env.TARO_ENV) {
+  case 'weapp':
+    require('./teamCreate.scss')
+    break
+
+  case 'h5':
+    require('./teamCreate-h5.scss')
+    break
+}
 
 @connect(({ team, staff }) => ({
   team,
@@ -37,6 +45,8 @@ export default class TeamCreate extends Component {
         jobs: {}
       },
       staffNameList: [],
+      needLeader: false,
+      leaderWork: true,
       leaderSelected: -1,
       addJob: false
     }
@@ -77,6 +87,15 @@ export default class TeamCreate extends Component {
     }
     this.setState({
       addJob: false
+    })
+  }
+  /**
+   * 处理是否需要负责人发生变化
+   * @param {Object} e 改变事件信息
+   */
+  needLeaderChange (e) {
+    this.setState({
+      needLeader: e.detail.value
     })
   }
   /**
@@ -124,9 +143,14 @@ export default class TeamCreate extends Component {
     newTeamMap[formData.name] = {
       name: formData.name,
       rest: !formData.rest,
+      needLeader: this.state.needLeader,
+      leaderWork: this.state.leaderWork,
       leader: this.state.staffNameList[this.state.leaderSelected],
       jobs: this.state.jobs,
       workers: []
+    }
+    if (!this.state.needLeader) {
+      newTeamMap[formData.name].leader = ''
     }
     this.props.updateTeamMap(newTeamMap)
     Taro.navigateBack({ delta: 1 })
@@ -134,7 +158,26 @@ export default class TeamCreate extends Component {
 
   render () {
     const staffNameList = this.state.staffNameList || []
-    const leader = staffNameList[this.state.leaderSelected]
+    let leader = null
+    let leaderSelector = null
+    if (this.state.needLeader) {
+      leader = staffNameList[this.state.leaderSelected] || ''
+      leaderSelector = (
+        <View>
+          <View className='form-item'>
+            <Text className='title'>负责人参与岗位分配</Text>
+            <Switch name='leaderWork' checked={this.state.leaderWork} />
+          </View>
+
+          <Picker mode='selector' range={staffNameList} onChange={this.handleLeaderPick}>
+            <View className='form-item'>
+              <Text className='title'>负责人</Text>
+              <Text className='content'>{leader}</Text>
+            </View>
+        </Picker>
+        </View>
+      )
+    }
     const teamData = this.state.teamData || {}
     const jobs = teamData.jobs || {}
     const jobListCards = Object.keys(jobs).sort(naturalSort).map(job => {
@@ -157,20 +200,30 @@ export default class TeamCreate extends Component {
     } else {
       addJobCard = ''
     }
+    const h5Header = (
+      <View className='team-create-header'>
+        <View>
+          <AtIcon value='chevron-left' size='24' color='#FFFFFF'></AtIcon>
+        </View>
+        <View className='title'>添加团队信息</View>
+        <View> </View>
+      </View>
+    )
     return (
-      <View className='form-container'>
-        <Form onSubmit={this.submit}>
+      <View className='team-create-form-container'>
+        {process.env.TARO_ENV === 'h5' ? h5Header : ''}
+        <Form className='from-container' onSubmit={this.submit}>
           <View className='form-item'>
             <Text className='title'>团队名称</Text>
             <Input className='item-input' name='name' placeholder='输入团队名称' autoFocus></Input>
           </View>
 
-          <Picker mode='selector' range={staffNameList} onChange={this.handleLeaderPick}>
-            <View className='form-item'>
-              <Text className='title'>负责人</Text>
-              <Text className='content'>{leader}</Text>
-            </View>
-          </Picker>
+          <View className='form-item'>
+            <Text className='title'>是否需要负责人</Text>
+            <Switch name='needLeader' checked={teamData.needLeader} onChange={this.needLeaderChange} />
+          </View>
+
+          {leaderSelector}
 
           <View className='form-item'>
             <Text className='title'>是否参与分配</Text>

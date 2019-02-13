@@ -2,5 +2,6 @@ dist/
 .temp/
 .rn_temp/
 node_modules/
+yarn-error.log
 
 secret.json

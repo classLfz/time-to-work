@@ -7680,10 +7680,10 @@ tar@^4:
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
 
-taro-ui@^1.5.1:
-  version "1.5.1"
-  resolved "https://r.cnpmjs.org/taro-ui/download/taro-ui-1.5.1.tgz#145c2bea3d9cf51370410b4783a8216d7ad3ca18"
-  integrity sha1-FFwr6j2c9RNwQQtHg6ghbXrTyhg=
+taro-ui@^1.5.2:
+  version "1.5.2"
+  resolved "https://r.cnpmjs.org/taro-ui/download/taro-ui-1.5.2.tgz#c74ac8a8b304e1e924e882a6260412e0b7602af5"
+  integrity sha1-x0rIqLME4ekk6IKmJgQS4LdgKvU=
   dependencies:
     "@types/react" "^16.7.3"
     bind-decorator "^1.0.11"

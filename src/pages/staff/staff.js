@@ -6,7 +6,6 @@ import { AtIcon } from 'taro-ui'
 import StaffCard from './staffCard'
 
 import './staff.scss'
-// import addStaffIcon from '../../images/add_people_white.png'
 
 @connect(({ staff }) => ({
   staff
@@ -33,12 +32,26 @@ export default class Staff extends Component {
 
   render () {
     const staffMap = JSON.parse(JSON.stringify(this.props.staff.staffMap)) || {}
-    const staffMapCards = Object.keys(staffMap).map(staff => {
-      const staffData = staffMap[staff] || {}
-      return (
-        <StaffCard key={staff} staffName={staff} staffData={staffData} />
+    let staffMapCards = null
+    const staffMapKeys = Object.keys(staffMap)
+    if (staffMapKeys.length > 0) {
+      staffMapCards = staffMapKeys.map(staff => {
+        const staffData = staffMap[staff] || {}
+        return (
+          <StaffCard key={staff} staffName={staff} staffData={staffData} />
+        )
+      })
+    } else {
+      staffMapCards = (
+        <View className='empty-container'>
+          <AtIcon
+            value='add-circle'
+            size='80'
+            color='#e0e0e0'
+            onClick={this.entryCreate}></AtIcon>
+        </View>
       )
-    })
+    }
     return (
       <View className='staff-container'>
         <View className='staff-header'>

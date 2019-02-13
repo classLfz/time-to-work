@@ -5,8 +5,15 @@ import { AtIcon } from 'taro-ui'
 
 import TeamCard from '../../components/teamCard/teamCard'
 
-import './team.scss'
-// import addTeamIcon from '../../images/add_people_white.png'
+switch (process.env.TARO_ENV) {
+  case 'weapp':
+    require('./team.scss')
+    break
+
+  case 'h5':
+    require('./team-h5.scss')
+    break
+}
 
 @connect(({ team }) => ({
   team
@@ -49,22 +56,34 @@ export default class Teams extends Component {
 
   render () {
     let teamMap = this.state.teamMap
-    const teamListCards = Object.keys(teamMap).map(team => {
-      return (
-        <TeamCard teamData={teamMap[team]} key={team.name} />
+    let teamListCards = null
+    const teamMapKeys = Object.keys(teamMap)
+    if (teamMapKeys.length > 0) {
+      teamListCards = teamMapKeys.map(team => {
+        return (
+          <TeamCard teamData={teamMap[team]} key={team.name} />
+        )
+      })
+    } else {
+      teamListCards = (
+        <View className='empty-container'>
+          <AtIcon
+            value='add-circle'
+            size='80'
+            color='#e0e0e0'
+            onClick={this.entryCreate}></AtIcon>
+        </View>
       )
-    })
+    }
     return (
       <View className='team-container'>
         <View className='team-header'>
-          <View>
-            <View className='icon-btn' onClick={this.entryCreate}>
-              <AtIcon
-                value='add-circle'
-                size='24'
-                color='#FFFFFF'>
-              </AtIcon>
-            </View>
+          <View className='icon-btn' onClick={this.entryCreate}>
+            <AtIcon
+              value='add-circle'
+              size='24'
+              color='#FFFFFF'>
+            </AtIcon>
           </View>
         </View>
         {teamListCards}

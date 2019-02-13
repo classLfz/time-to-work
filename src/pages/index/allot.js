@@ -22,8 +22,10 @@ export default function (teamMap, staffMap) {
   for (let team in teamMap) {
     // 团队不分配，人员需要参与其他分配
     if (teamMap[team].rest) continue
-    // 去除负责人
-    delete staffMap[teamMap[team].leader]
+    // 根据用户设置去除负责人
+    if (teamMap[team].needLeader && teamMap[team].leader && !teamMap[team].leaderWork) {
+      delete staffMap[teamMap[team].leader]
+    }
     let jobs = teamMap[team].jobs
     for (let job in jobs) {
       // 去除已经指定工作的人员
@@ -39,11 +41,14 @@ export default function (teamMap, staffMap) {
     }
   }
   for (let team in teamMap) {
-    if (!teamMap[team].leader) {
+    if (teamMap[team].needLeader && !teamMap[team].leader) {
       let staffKeys = Object.keys(staffMap)
       let index = parseInt(Math.random() * staffKeys.length)
       teamMap[team].leader = staffKeys[index]
-      delete staffMap[staffKeys[index]]
+      // 负责人是否参与岗位分配
+      if (!teamMap[team].leaderWork) {
+        delete staffMap[staffKeys[index]]
+      }
     }
     let jobs = teamMap[team].jobs
     // 团队不做分配

@@ -6,7 +6,7 @@
  * @return {Array} [teamMap, staffMap] 新的团队信息，新的职员信息
  */
 export default function resolveClipboardData (data, teamMap = {}, staffMap = {}) {
-  if (/^该干活了[(|（]清空[)|）]/.test(data)) {
+  if (/^分配工作[(|（]清空[)|）]/.test(data)) {
     teamMap = {}
     staffMap = {}
   }

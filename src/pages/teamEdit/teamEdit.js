@@ -33,6 +33,8 @@ export default class TeamEdit extends Component {
       teamName: '',
       teamData: {},
       staffNameList: [],
+      needLeader: false,
+      leaderWork: true,
       leaderSelected: 0,
       addJob: false
     }
@@ -42,6 +44,8 @@ export default class TeamEdit extends Component {
     const staffMap = this.props.staff.staffMap || {}
     const teamName = this.$router.params.teamName || ''
     const teamData = this.props.team.teamMap[teamName]
+    const needLeader = teamData.needLeader
+    const leaderWork = teamData.leaderWork
     const leader = teamData.leader
     let staffNameList = Object.keys(staffMap)
     this.setState({
@@ -49,6 +53,8 @@ export default class TeamEdit extends Component {
       teamName: teamName,
       teamData: teamData,
       staffNameList: staffNameList,
+      needLeader: needLeader,
+      leaderWork: leaderWork,
       leaderSelected: staffNameList.indexOf(leader)
     })
   }
@@ -107,6 +113,15 @@ export default class TeamEdit extends Component {
     })
   }
   /**
+   * 处理是否需要负责人发生变化
+   * @param {Object} e 改变事件信息
+   */
+  needLeaderChange (e) {
+    this.setState({
+      needLeader: e.detail.value
+    })
+  }
+  /**
    * 处理负责人的选择
    */
   handleLeaderPick (e) {
@@ -127,9 +142,14 @@ export default class TeamEdit extends Component {
     newTeamMap[formData.name] = {
       name: formData.name,
       rest: !formData.rest,
+      needLeader: formData.needLeader,
+      leaderWork: formData.leaderWork,
       leader: this.state.staffNameList[this.state.leaderSelected],
       jobs: this.state.teamData.jobs,
       workers: {}
+    }
+    if (!newTeamMap[formData.name].needLeader) {
+      newTeamMap[formData.name].leader = ''
     }
     this.props.updateTeamMap(newTeamMap)
     Taro.navigateBack({ delta: 1 })
@@ -146,7 +166,7 @@ export default class TeamEdit extends Component {
           const teamName = this.state.originalTeamName
           let newTeamMap = JSON.parse(JSON.stringify(this.props.team.teamMap))
           delete newTeamMap[teamName]
-          this.props.updateTeamMap(newTeamMap)
+          this.props.onUpdateTeamMap(newTeamMap)
           Taro.navigateBack({ delta: 1 })
         }
       }
@@ -155,7 +175,29 @@ export default class TeamEdit extends Component {
 
   render () {
     const staffNameList = this.state.staffNameList || []
-    const leader = staffNameList[this.state.leaderSelected]
+    let leader = null
+    let leaderSelector = null
+    if (this.state.needLeader) {
+      leader = staffNameList[this.state.leaderSelected] || ''
+      leaderSelector = (
+        <View>
+          <View className='form-item'>
+            <Text className='title'>负责人参与岗位分配</Text>
+            <Switch name='leaderWork' checked={this.state.leaderWork} />
+          </View>
+
+          <Picker mode='selector' range={staffNameList} onChange={this.handleLeaderPick}>
+            <View className='form-item'>
+              <Text className='title'>负责人</Text>
+              <Text className='content'>{leader}</Text>
+            </View>
+          </Picker>
+        </View>
+      )
+    } else {
+      leader = ''
+      leaderSelector = ''
+    }
     const teamData = this.state.teamData || {}
     const jobs = teamData.jobs || {}
     const staff = this.props.staff
@@ -188,12 +230,12 @@ export default class TeamEdit extends Component {
             <Input className='item-input' name='name' value={teamData.name} placeholder='输入团队名称' autoFocus></Input>
           </View>
 
-          <Picker mode='selector' range={staffNameList} onChange={this.handleLeaderPick}>
-            <View className='form-item'>
-              <Text className='title'>负责人</Text>
-              <Text className='content'>{leader}</Text>
-            </View>
-          </Picker>
+          <View className='form-item'>
+            <Text className='title'>是否需要负责人</Text>
+            <Switch name='needLeader' checked={teamData.needLeader} onChange={this.needLeaderChange} />
+          </View>
+
+          {leaderSelector}
 
           <View className='form-item'>
             <Text className='title'>是否参与分配</Text>

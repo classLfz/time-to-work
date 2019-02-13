@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Form, Input, Switch, Button } from '@tarojs/components'
+import { View, Text, Form, Input, Switch, Button } from '@tarojs/components'
 
 import { connect } from '@tarojs/redux'
 import { updateStaffMap } from '../../actions/staff'

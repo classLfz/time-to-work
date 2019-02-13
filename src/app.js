@@ -71,35 +71,37 @@ class App extends Component {
   }
 
   componentDidMount () {
-    const updateManager = Taro.getUpdateManager()
-    // 检查更新
-    updateManager.onCheckForUpdate(function (res) {
-      if (res.hasUpdate) {
-        Taro.showToast({
-          title: '发现新版本',
-          icon: 'none'
-        })
-      }
-    })
-    // 有新的版本可以更新
-    updateManager.onUpdateReady(function () {
-      Taro.showModal({
-        title: '更新提示',
-        content: '新版本已经准备好，是否重启应用？',
-        success: function (res) {
-          if (res.confirm) {
-            updateManager.applyUpdate()
-          }
+    if (process.env.TARO_ENV === 'weapp') {
+      const updateManager = Taro.getUpdateManager()
+      // 检查更新
+      updateManager.onCheckForUpdate(function (res) {
+        if (res.hasUpdate) {
+          Taro.showToast({
+            title: '发现新版本',
+            icon: 'none'
+          })
         }
       })
-    })
-    // 下载更新失败
-    updateManager.onUpdateFailed(function () {
-      Taro.showToast({
-        title: '更新失败，请检查网络',
-        icon: 'none'
+      // 有新的版本可以更新
+      updateManager.onUpdateReady(function () {
+        Taro.showModal({
+          title: '更新提示',
+          content: '新版本已经准备好，是否重启应用？',
+          success: function (res) {
+            if (res.confirm) {
+              updateManager.applyUpdate()
+            }
+          }
+        })
       })
-    })
+      // 下载更新失败
+      updateManager.onUpdateFailed(function () {
+        Taro.showToast({
+          title: '更新失败，请检查网络',
+          icon: 'none'
+        })
+      })
+    }
     
     try {
       // 检查储存容量，并作出处理
