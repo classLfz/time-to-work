@@ -9,7 +9,7 @@ import './staffEdit.scss'
 @connect(({ staff }) => ({
   staff
 }), (dispatch) => ({
-  updateStaffMap (data) {
+  onUpdateStaffMap (data) {
     dispatch(updateStaffMap(data))
   }
 }))
@@ -51,7 +51,7 @@ export default class StaffEdit extends Component {
       rest: formData.rest,
       leave: formData.leave
     }
-    this.props.updateStaffMap(newStaffMap)
+    this.props.onUpdateStaffMap(newStaffMap)
     Taro.navigateBack({ delta: 1 })
   }
   /**
@@ -66,7 +66,7 @@ export default class StaffEdit extends Component {
           const name = this.state.name
           let newStaffMap = JSON.parse(JSON.stringify(this.props.staff.staffMap))
           delete newStaffMap[name]
-          this.props.updateStaffMap(newStaffMap)
+          this.props.onUpdateStaffMap(newStaffMap)
           Taro.navigateBack({ delta: 1 })
         }
       }

@@ -11,7 +11,7 @@ import unCheckIcon from '../../images/uncheck_gray.png'
 @connect(({ staff }) => ({
   staff
 }), (dispatch) => ({
-  updateStaffMap (data) {
+  onUpdateStaffMap (data) {
     dispatch(updateStaffMap(data))
   }
 }))
@@ -43,7 +43,7 @@ export default class StaffCard extends Component {
       rest: !staffData.rest,
       leave: staffData.leave
     }
-    this.props.updateStaffMap(newStaffMap)
+    this.props.onUpdateStaffMap(newStaffMap)
   }
   /**
    * 切换请假状态
@@ -56,7 +56,7 @@ export default class StaffCard extends Component {
       rest: staffData.rest,
       leave: !staffData.leave
     }
-    this.props.updateStaffMap(newStaffMap)
+    this.props.onUpdateStaffMap(newStaffMap)
   }
 
   render () {

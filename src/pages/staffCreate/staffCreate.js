@@ -9,7 +9,7 @@ import './staffCreate.scss'
 @connect(({ staff }) => ({
   staff
 }), (dispatch) => ({
-  updateStaffMap (data) {
+  onUpdateStaffMap (data) {
     dispatch(updateStaffMap(data))
   }
 }))
@@ -36,7 +36,7 @@ export default class StaffCreate extends Component {
       rest: formData.rest,
       leave: formData.leave
     }
-    this.props.updateStaffMap(newStaffMap)
+    this.props.onUpdateStaffMap(newStaffMap)
     Taro.navigateBack({ delta: 1 })
   }
 

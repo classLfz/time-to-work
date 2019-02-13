@@ -22,7 +22,7 @@ switch (process.env.TARO_ENV) {
   team,
   staff
 }), (dispatch) => ({
-  updateTeamMap (data) {
+  onUpdateTeamMap (data) {
     dispatch(updateTeamMap(data))
   }
 }))
@@ -152,16 +152,16 @@ export default class TeamCreate extends Component {
     if (!this.state.needLeader) {
       newTeamMap[formData.name].leader = ''
     }
-    this.props.updateTeamMap(newTeamMap)
+    this.props.onUpdateTeamMap(newTeamMap)
     Taro.navigateBack({ delta: 1 })
   }
 
   render () {
-    const staffNameList = this.state.staffNameList || []
+    const staffNameListArr = this.state.staffNameList || []
     let leader = null
     let leaderSelector = null
     if (this.state.needLeader) {
-      leader = staffNameList[this.state.leaderSelected] || ''
+      leader = staffNameListArr[this.state.leaderSelected] || ''
       leaderSelector = (
         <View>
           <View className='form-item'>
@@ -169,7 +169,7 @@ export default class TeamCreate extends Component {
             <Switch name='leaderWork' checked={this.state.leaderWork} />
           </View>
 
-          <Picker mode='selector' range={staffNameList} onChange={this.handleLeaderPick}>
+          <Picker mode='selector' range={staffNameListArr} onChange={this.handleLeaderPick}>
             <View className='form-item'>
               <Text className='title'>负责人</Text>
               <Text className='content'>{leader}</Text>
@@ -178,8 +178,8 @@ export default class TeamCreate extends Component {
         </View>
       )
     }
-    const teamData = this.state.teamData || {}
-    const jobs = teamData.jobs || {}
+    const teamDataObj = this.state.teamData || {}
+    const jobs = teamDataObj.jobs || {}
     const jobListCards = Object.keys(jobs).sort(naturalSort).map(job => {
       return (
         <JobCard
@@ -220,14 +220,14 @@ export default class TeamCreate extends Component {
 
           <View className='form-item'>
             <Text className='title'>是否需要负责人</Text>
-            <Switch name='needLeader' checked={teamData.needLeader} onChange={this.needLeaderChange} />
+            <Switch name='needLeader' checked={teamDataObj.needLeader} onChange={this.needLeaderChange} />
           </View>
 
           {leaderSelector}
 
           <View className='form-item'>
             <Text className='title'>是否参与分配</Text>
-            <Switch name='rest' checked={!teamData.rest} />
+            <Switch name='rest' checked={!teamDataObj.rest} />
           </View>
 
           <View className='job-list'>

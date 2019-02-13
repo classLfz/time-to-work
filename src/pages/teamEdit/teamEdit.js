@@ -14,7 +14,7 @@ import './teamEdit.scss'
   team,
   staff
 }), (dispatch) => ({
-  updateTeamMap (data) {
+  onUpdateTeamMap (data) {
     dispatch(updateTeamMap(data))
   }
 }))
@@ -151,7 +151,7 @@ export default class TeamEdit extends Component {
     if (!newTeamMap[formData.name].needLeader) {
       newTeamMap[formData.name].leader = ''
     }
-    this.props.updateTeamMap(newTeamMap)
+    this.props.onUpdateTeamMap(newTeamMap)
     Taro.navigateBack({ delta: 1 })
   }
   /**
@@ -174,11 +174,11 @@ export default class TeamEdit extends Component {
   }
 
   render () {
-    const staffNameList = this.state.staffNameList || []
+    const staffNameListArr = this.state.staffNameList || []
     let leader = null
     let leaderSelector = null
     if (this.state.needLeader) {
-      leader = staffNameList[this.state.leaderSelected] || ''
+      leader = staffNameListArr[this.state.leaderSelected] || ''
       leaderSelector = (
         <View>
           <View className='form-item'>
@@ -186,7 +186,7 @@ export default class TeamEdit extends Component {
             <Switch name='leaderWork' checked={this.state.leaderWork} />
           </View>
 
-          <Picker mode='selector' range={staffNameList} onChange={this.handleLeaderPick}>
+          <Picker mode='selector' range={staffNameListArr} onChange={this.handleLeaderPick}>
             <View className='form-item'>
               <Text className='title'>负责人</Text>
               <Text className='content'>{leader}</Text>
@@ -198,8 +198,8 @@ export default class TeamEdit extends Component {
       leader = ''
       leaderSelector = ''
     }
-    const teamData = this.state.teamData || {}
-    const jobs = teamData.jobs || {}
+    const teamDataObj = this.state.teamData || {}
+    const jobs = teamDataObj.jobs || {}
     const staff = this.props.staff
     const jobListCards = Object.keys(jobs).sort(naturalSort).map(job => {
       return (
@@ -227,19 +227,19 @@ export default class TeamEdit extends Component {
         <Form onSubmit={this.submit}>
           <View className='form-item'>
             <Text className='title'>团队名称</Text>
-            <Input className='item-input' name='name' value={teamData.name} placeholder='输入团队名称' autoFocus></Input>
+            <Input className='item-input' name='name' value={teamDataObj.name} placeholder='输入团队名称' autoFocus></Input>
           </View>
 
           <View className='form-item'>
             <Text className='title'>是否需要负责人</Text>
-            <Switch name='needLeader' checked={teamData.needLeader} onChange={this.needLeaderChange} />
+            <Switch name='needLeader' checked={teamDataObj.needLeader} onChange={this.needLeaderChange} />
           </View>
 
           {leaderSelector}
 
           <View className='form-item'>
             <Text className='title'>是否参与分配</Text>
-            <Switch name='rest' checked={!teamData.rest} />
+            <Switch name='rest' checked={!teamDataObj.rest} />
           </View>
 
           <View className='job-list'>

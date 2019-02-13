@@ -26,10 +26,10 @@ switch (process.env.TARO_ENV) {
   team,
   staff
 }), (dispatch) => ({
-  updateTeamMap (data) {
+  onUpdateTeamMap (data) {
     dispatch(updateTeamMap(data))
   },
-  updateStaffMap (data) {
+  onUpdateStaffMap (data) {
     dispatch(updateStaffMap(data))
   }
 }))
@@ -59,13 +59,13 @@ export default class Index extends Component {
   }
 
   componentDidShow () {
-    const { updateTeamMap, updateStaffMap } = this.props
+    const { onUpdateTeamMap, onUpdateStaffMap } = this.props
     let teamMap = Taro.getStorageSync('teams') || {}
     let staffMap = Taro.getStorageSync('staff') || {}
     // 首次更新store状态
     if (!this.state.firstUpdated) {
-      updateTeamMap(teamMap)
-      updateStaffMap(staffMap)
+      onUpdateTeamMap(teamMap)
+      onUpdateStaffMap(staffMap)
       this.setState({
         firstUpdated: true
       })
@@ -86,7 +86,7 @@ export default class Index extends Component {
         Taro.showModal({
           title: '检测到自动导入内容',
           content: '是否将粘贴板内容进行自动导入？',
-          success: function (res) {
+          success: (res) => {
             // 清空粘贴板
             Taro.setClipboardData({
               data: '',
@@ -96,8 +96,8 @@ export default class Index extends Component {
             })
             if (!res.confirm) return
             [teamMap, staffMap] = resolveClipboardData(data, teamMap, staffMap)
-            updateTeamMap(teamMap)
-            updateStaffMap(staffMap)
+            onUpdateTeamMap(teamMap)
+            onUpdateStaffMap(staffMap)
           }
         })
       }
