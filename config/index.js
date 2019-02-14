@@ -51,7 +51,7 @@ const config = {
 
   },
   h5: {
-    publicPath: '/',
+    publicPath: '/time-to-work',
     staticDirectory: 'static',
     module: {
       postcss: {
