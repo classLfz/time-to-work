@@ -106,7 +106,7 @@ export default class Index extends Component {
   /**
    * 进入归档记录列表页面
    */
-  entryHistory () {
+  entryHistory = () => {
     Taro.navigateTo({
       url: `/pages/history/history`
     })
@@ -115,7 +115,7 @@ export default class Index extends Component {
    * 判别是否可以进行分配
    * @param {Object} e 点击事件
    */
-  decideToAllot (e) {
+  decideToAllot = (e) => {
     e.stopPropagation()
     const allotIntervalTime = this.state.allotIntervalTime
     if (allotIntervalTime !== 0) {
@@ -148,7 +148,7 @@ export default class Index extends Component {
   /**
    * 分配工作
    */
-  allot () {
+  allot = () => {
     const { team, staff } = this.props
     let teamMap = JSON.parse(JSON.stringify(team.teamMap))
     let staffMap = JSON.parse(JSON.stringify(staff.staffMap))
@@ -162,35 +162,34 @@ export default class Index extends Component {
     }
     Taro.showLoading({
       title: '分配任务中...',
-      mask: true,
-      success: () => {
-        setTimeout(() => {
-          Taro.hideLoading()
-          this.setState({
-            teamAlloted: result.teamMap
-          })
-          Taro.showToast({
-            title: '分配工作完成',
-            icon: 'success'
-          })
-          if (this.state.allotAndArchive) {
-            setTimeout(() => {
-              this.archive()
-            }, 0)
-          }
-          if (this.state.allotAndCopy) {
-            setTimeout(() => {
-              this.copy()
-            }, 500)
-          }
-        }, 1000)
-      }
+      mask: true
+    }).then(() => {
+      setTimeout(() => {
+        Taro.hideLoading()
+        this.setState({
+          teamAlloted: result.teamMap
+        })
+        if (this.state.allotAndArchive) {
+          setTimeout(() => {
+            this.archive()
+          }, 0)
+        }
+        if (this.state.allotAndCopy) {
+          setTimeout(() => {
+            this.copy()
+          }, 500)
+        }
+        Taro.showToast({
+          title: '分配工作完成',
+          icon: 'success'
+        })
+      }, 1000)
     })
   }
   /**
    * 清空本次分配信息
    */
-  reset () {
+  reset = () => {
     this.setState({
       teamAlloted: {}
     })
@@ -198,7 +197,7 @@ export default class Index extends Component {
   /**
    * 复制分配信息到用户粘贴板
    */
-  copy () {
+  copy = () => {
     const teamAlloted = this.state.teamAlloted
     if (Object.keys(teamAlloted).length <= 0) {
       Taro.showToast({
@@ -232,7 +231,7 @@ export default class Index extends Component {
   /**
    * 归档
    */
-  archive () {
+  archive = () => {
     const teamAlloted = this.state.teamAlloted
     if (Object.keys(teamAlloted).length === 0) {
       Taro.showToast({
@@ -270,11 +269,13 @@ export default class Index extends Component {
             </AtIcon>
           </View>
         </View>
-        <View hidden={hideIntro}>
-          <IntroCard />
-        </View>
-        <View hidden={!hideIntro}>
-          {teamListCards}
+        <View className='content'>
+          <View hidden={hideIntro}>
+            <IntroCard />
+          </View>
+          <View hidden={!hideIntro}>
+            {teamListCards}
+          </View>
         </View>
         <View className='operator-box'>
           <View className='operator'>
@@ -292,13 +293,15 @@ export default class Index extends Component {
                 color='#004D40'>
               </AtIcon>
             </View>
-            <View className='icon-btn' onClick={this.copy}>
-              <AtIcon
-                value='download'
-                size='40'
-                color='#FF6D00'>
-              </AtIcon>
-            </View>
+            {process.env.TARO_ENV === 'h5' ? '' : (
+              <View className='icon-btn' onClick={this.copy}>
+                <AtIcon
+                  value='download'
+                  size='40'
+                  color='#FF6D00'>
+                </AtIcon>
+              </View>
+            )}
             <View className='icon-btn' onClick={this.archive}>
               <AtIcon
                 value='star'

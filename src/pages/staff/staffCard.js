@@ -23,7 +23,7 @@ export default class StaffCard extends Component {
   /**
    * 进入职员编辑页面
    */
-  entryEdit () {
+  entryEdit = () => {
     let name = this.props.staffName
     let rest = this.props.staffData.rest
     let leave = this.props.staffData.leave
@@ -34,7 +34,7 @@ export default class StaffCard extends Component {
   /**
    * 切换休息状态
    */
-  toggleRest () {
+  toggleRest = () => {
     const staffName = this.props.staffName
     const staffData = this.props.staffData
     let newStaffMap = JSON.parse(JSON.stringify(this.props.staff.staffMap))
@@ -48,7 +48,7 @@ export default class StaffCard extends Component {
   /**
    * 切换请假状态
    */
-  toggleLeave () {
+  toggleLeave = () => {
     const staffName = this.props.staffName
     const staffData = this.props.staffData
     let newStaffMap = JSON.parse(JSON.stringify(this.props.staff.staffMap))

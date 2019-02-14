@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtTag, AtCard } from 'taro-ui'
+import { AtCard } from 'taro-ui'
 
 import './teamCard.scss'
 
@@ -12,7 +12,7 @@ export default class TeamCard extends Component {
   /**
    * 进入编辑页面
    */
-  entryEdit () {
+  entryEdit = () => {
     if (this.props.justShow) return
     Taro.navigateTo({
       url: `/pages/teamEdit/teamEdit?teamName=${this.props.teamData.name}`

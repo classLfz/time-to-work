@@ -2,8 +2,10 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Button } from '@tarojs/components'
 
 import TeamCard from '../../components/teamCard/teamCard'
+import NavHeader from '../../components/navHeader/navHeader.js'
 
 import { formatTime } from '../../utils'
+import './historyDetail.scss'
 
 export default class HistoryDetail extends Component {
   config = {
@@ -32,7 +34,7 @@ export default class HistoryDetail extends Component {
   /**
    * 删除该记录
    */
-  delete () {
+  delete = () => {
     Taro.showModal({
       title: '操作不可逆',
       content: '确定要删除该记录吗？',
@@ -60,8 +62,10 @@ export default class HistoryDetail extends Component {
         <TeamCard teamData={teamMap[team]} key={team} justShow />
       )
     })
+    const title = '归档记录详情'
     return (
       <View className='detail-container'>
+        {process.env.TARO_ENV === 'h5' ? (<NavHeader title={title} />) : ''}
         <View className='time-title'>{timeStr}</View>
         {teamListCards}
         <View className='detail-btns'>

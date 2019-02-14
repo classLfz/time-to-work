@@ -1,7 +1,15 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Switch} from '@tarojs/components'
 
-import './setting.scss'
+switch (process.env.TARO_ENV) {
+  case 'weapp':
+    require('./setting.scss')
+    break
+
+  case 'h5':
+    require('./setting-h5.scss')
+    break
+}
 
 export default class Setting extends Component {
   config = {
@@ -33,7 +41,7 @@ export default class Setting extends Component {
   /**
    * 打开时间间隔选择框
    */
-  openTimeSheet () {
+  openTimeSheet = () => {
     Taro.showActionSheet({
       itemList: this.state.intervalList,
       success: (res) => {
@@ -48,7 +56,7 @@ export default class Setting extends Component {
   /**
    * 保存分配后复制选择
    */
-  allotAndCopyChange (e) {
+  allotAndCopyChange = (e) => {
     e.stopPropagation()
     Taro.setStorageSync('allotAndCopy', e.detail.value)
     this.setState({
@@ -58,7 +66,7 @@ export default class Setting extends Component {
   /**
    * 保存分配后归档选择
    */
-  allotAndSaveChange (e) {
+  allotAndSaveChange = (e) => {
     e.stopPropagation()
     Taro.setStorageSync('allotAndArchive', e.detail.value)
     this.setState({
@@ -71,15 +79,17 @@ export default class Setting extends Component {
     const allotAndCopy = this.state.allotAndCopy
     return (
       <View className='setting-container'>
-        <View class='setting-item' onClick={this.openTimeSheet}>
+        <View className='setting-item' onClick={this.openTimeSheet}>
           <Text>分配时间间隔</Text>
           <Text>{this.state.allotInterval}</Text>
         </View>
 
-        <View className='setting-item'>
-          <Text>分配后复制到粘贴板</Text>
-          <Switch checked={allotAndCopy} onChange={this.allotAndCopyChange} />
-        </View>
+        {process.env.TARO_ENV === 'h5' ? '' : (
+          <View className='setting-item'>
+            <Text>分配后复制到粘贴板</Text>
+            <Switch checked={allotAndCopy} onChange={this.allotAndCopyChange} />
+          </View>
+        )}
 
         <View className='setting-item'>
           <Text>分配后归档</Text>
@@ -87,7 +97,7 @@ export default class Setting extends Component {
         </View>
 
         <View className='setting-notify'>
-          使用过程如遇到不合理的地方，请发送邮件到 classlfz@qq.com 告知。其他问题，请勿发邮件打扰，谢谢~
+          使用过程如遇到不合理的地方，需要改进的，请发送邮件到 classlfz@qq.com 告知。其他问题，请勿发邮件打扰，谢谢~
         </View>
       </View>
     )

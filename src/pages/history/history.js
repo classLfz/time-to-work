@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 
 import HistoryCard from './historyCard.js'
+import NavHeader from '../../components/navHeader/navHeader.js'
 
 export default class History extends Component {
   config = {
@@ -23,7 +24,7 @@ export default class History extends Component {
   /**
    * 刷新归档记录列表信息
    */
-  refresh () {
+  refresh = () => {
     const history = Taro.getStorageSync('history') || {}
     this.setState({
       historyKeyList: Object.keys(history).sort((i1, i2) => {
@@ -39,8 +40,10 @@ export default class History extends Component {
         <HistoryCard key={key} keyData={key} onRefresh={this.refresh} />
       )
     })
+    const title = '归档记录'
     return (
       <View>
+        {process.env.TARO_ENV === 'h5' ? (<NavHeader title={title} />) : ''}
         {cardList}
       </View>
     )

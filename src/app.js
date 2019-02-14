@@ -106,7 +106,7 @@ class App extends Component {
     try {
       // 检查储存容量，并作出处理
       let info = Taro.getStorageInfoSync()
-      if ((info.limitSize - info.currentSize) < 240) {
+      if (process.env.TARO_ENV === 'weapp' && (info.limitSize - info.currentSize) < 240) {
         Taro.showToast({
           title: '储存容量过大，正在为您清除',
           icon: 'none'
@@ -120,12 +120,35 @@ class App extends Component {
           delete history[historyKeys[i]]
         }
         Taro.setStorageSync('history', history)
+      } else if (process.env.TARO_ENV === 'h5') {
+        let history = Taro.getStorageInfoSync('history')
+        let historyKeys = Object.keys(history).sort((i1, i2) => {
+          return parseInt(i1) - parseInt(i2)
+        })
+        if (historyKeys.length > 400) {
+          Taro.showToast({
+            title: '储存容量过大，正在为您清除',
+            icon: 'none'
+          })
+          let count = 100
+          for (let i = 0; i < count && i < historyKeys.length; i++) {
+            delete history[historyKeys[i]]
+          }
+          Taro.setStorageSync('history', history)
+        }
       }
     } catch (e) {
       Taro.showToast({
         title: '清除存储容量出错',
         icon: 'none'
       })
+    }
+
+    // h5纠正路由
+    if (process.env.TARO_ENV === 'h5') {
+      if (window.location.hash !== '#/pages/index/index') {
+        window.location = '#/pages/index/index'
+      }
     }
   }
 

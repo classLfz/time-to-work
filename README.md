@@ -31,3 +31,7 @@ $ yarn dev:weapp
 # 小程序打包
 $ yarn build:weapp
 ```
+
+## 开发注意事项
+
+- 组件js文件内函数，除 `constructor`, `render` 以及一些生命周期函数外，其他的函数最好时候箭头函数的方式命名，以兼容h5；

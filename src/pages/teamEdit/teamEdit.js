@@ -1,10 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Form, Input, Picker, Switch, Button } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
+import { connect } from '@tarojs/redux'
 
 import JobCard from '../../components/jobCard/jobCard.js'
-
-import { connect } from '@tarojs/redux'
+import NavHeader from '../../components/navHeader/navHeader.js'
 import { updateTeamMap } from '../../actions/team'
 import { naturalSort } from '../../utils'
 
@@ -33,7 +33,6 @@ export default class TeamEdit extends Component {
       teamName: '',
       teamData: {},
       staffNameList: [],
-      needLeader: false,
       leaderWork: true,
       leaderSelected: 0,
       addJob: false
@@ -44,7 +43,6 @@ export default class TeamEdit extends Component {
     const staffMap = this.props.staff.staffMap || {}
     const teamName = this.$router.params.teamName || ''
     const teamData = this.props.team.teamMap[teamName]
-    const needLeader = teamData.needLeader
     const leaderWork = teamData.leaderWork
     const leader = teamData.leader
     let staffNameList = Object.keys(staffMap)
@@ -53,7 +51,6 @@ export default class TeamEdit extends Component {
       teamName: teamName,
       teamData: teamData,
       staffNameList: staffNameList,
-      needLeader: needLeader,
       leaderWork: leaderWork,
       leaderSelected: staffNameList.indexOf(leader)
     })
@@ -61,7 +58,7 @@ export default class TeamEdit extends Component {
   /**
    * 展示岗位名称输入框
    */
-  showAddJob () {
+  showAddJob = () => {
     this.setState({
       addJob: true
     })
@@ -70,7 +67,7 @@ export default class TeamEdit extends Component {
    * 处理岗位的修改
    * @param {Object} e 事件
    */
-  handleJobChange (e) {
+  handleJobChange = (e) => {
     let newTeamData = JSON.parse(JSON.stringify(this.state.teamData))
     if (e.deleteKey) {
       delete newTeamData.jobs[e.deleteKey]
@@ -90,7 +87,7 @@ export default class TeamEdit extends Component {
    * 添加岗位
    * @param {Object} blur事件
    */
-  addJob (e) {
+  addJob = (e) => {
     const newJobName = e.detail.value || ''
     if (newJobName) {
       let newTeamData = JSON.parse(JSON.stringify(this.state.teamData))
@@ -116,15 +113,17 @@ export default class TeamEdit extends Component {
    * 处理是否需要负责人发生变化
    * @param {Object} e 改变事件信息
    */
-  needLeaderChange (e) {
+  needLeaderChange = () => {
+    let newTeamData = JSON.parse(JSON.stringify(this.state.teamData))
+    newTeamData.needLeader = !newTeamData.needLeader
     this.setState({
-      needLeader: e.detail.value
+      teamData: newTeamData
     })
   }
   /**
    * 处理负责人的选择
    */
-  handleLeaderPick (e) {
+  handleLeaderPick = (e) => {
     this.setState({
       leaderSelected: e.detail.value
     })
@@ -133,7 +132,7 @@ export default class TeamEdit extends Component {
    * 提交表单
    * @param {Object} 事件
    */
-  submit (e) {
+  submit = (e) => {
     const formData = e.detail.value
     let newTeamMap = JSON.parse(JSON.stringify(this.props.team.teamMap))
     if (formData.name !== this.state.teamName) {
@@ -157,7 +156,7 @@ export default class TeamEdit extends Component {
   /**
    * 删除该团队
    */
-  delete () {
+  delete = () => {
     Taro.showModal({
       title: '操作不可逆',
       content: '确定要删除该团队吗？',
@@ -174,10 +173,12 @@ export default class TeamEdit extends Component {
   }
 
   render () {
+    const jobNameInputPlaceholder = '请输入名称'
+    const teamNameInputPlaceholder = '请输入团队名称'
     const staffNameListArr = this.state.staffNameList || []
     let leader = null
     let leaderSelector = null
-    if (this.state.needLeader) {
+    if (this.state.teamData.needLeader) {
       leader = staffNameListArr[this.state.leaderSelected] || ''
       leaderSelector = (
         <View>
@@ -216,18 +217,20 @@ export default class TeamEdit extends Component {
       addJobCard = (
         <View className='add-job-container'>
           <Text>新建岗位名称</Text>
-          <Input placeholder='请输入名称' autoFocus onBlur={this.addJob} />
+          <Input className='item-input' placeholder={jobNameInputPlaceholder} autoFocus onBlur={this.addJob} />
         </View>
       )
     } else {
       addJobCard = ''
     }
+    const title = '编辑团队信息'
     return (
       <View className='form-container'>
+        {process.env.TARO_ENV === 'h5' ? (<NavHeader title={title} />) : ''}
         <Form onSubmit={this.submit}>
           <View className='form-item'>
             <Text className='title'>团队名称</Text>
-            <Input className='item-input' name='name' value={teamDataObj.name} placeholder='输入团队名称' autoFocus></Input>
+            <Input className='item-input' name='name' value={teamDataObj.name} placeholder={teamNameInputPlaceholder} autoFocus></Input>
           </View>
 
           <View className='form-item'>

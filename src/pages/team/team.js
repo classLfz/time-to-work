@@ -39,7 +39,7 @@ export default class Teams extends Component {
   /**
    * 刷新列表信息
    */
-  refresh () {
+  refresh = () => {
     const teamMap = this.props.team.teamMap
     this.setState({
       teamMap: teamMap

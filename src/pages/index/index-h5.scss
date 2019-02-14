@@ -1,12 +1,13 @@
 .index-container {
   width: 100%;
-  padding-top: 100px;
-  padding-bottom: 120px;
+  padding-top: 160px;
+  padding-bottom: 140px;
   overflow-y: auto;
+  font-size: 30px;
 
   .index-header {
     width: 100vw;
-    height: 80px;
+    height: 160px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,6 +17,10 @@
     top: 0;
     left: 0;
     z-index: 2;
+  }
+
+  .content {
+    margin-top: 24px;
   }
 
   .operator-box {
@@ -30,7 +35,7 @@
     .operator {
       display: flex;
       justify-content: space-between;
-      width: 600px;
+      width: 450px;
     }
 
     .icon-btn {

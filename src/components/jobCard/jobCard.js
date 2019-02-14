@@ -21,7 +21,7 @@ export default class JobCard extends Component {
   /**
    * 打开人员选择窗口
    */
-  openWorkerPicking () {
+  openWorkerPicking = () => {
     this.setState({
       workerPicking: true
     })
@@ -30,7 +30,7 @@ export default class JobCard extends Component {
    * 处理人员标签被点击事件，修改人员选择情况
    * @param {Object} e 点击事件
    */
-  handleTagClick (e) {
+  handleTagClick = (e) => {
     let newJobData = JSON.parse(JSON.stringify(this.props.jobData))
     let workers = new Set(newJobData.workers)
     if (!e.active) {
@@ -48,7 +48,7 @@ export default class JobCard extends Component {
    * 处理岗位名称输入事件，修改state的值
    * @param {Object} e 键盘输入事件
    */
-  handleJobNameInput (e) {
+  handleJobNameInput = (e) => {
     const newJobName = e.detail.value
     this.props.onJobChange({
       oldName: this.props.jobName,
@@ -60,7 +60,7 @@ export default class JobCard extends Component {
    * 处理岗位人数发生变化
    * @param {Number} newJobNum 
    */
-  handleJobNumInput (newJobNum) {
+  handleJobNumInput = (newJobNum) => {
     let newJobData = JSON.parse(JSON.stringify(this.props.jobData))
     newJobData.num = newJobNum
     this.props.onJobChange({
@@ -72,7 +72,7 @@ export default class JobCard extends Component {
    * 处理岗位是否参与分配发生变化
    * @param {Object} e 事件
    */
-  handleJobRestChange (e) {
+  handleJobRestChange = (e) => {
     const newRest = !e.detail.value
     let newJobData = JSON.parse(JSON.stringify(this.props.jobData))
     newJobData.rest = newRest
@@ -84,7 +84,7 @@ export default class JobCard extends Component {
   /**
    * 删除岗位
    */
-  delete () {
+  delete = () => {
     Taro.showModal({
       title: '操作不可逆',
       content: '确定要删除该岗位吗？',
@@ -100,7 +100,7 @@ export default class JobCard extends Component {
   /**
    * 打开作弊选择人员窗口
    */
-  openCheatSelector (e) {
+  openCheatSelector = (e) => {
     e.stopPropagation()
     let cheatClickCount = this.state.cheatClickCount
     if (cheatClickCount > 7) {
@@ -119,7 +119,7 @@ export default class JobCard extends Component {
    * 处理作弊人员标签被点击事件，秘密修改人员选择情况
    * @param {Object} e 点击事件
    */
-  handleCheatTagClick (e) {
+  handleCheatTagClick = (e) => {
     let newJobData = JSON.parse(JSON.stringify(this.props.jobData))
     let cheatWorkers = new Set(newJobData.cheatWorkers || [])
     if (!e.active) {
@@ -133,18 +133,19 @@ export default class JobCard extends Component {
       jobData: newJobData
     })
   }
-  handlePickingClose () {
+  handlePickingClose = () => {
     this.setState({
       workerPicking: false
     })
   }
-  handleCheatClose () {
+  handleCheatClose = () => {
     this.setState({
       cheatWorkerPicking: false
     })
   }
 
   render () {
+    const jobNameInputPlaceholder = '请输入职位名称'
     const jobName = this.props.jobName
     const jobData = this.props.jobData || {}
     const workers = jobData.workers || []
@@ -201,7 +202,7 @@ export default class JobCard extends Component {
           <Input
             className='item-input'
             name='jobName' value={jobName}
-            placeholder='请输入职位名称'
+            placeholder={jobNameInputPlaceholder}
             onBlur={this.handleJobNameInput} />
         </View>
 

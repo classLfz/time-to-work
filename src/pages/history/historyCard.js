@@ -3,6 +3,7 @@ import { View, Text } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 
 import { formatTime } from '../../utils'
+import './historyCard.scss'
 
 export default class HistoryCard extends Component {
   constructor (props) {
@@ -11,7 +12,7 @@ export default class HistoryCard extends Component {
   /**
    * 进入详情页面
    */
-  entryDetail () {
+  entryDetail = () => {
     const key = this.props.keyData || ''
     Taro.navigateTo({
       url: `/pages/historyDetail/historyDetail?key=${key}`
@@ -20,7 +21,7 @@ export default class HistoryCard extends Component {
   /**
    * 删除该记录
    */
-  delete () {
+  delete = () => {
     Taro.showModal({
       title: '操作不可逆',
       content: '确定要删除该记录吗？',

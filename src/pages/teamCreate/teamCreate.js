@@ -1,10 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Form, Input, Picker, Switch, Button } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
+import { connect } from '@tarojs/redux'
 
 import JobCard from '../../components/jobCard/jobCard.js'
-
-import { connect } from '@tarojs/redux'
+import NavHeader from '../../components/navHeader/navHeader.js'
 import { updateTeamMap } from '../../actions/team'
 import { naturalSort } from '../../utils'
 
@@ -39,13 +39,13 @@ export default class TeamCreate extends Component {
     this.state = {
       teamData: {
         name: '',
+        needLeader: false,
         leader: '',
         rest: false,
         workers: [],
         jobs: {}
       },
       staffNameList: [],
-      needLeader: false,
       leaderWork: true,
       leaderSelected: -1,
       addJob: false
@@ -62,7 +62,7 @@ export default class TeamCreate extends Component {
   /**
    * 展示添加岗位输入框
    */
-  showAddJob () {
+  showAddJob = () => {
     this.setState({
       addJob: true
     })
@@ -71,7 +71,7 @@ export default class TeamCreate extends Component {
    * 添加岗位
    * @param {Object} e 键盘事件
    */
-  addJob (e) {
+  addJob = (e) => {
     const newJobName = e.detail.value || ''
     if (newJobName) {
       let newTeamData = JSON.parse(JSON.stringify(this.state.teamData))
@@ -93,16 +93,18 @@ export default class TeamCreate extends Component {
    * 处理是否需要负责人发生变化
    * @param {Object} e 改变事件信息
    */
-  needLeaderChange (e) {
+  needLeaderChange = () => {
+    let newTeamData = JSON.parse(JSON.stringify(this.state.teamData))
+    newTeamData.needLeader = !newTeamData.needLeader
     this.setState({
-      needLeader: e.detail.value
+      teamData: newTeamData
     })
   }
   /**
    * 处理负责人选择发生变化
    * @param {Object} e 事件
    */
-  handleLeaderPick (e) {
+  handleLeaderPick = (e) => {
     this.setState({
       leaderSelected: e.detail.value
     })
@@ -111,7 +113,7 @@ export default class TeamCreate extends Component {
    * 处理岗位信息发生变化
    * @param {Object} e  事件
    */
-  handleJobChange (e) {
+  handleJobChange = (e) => {
     let newTeamData = JSON.parse(JSON.stringify(this.state.teamData))
     if (e.deleteKey) {
       delete newTeamData.jobs[e.deleteKey]
@@ -130,7 +132,7 @@ export default class TeamCreate extends Component {
    * 提交表单，创建团队
    * @param {Object} e 事件
    */
-  submit (e) {
+  submit = (e) => {
     const formData = e.detail.value
     let newTeamMap = JSON.parse(JSON.stringify(this.props.team.teamMap))
     if (!formData.name.trim()) {
@@ -143,10 +145,10 @@ export default class TeamCreate extends Component {
     newTeamMap[formData.name] = {
       name: formData.name,
       rest: !formData.rest,
-      needLeader: this.state.needLeader,
+      needLeader: formData.needLeader,
       leaderWork: this.state.leaderWork,
       leader: this.state.staffNameList[this.state.leaderSelected],
-      jobs: this.state.jobs,
+      jobs: this.state.teamData.jobs,
       workers: []
     }
     if (!this.state.needLeader) {
@@ -157,10 +159,12 @@ export default class TeamCreate extends Component {
   }
 
   render () {
+    const teamNameInputPlaceholder = '输入团队名称'
+    const jobNameInputPlaceholder = '请输入名称'
     const staffNameListArr = this.state.staffNameList || []
     let leader = null
     let leaderSelector = null
-    if (this.state.needLeader) {
+    if (this.state.teamData.needLeader) {
       leader = staffNameListArr[this.state.leaderSelected] || ''
       leaderSelector = (
         <View>
@@ -194,28 +198,20 @@ export default class TeamCreate extends Component {
       addJobCard = (
         <View className='add-job-container'>
           <Text>新建岗位名称</Text>
-          <Input placeholder='请输入名称' autoFocus onBlur={this.addJob} />
+          <Input placeholder={jobNameInputPlaceholder} autoFocus onBlur={this.addJob} />
         </View>
       )
     } else {
       addJobCard = ''
     }
-    const h5Header = (
-      <View className='team-create-header'>
-        <View>
-          <AtIcon value='chevron-left' size='24' color='#FFFFFF'></AtIcon>
-        </View>
-        <View className='title'>添加团队信息</View>
-        <View> </View>
-      </View>
-    )
+    const title = '添加团队信息'
     return (
       <View className='team-create-form-container'>
-        {process.env.TARO_ENV === 'h5' ? h5Header : ''}
+        {process.env.TARO_ENV === 'h5' ? (<NavHeader title={title} />) : (<Text></Text>)}
         <Form className='from-container' onSubmit={this.submit}>
           <View className='form-item'>
             <Text className='title'>团队名称</Text>
-            <Input className='item-input' name='name' placeholder='输入团队名称' autoFocus></Input>
+            <Input className='item-input' name='name' placeholder={teamNameInputPlaceholder} autoFocus></Input>
           </View>
 
           <View className='form-item'>

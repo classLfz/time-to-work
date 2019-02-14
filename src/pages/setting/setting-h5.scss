@@ -1,0 +1,17 @@
+.setting-container {
+  padding-top: 8px;
+  font-size: 28px;
+}
+.setting-item {
+  height: 100px;
+  display: flex;
+  padding: 0 24px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #E0E0E0;
+}
+.setting-notify {
+  font-size: 32px;
+  color: gray;
+  padding: 24px;
+}

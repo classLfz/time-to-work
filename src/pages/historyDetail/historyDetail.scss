@@ -1,10 +1,15 @@
 .detail-container {
   padding-bottom: 160px;
+  box-sizing: border-box;
+  font-size: 28px;
 }
 .time-title {
   padding: 8px 24px;
+  font-size: 34px;
+  font-weight: bold;
 }
 .detail-btns {
+  box-sizing: border-box;
   width: 100%;
   padding: 24px;
   position: fixed;

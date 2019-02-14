@@ -5,7 +5,15 @@ import { AtIcon } from 'taro-ui'
 
 import StaffCard from './staffCard'
 
-import './staff.scss'
+switch (process.env.TARO_ENV) {
+  case 'weapp':
+    require('./staff.scss')
+    break
+
+  case 'h5':
+    require('./staff-h5.scss')
+    break
+}
 
 @connect(({ staff }) => ({
   staff
@@ -24,7 +32,7 @@ export default class Staff extends Component {
   /**
    * 进入添加职员页面
    */
-  entryCreate () {
+  entryCreate = () => {
     Taro.navigateTo({
       url: `/pages/staffCreate/staffCreate`
     })
@@ -65,7 +73,7 @@ export default class Staff extends Component {
             </View>
           </View>
           <View className='operator'>
-            <Text>姓名</Text>
+            <View>姓名</View>
             <View>
               <Text className='title'>休息</Text>
               <Text className='title'>请假</Text>

@@ -3,6 +3,7 @@ import { View, Text, Form, Input, Switch, Button } from '@tarojs/components'
 
 import { connect } from '@tarojs/redux'
 import { updateStaffMap } from '../../actions/staff'
+import NavHeader from '../../components/navHeader/navHeader.js'
 
 import './staffEdit.scss'
 
@@ -42,7 +43,7 @@ export default class StaffEdit extends Component {
    * 提交表单
    * @param {Object} e 事件
    */
-  submit (e) {
+  submit = (e) => {
     const formData = e.detail.value
     const staffMap = this.props.staff.staffMap
     let newStaffMap = JSON.parse(JSON.stringify(staffMap))
@@ -57,7 +58,7 @@ export default class StaffEdit extends Component {
   /**
    * 删除职员
    */
-  delete () {
+  delete = () => {
     Taro.showModal({
       title: '操作不可逆',
       content: '确定要删除该职员吗？',
@@ -77,8 +78,10 @@ export default class StaffEdit extends Component {
     const name = this.state.name
     const rest = this.state.rest
     const leave = this.state.leave
+    const title = '编辑人员信息'
     return (
       <View className='form-container'>
+        {process.env.TARO_ENV === 'h5' ? (<NavHeader title={title} />) : ''}
         <Form onSubmit={this.submit}>
           <View className='form-item'>
             <Text className='title'>姓名</Text>

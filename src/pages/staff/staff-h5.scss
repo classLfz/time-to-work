@@ -1,0 +1,46 @@
+.staff-container {
+  width: 100vw;
+  height: 100vh;
+  padding-top: 200px;
+  font-size: 32px;
+
+  .staff-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100vw;
+    height: 200px;
+    padding: 48px 24px 0;
+    background-color: #2196F3;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+
+    .icon {
+      width: 48px;
+      height: 48px;
+    }
+
+    .operator {
+      width: 100%;
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .title {
+      display: inline-block;
+      width: 100px;
+      text-align: center;
+    }
+  }
+}
+.empty-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 220px;
+}

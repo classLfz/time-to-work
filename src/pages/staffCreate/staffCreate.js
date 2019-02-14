@@ -3,8 +3,18 @@ import { View, Button, Form, Text, Switch, Input } from '@tarojs/components'
 
 import { connect } from '@tarojs/redux'
 import { updateStaffMap } from '../../actions/staff'
+import NavHeader from '../../components/navHeader/navHeader.js'
 
-import './staffCreate.scss'
+console.log(process.env.TARO_ENV)
+switch (process.env.TARO_ENV) {
+  case 'weapp':
+    require('./staffCreate.scss')
+    break
+
+  case 'h5':
+    require('./staffCreate-h5.scss')
+    break
+}
 
 @connect(({ staff }) => ({
   staff
@@ -28,7 +38,7 @@ export default class StaffCreate extends Component {
    * 提交表单，创建职员
    * @param {Object} e 点击事件
    */
-  submit (e) {
+  submit = (e) => {
     const formData = e.detail.value
     const staffMap = this.props.staff.staffMap
     let newStaffMap = JSON.parse(JSON.stringify(staffMap))
@@ -41,8 +51,10 @@ export default class StaffCreate extends Component {
   }
 
   render () {
+    const title = '添加人员信息'
     return (
       <View className='form-container'>
+        {process.env.TARO_ENV === 'h5' ? (<NavHeader title={title} />) : ''}
         <Form onSubmit={this.submit}>
           <View className='form-item'>
             <Text className='title'>姓名</Text>
