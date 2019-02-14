@@ -2,7 +2,7 @@
 
 一款随机分配工作的小工具。使用[Taro](https://taro.aotu.io)以及[taro-ui](http://taro-ui.aotu.io)编写。
 
-目前暂时只有小程序版本，还没有做适配工作。
+目前暂时只有小程序版本以及H5版本。
 
 ## 演示
 
