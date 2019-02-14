@@ -6,9 +6,17 @@
 
 ## 演示
 
+### weapp
+
 微信小程序体验请扫码
 
 ![qr_code](./weapp-qr.jpg)
+
+### h5
+
+[进入链接](https://classlfz.github.io/time-to-work)(使用移动端设备预览效果最佳)
+
+## 一次性导入
 
 可以复制[模板内容（template.txt）](./template.txt)到粘贴板，进行一次性导入团队、岗位、人员信息。
 
