@@ -1,5 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Form, Text, Switch, Input } from '@tarojs/components'
+import { AtInputNumber } from 'taro-ui'
 
 import { connect } from '@tarojs/redux'
 import { updateStaffMap } from '../../actions/staff'
@@ -33,7 +34,32 @@ export default class StaffCreate extends Component {
   
   constructor (props) {
     super (props)
+    this.state = {
+      multiple: false,
+      multipleCount: 2
+    }
   }
+
+  /**
+   * 处理是否多次分配发生变化
+   * @param {Object} e 变化事件
+   */
+  handleMultipleChange (e) {
+    this.setState({
+      multiple: e.detail.value
+    })
+  }
+
+  /**
+   * 处理分配次数变化
+   * @param {String} newCount 次数
+   */
+  handleMultipleCount (newCount) {
+    this.setState({
+      multipleCount: parseInt(newCount)
+    })
+  }
+
   /**
    * 提交表单，创建职员
    * @param {Object} e 点击事件
@@ -44,13 +70,17 @@ export default class StaffCreate extends Component {
     let newStaffMap = JSON.parse(JSON.stringify(staffMap))
     newStaffMap[formData.name] = {
       rest: formData.rest,
-      leave: formData.leave
+      leave: formData.leave,
+      multiple: this.state.multiple,
+      multipleCount: this.state.multipleCount
     }
     this.props.onUpdateStaffMap(newStaffMap)
     Taro.navigateBack({ delta: 1 })
   }
 
   render () {
+    const multiple = this.state.multiple
+    const multipleCount = this.state.multipleCount
     const title = '添加人员信息'
     return (
       <View className='form-container'>
@@ -69,6 +99,21 @@ export default class StaffCreate extends Component {
           <View className='form-item'>
             <Text className='title'>请假</Text>
             <Switch name='leave'></Switch>
+          </View>
+
+          <View className='form-item'>
+            <Text className='title'>多次分配</Text>
+            <Switch name='multiple' checked={multiple} onChange={this.handleMultipleChange}></Switch>
+          </View>
+
+          <View className='form-item' hidden={!multiple}>
+            <Text className='title'>最大分配次数</Text>
+            <AtInputNumber
+              min={2}
+              step={1}
+              value={multipleCount}
+              onChange={this.handleMultipleCount}
+            />
           </View>
 
           <View className='form-btns'>

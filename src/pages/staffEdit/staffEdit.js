@@ -34,6 +34,10 @@ export default class StaffEdit extends Component {
     }
   }
 
+  /**
+   * 处理是否多次分配发生变化
+   * @param {Object} e 变化事件
+   */
   handleMultipleChange (e) {
     this.setState({
       multiple: e.detail.value
@@ -42,10 +46,11 @@ export default class StaffEdit extends Component {
 
   /**
    * 处理分配次数变化
+   * @param {String} newCount 次数
    */
   handleMultipleCount (newCount) {
     this.setState({
-      multipleCount: newCount
+      multipleCount: parseInt(newCount)
     })
   }
 
@@ -104,17 +109,6 @@ export default class StaffEdit extends Component {
     const multipleCount = this.state.multipleCount
     const title = '编辑人员信息'
 
-    const mulCountView = multiple ? (
-      <View className='form-item'>
-        <Text className='title'>最大分配次数</Text>
-        <AtInputNumber
-          min={2}
-          step={1}
-          value={multipleCount}
-          onChange={this.handleMultipleCount}
-        />
-      </View>
-    ) : ('')
     return (
       <View className='form-container'>
         {process.env.TARO_ENV === 'h5' ? (<NavHeader title={title} />) : ''}
@@ -139,7 +133,15 @@ export default class StaffEdit extends Component {
             <Switch name='multiple' checked={multiple} onChange={this.handleMultipleChange}></Switch>
           </View>
 
-          {mulCountView}
+          <View className='form-item' hidden={!multiple}>
+            <Text className='title'>最大分配次数</Text>
+            <AtInputNumber
+              min={2}
+              step={1}
+              value={multipleCount}
+              onChange={this.handleMultipleCount}
+            />
+          </View>
 
           <View className='form-btns'>
             <Button type='warn' className='form-btn' onClick={this.delete}>删除</Button>
