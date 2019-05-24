@@ -24,11 +24,13 @@ export default class StaffCard extends Component {
    * 进入职员编辑页面
    */
   entryEdit = () => {
-    let name = this.props.staffName
-    let rest = this.props.staffData.rest
-    let leave = this.props.staffData.leave
+    const name = this.props.staffName
+    const rest = this.props.staffData.rest
+    const leave = this.props.staffData.leave
+    const multiple = !!this.props.staffData.multiple
+    const multipleCount = this.props.staffData.multipleCount || 2
     Taro.navigateTo({
-      url: `/pages/staffEdit/staffEdit?name=${name}&rest=${rest}&leave=${leave}`
+      url: `/pages/staffEdit/staffEdit?name=${name}&rest=${rest}&leave=${leave}&multiple=${multiple}&multipleCount=${multipleCount}`
     })
   }
   /**
@@ -41,7 +43,9 @@ export default class StaffCard extends Component {
     delete newStaffMap[staffName]
     newStaffMap[staffName] = {
       rest: !staffData.rest,
-      leave: staffData.leave
+      leave: staffData.leave,
+      multiple: staffData.multiple,
+      multipleCount: staffData.multipleCount
     }
     this.props.onUpdateStaffMap(newStaffMap)
   }
@@ -54,7 +58,9 @@ export default class StaffCard extends Component {
     let newStaffMap = JSON.parse(JSON.stringify(this.props.staff.staffMap))
     newStaffMap[staffName] = {
       rest: staffData.rest,
-      leave: !staffData.leave
+      leave: !staffData.leave,
+      multiple: staffData.multiple,
+      multipleCount: staffData.multipleCount
     }
     this.props.onUpdateStaffMap(newStaffMap)
   }

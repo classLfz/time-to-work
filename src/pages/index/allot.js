@@ -75,7 +75,14 @@ export default function (teamMap, staffMap) {
         let index = parseInt(Math.random() * staffKeys.length)
         if (staffKeys[index]) {
           jobs[job].workers.push(staffKeys[index])
-          delete staffMap[staffKeys[index]]
+          const staffData = staffMap[staffKeys[index]]
+          const { multiple, multipleCount } = staffData
+          // 处理多次分配
+          if (multiple && multipleCount && multipleCount >= 2) {
+            staffData.multipleCount--
+          } else {
+            delete staffMap[staffKeys[index]]
+          }
         }
       }
     }

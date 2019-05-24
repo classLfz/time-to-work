@@ -1,5 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Form, Input, Switch, Button } from '@tarojs/components'
+import { AtInputNumber } from 'taro-ui'
 
 import { connect } from '@tarojs/redux'
 import { updateStaffMap } from '../../actions/staff'
@@ -27,8 +28,25 @@ export default class StaffEdit extends Component {
     this.state = {
       name: '',
       rest: false,
-      leave: false
+      leave: false,
+      multiple: false,
+      multipleCount: 2
     }
+  }
+
+  handleMultipleChange (e) {
+    this.setState({
+      multiple: e.detail.value
+    })
+  }
+
+  /**
+   * 处理分配次数变化
+   */
+  handleMultipleCount (newCount) {
+    this.setState({
+      multipleCount: newCount
+    })
   }
 
   componentWillMount () {
@@ -36,7 +54,9 @@ export default class StaffEdit extends Component {
     this.setState({
       name: this.$router.params.name || '',
       rest: this.$router.params.rest === 'true',
-      leave: this.$router.params.leave === 'true'
+      leave: this.$router.params.leave === 'true',
+      multiple: this.$router.params.multiple === 'true',
+      multipleCount: this.$router.params.multipleCount || 2
     })
   }
   /**
@@ -50,7 +70,9 @@ export default class StaffEdit extends Component {
     delete newStaffMap[this.state.name]
     newStaffMap[formData.name] = {
       rest: formData.rest,
-      leave: formData.leave
+      leave: formData.leave,
+      multiple: formData.multiple,
+      multipleCount: parseInt(this.state.multipleCount)
     }
     this.props.onUpdateStaffMap(newStaffMap)
     Taro.navigateBack({ delta: 1 })
@@ -78,7 +100,21 @@ export default class StaffEdit extends Component {
     const name = this.state.name
     const rest = this.state.rest
     const leave = this.state.leave
+    const multiple = this.state.multiple
+    const multipleCount = this.state.multipleCount
     const title = '编辑人员信息'
+
+    const mulCountView = multiple ? (
+      <View className='form-item'>
+        <Text className='title'>最大分配次数</Text>
+        <AtInputNumber
+          min={2}
+          step={1}
+          value={multipleCount}
+          onChange={this.handleMultipleCount}
+        />
+      </View>
+    ) : ('')
     return (
       <View className='form-container'>
         {process.env.TARO_ENV === 'h5' ? (<NavHeader title={title} />) : ''}
@@ -97,6 +133,13 @@ export default class StaffEdit extends Component {
             <Text className='title'>请假</Text>
             <Switch name='leave' checked={leave}></Switch>
           </View>
+
+          <View className='form-item'>
+            <Text className='title'>多次分配</Text>
+            <Switch name='multiple' checked={multiple} onChange={this.handleMultipleChange}></Switch>
+          </View>
+
+          {mulCountView}
 
           <View className='form-btns'>
             <Button type='warn' className='form-btn' onClick={this.delete}>删除</Button>
