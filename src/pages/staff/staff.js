@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtIcon } from 'taro-ui'
-
+import { updateStaffMap } from '../../actions/staff'
 import StaffCard from './staffCard'
 
 switch (process.env.TARO_ENV) {
@@ -17,6 +17,10 @@ switch (process.env.TARO_ENV) {
 
 @connect(({ staff }) => ({
   staff
+}), (dispatch) => ({
+  onUpdateStaffMap (data) {
+    dispatch(updateStaffMap(data))
+  }
 }))
 
 export default class Staff extends Component {
@@ -35,6 +39,21 @@ export default class Staff extends Component {
   entryCreate = () => {
     Taro.navigateTo({
       url: `/pages/staffCreate/staffCreate`
+    })
+  }
+
+  /**
+   * 清空职员列表
+   */
+  clear () {
+    Taro.showModal({
+      title: '清空职员列表',
+      content: '操作不可逆，确定要清空职员列表吗？',
+      success: (res) => {
+        if (res.confirm) {
+          this.props.onUpdateStaffMap({})
+        }
+      }
     })
   }
 
@@ -63,7 +82,7 @@ export default class Staff extends Component {
     return (
       <View className='staff-container'>
         <View className='staff-header'>
-          <View>
+          <View class='staff-header-operator'>
             <View className='icon-btn' onClick={this.entryCreate}>
               <AtIcon
                 value='add-circle'
@@ -71,7 +90,16 @@ export default class Staff extends Component {
                 color='#FFFFFF'>
               </AtIcon>
             </View>
+
+            <View className='icon-btn' onClick={this.clear}>
+              <AtIcon
+                value='trash'
+                size='24'
+                color='#e0e0e0'>
+              </AtIcon>
+            </View>
           </View>
+
           <View className='operator'>
             <View>姓名</View>
             <View>

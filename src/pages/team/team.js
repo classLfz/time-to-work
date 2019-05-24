@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtIcon } from 'taro-ui'
-
+import { updateTeamMap } from '../../actions/team'
 import TeamCard from '../../components/teamCard/teamCard'
 
 switch (process.env.TARO_ENV) {
@@ -17,6 +17,10 @@ switch (process.env.TARO_ENV) {
 
 @connect(({ team }) => ({
   team
+}), (dispatch) => ({
+  onUpdateTeamMap (data) {
+    dispatch(updateTeamMap(data))
+  }
 }))
 
 export default class Teams extends Component {
@@ -54,6 +58,22 @@ export default class Teams extends Component {
     })
   }
 
+  /**
+   * 清空团队列表
+   */
+  clear () {
+    Taro.showModal({
+      title: '清空团队列表',
+      content: '操作不可逆，确定要清空团队列表吗？',
+      success: (res) => {
+        if (res.confirm) {
+          this.props.onUpdateTeamMap({})
+          this.refresh()
+        }
+      }
+    })
+  }
+
   render () {
     let teamMap = this.state.teamMap
     let teamListCards = null
@@ -83,6 +103,14 @@ export default class Teams extends Component {
               value='add-circle'
               size='24'
               color='#FFFFFF'>
+            </AtIcon>
+          </View>
+
+          <View className='icon-btn' onClick={this.clear}>
+            <AtIcon
+              value='trash'
+              size='24'
+              color='#e0e0e0'>
             </AtIcon>
           </View>
         </View>

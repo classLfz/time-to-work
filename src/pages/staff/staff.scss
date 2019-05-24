@@ -17,6 +17,12 @@
     top: 0;
     left: 0;
 
+    .staff-header-operator {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     .icon {
       width: 48px;
       height: 48px;
