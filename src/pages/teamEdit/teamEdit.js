@@ -6,7 +6,6 @@ import { connect } from '@tarojs/redux'
 import JobCard from '../../components/jobCard/jobCard.js'
 import NavHeader from '../../components/navHeader/navHeader.js'
 import { updateTeamMap } from '../../actions/team'
-import { naturalSort } from '../../utils'
 
 import './teamEdit.scss'
 
@@ -202,7 +201,7 @@ export default class TeamEdit extends Component {
     const teamDataObj = this.state.teamData || {}
     const jobs = teamDataObj.jobs || {}
     const staff = this.props.staff
-    const jobListCards = Object.keys(jobs).sort(naturalSort).map(job => {
+    const jobListCards = Object.keys(jobs).sort().map(job => {
       return (
         <JobCard
           key={job}

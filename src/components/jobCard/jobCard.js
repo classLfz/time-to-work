@@ -157,7 +157,7 @@ export default class JobCard extends Component {
     })
     const staffMap = this.props.staff ? this.props.staff.staffMap : {}
     // 人员名单列表视图
-    const staffList = Object.keys(staffMap).map(staff => {
+    const staffList = Object.keys(staffMap).sort().map(staff => {
       return (
         <View className='tag' key={staff}>
           <AtTag
