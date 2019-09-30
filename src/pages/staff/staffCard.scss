@@ -1,7 +1,14 @@
+$height: 120px;
+
+.staff-card-scroll-view {
+  width: 100%;
+  height: $height;
+  white-space: nowrap;
+}
 .staff-card-container {
   width: 100%;
-  height: 100px;
-  display: flex;
+  height: $height;
+  display: inline-flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 24px;
@@ -12,7 +19,7 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 100px;
+    width: 120px;
 
     .icon {
       width: 40px;
@@ -24,4 +31,14 @@
       }
     }
   }
+}
+
+.delete-btn {
+  width: 120px;
+  height: 100%;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #E53935;
 }

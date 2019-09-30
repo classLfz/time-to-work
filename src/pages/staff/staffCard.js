@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Image, Text } from '@tarojs/components'
+import { View, Image, Text, ScrollView } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
 import { updateStaffMap } from '../../actions/staff'
@@ -65,6 +65,21 @@ export default class StaffCard extends Component {
     this.props.onUpdateStaffMap(newStaffMap)
   }
 
+  deleteStaff = () => {
+    const { staffName } = this.props
+    Taro.showModal({
+      title: '删除人员',
+      content: `操作不可逆，确定要删除 ${staffName} 吗？`,
+      success: (res) => {
+        if (res.confirm) {
+          const newStaffMap = JSON.parse(JSON.stringify(this.props.staff.staffMap))
+          delete newStaffMap[staffName]
+          this.props.onUpdateStaffMap(newStaffMap)
+        }
+      }
+    })
+  }
+
   render () {
     const staffData = this.props.staffData || {}
     const staffName = this.props.staffName || ''
@@ -76,17 +91,22 @@ export default class StaffCard extends Component {
       ? checkIcon
       : unCheckIcon
     return (
-      <View className='staff-card-container'>
-        <Text onClick={this.entryEdit}>{staffName}</Text>
-        <View>
-          <View className='icon-container' onClick={this.toggleRest}>
-            <Image className='icon' src={restIconSrc} />
-          </View>
-          <View className='icon-container' onClick={this.toggleLeave}>
-            <Image className='icon' src={leaveIconSrc} />
+      <ScrollView className='staff-card-scroll-view' scrollX scrollWithAnimation>
+        <View className='staff-card-container'>
+          <Text onClick={this.entryEdit}>{staffName}</Text>
+          <View>
+            <View className='icon-container' onClick={this.toggleRest}>
+              <Image className='icon' src={restIconSrc} />
+            </View>
+            <View className='icon-container' onClick={this.toggleLeave}>
+              <Image className='icon' src={leaveIconSrc} />
+            </View>
           </View>
         </View>
-      </View>
+        <View className='delete-btn' onClick={this.deleteStaff}>
+          删除
+        </View>
+      </ScrollView>
     )
   }
 }
