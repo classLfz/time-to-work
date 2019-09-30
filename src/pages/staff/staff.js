@@ -82,7 +82,7 @@ export default class Staff extends Component {
     return (
       <View className='staff-container'>
         <View className='staff-header'>
-          <View class='staff-header-operator'>
+          <View className='staff-header-operator'>
             <View className='icon-btn' onClick={this.entryCreate}>
               <AtIcon
                 value='add-circle'
