@@ -20,56 +20,6 @@ Object.size = function(obj) {
 const store = configStore()
 
 class App extends Component {
-  config = {
-    pages: [
-      'pages/index/index',
-      'pages/team/team',
-      'pages/teamEdit/teamEdit',
-      'pages/teamCreate/teamCreate',
-      'pages/staff/staff',
-      'pages/staffEdit/staffEdit',
-      'pages/staffCreate/staffCreate',
-      'pages/history/history',
-      'pages/historyDetail/historyDetail',
-      'pages/setting/setting'
-    ],
-    window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
-    },
-    tabBar: {
-      selectedColor: '#1296db',
-      list: [
-        {
-          pagePath: 'pages/index/index',
-          text: '分配',
-          iconPath: 'images/allocation_gray.png',
-          selectedIconPath: 'images/allocation_blue.png'
-        },
-        {
-          pagePath: 'pages/team/team',
-          text: '团队',
-          iconPath: 'images/job_gray.png',
-          selectedIconPath: 'images/job_blue.png'
-        },
-        {
-          pagePath: 'pages/staff/staff',
-          text: '人员',
-          iconPath: 'images/people_gray.png',
-          selectedIconPath: 'images/people_blue.png'
-        },
-        {
-          pagePath: 'pages/setting/setting',
-          text: '设置',
-          iconPath: 'images/setting_gray.png',
-          selectedIconPath: 'images/setting_blue.png'
-        }
-      ]
-    }
-  }
-
   componentDidMount () {
     if (process.env.TARO_ENV === 'weapp') {
       const updateManager = Taro.getUpdateManager()
@@ -149,6 +99,57 @@ class App extends Component {
       if (window.location.hash !== '#/pages/index/index') {
         window.location = '#/pages/index/index'
       }
+    }
+  }
+
+  config = {
+    pages: [
+      'pages/index/index',
+      'pages/team/team',
+      'pages/teamEdit/teamEdit',
+      'pages/teamCreate/teamCreate',
+      'pages/teamSort/teamSort',
+      'pages/staff/staff',
+      'pages/staffEdit/staffEdit',
+      'pages/staffCreate/staffCreate',
+      'pages/history/history',
+      'pages/historyDetail/historyDetail',
+      'pages/setting/setting'
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      selectedColor: '#1296db',
+      list: [
+        {
+          pagePath: 'pages/index/index',
+          text: '分配',
+          iconPath: 'images/allocation_gray.png',
+          selectedIconPath: 'images/allocation_blue.png'
+        },
+        {
+          pagePath: 'pages/team/team',
+          text: '团队',
+          iconPath: 'images/job_gray.png',
+          selectedIconPath: 'images/job_blue.png'
+        },
+        {
+          pagePath: 'pages/staff/staff',
+          text: '人员',
+          iconPath: 'images/people_gray.png',
+          selectedIconPath: 'images/people_blue.png'
+        },
+        {
+          pagePath: 'pages/setting/setting',
+          text: '设置',
+          iconPath: 'images/setting_gray.png',
+          selectedIconPath: 'images/setting_blue.png'
+        }
+      ]
     }
   }
 

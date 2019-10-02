@@ -5,7 +5,7 @@ import { connect } from '@tarojs/redux'
 
 import JobCard from '../../components/jobCard/jobCard.js'
 import NavHeader from '../../components/navHeader/navHeader.js'
-import { updateTeamMap } from '../../actions/team'
+import { updateTeamMap, updateTeamSort } from '../../actions/team'
 import { naturalSort } from '../../utils'
 
 switch (process.env.TARO_ENV) {
@@ -24,16 +24,13 @@ switch (process.env.TARO_ENV) {
 }), (dispatch) => ({
   onUpdateTeamMap (data) {
     dispatch(updateTeamMap(data))
+  },
+  onUpdateTeamSort (data) {
+    dispatch(updateTeamSort(data))
   }
 }))
 
 export default class TeamCreate extends Component {
-  config = {
-    navigationBarTitleText: '添加团队',
-    navigationBarBackgroundColor: '#00897B',
-    navigationBarTextStyle: 'white'
-  }
-
   constructor (props) {
     super(props)
     this.state = {
@@ -59,6 +56,13 @@ export default class TeamCreate extends Component {
       staffNameList: staffNameList
     })
   }
+
+  config = {
+    navigationBarTitleText: '添加团队',
+    navigationBarBackgroundColor: '#00897B',
+    navigationBarTextStyle: 'white'
+  }
+
   /**
    * 展示添加岗位输入框
    */
@@ -134,10 +138,18 @@ export default class TeamCreate extends Component {
    */
   submit = (e) => {
     const formData = e.detail.value
-    let newTeamMap = JSON.parse(JSON.stringify(this.props.team.teamMap))
+    const { teamMap, teamSort } = this.props.team
+    let newTeamMap = JSON.parse(JSON.stringify(teamMap))
     if (!formData.name.trim()) {
       Taro.showToast({
         title: '团队名称不能为空',
+        icon: 'none'
+      })
+      return
+    }
+    if (newTeamMap[formData.name]) {
+      Taro.showToast({
+        title: '团队名称已存在，请检查',
         icon: 'none'
       })
       return
@@ -154,7 +166,12 @@ export default class TeamCreate extends Component {
     if (!this.state.needLeader) {
       newTeamMap[formData.name].leader = ''
     }
+    let newTeamSort = teamSort.length === 0 ?
+      Object.keys(newTeamMap) :
+      JSON.parse(JSON.stringify(teamSort))
+    if (teamSort.length !== 0) newTeamSort.push(formData.name)
     this.props.onUpdateTeamMap(newTeamMap)
+    this.props.onUpdateTeamSort(newTeamSort)
     Taro.navigateBack({ delta: 1 })
   }
 

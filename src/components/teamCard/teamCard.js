@@ -12,7 +12,9 @@ export default class TeamCard extends Component {
   /**
    * 进入编辑页面
    */
-  entryEdit = () => {
+  entryEdit = (e) => {
+    if (e.stopPropagation) e.stopPropagation()
+    if (e.preventDefault) e.preventDefault()
     if (this.props.justShow) return
     Taro.navigateTo({
       url: `/pages/teamEdit/teamEdit?teamName=${this.props.teamData.name}`

@@ -1,1 +1,2 @@
 export const UPDATE_TEAM_MAP = 'UPDATE_TEAM_MAP'
+export const UPDATE_TEAM_SORT = 'UPDATE_TEAM_SORT'

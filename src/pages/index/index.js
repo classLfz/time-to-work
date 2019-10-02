@@ -3,7 +3,7 @@ import { View } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 
 import { connect } from '@tarojs/redux'
-import { updateTeamMap } from '../../actions/team'
+import { updateTeamMap, updateTeamSort } from '../../actions/team'
 import { updateStaffMap } from '../../actions/staff'
 
 import resolveClipboardData from './resolveClipboardData.js'
@@ -29,18 +29,15 @@ switch (process.env.TARO_ENV) {
   onUpdateTeamMap (data) {
     dispatch(updateTeamMap(data))
   },
+  onUpdateTeamSort (data) {
+    dispatch(updateTeamSort(data))
+  },
   onUpdateStaffMap (data) {
     dispatch(updateStaffMap(data))
   }
 }))
 
 export default class Index extends Component {
-  config = {
-    navigationBarTitleText: '分配工作',
-    navigationBarBackgroundColor: '#5E35B1',
-    navigationBarTextStyle: 'white'
-  }
-
   constructor (props) {
     super(props)
     this.state = {
@@ -58,13 +55,23 @@ export default class Index extends Component {
     }
   }
 
+  config = {
+    navigationBarTitleText: '分配工作',
+    navigationBarBackgroundColor: '#5E35B1',
+    navigationBarTextStyle: 'white'
+  }
+
   componentDidShow () {
-    const { onUpdateTeamMap, onUpdateStaffMap } = this.props
+    const { onUpdateTeamMap, onUpdateTeamSort, onUpdateStaffMap } = this.props
     let teamMap = Taro.getStorageSync('teams') || {}
+    let teamSort = Taro.getStorageSync('teamSort') || []
+    // console.log(teamSort)
+    // Taro.setStorageSync('teamSort', [])
     let staffMap = Taro.getStorageSync('staff') || {}
     // 首次更新store状态
     if (!this.state.firstUpdated) {
       onUpdateTeamMap(teamMap)
+      onUpdateTeamSort(teamSort)
       onUpdateStaffMap(staffMap)
       this.setState({
         firstUpdated: true
@@ -207,9 +214,11 @@ export default class Index extends Component {
       return
     }
     let outStr = '分配好工作了：\n'
-    for (let team in teamAlloted) {
-      let teamData = teamAlloted[team]
-      outStr += `\n#\n团队：${team}\n`
+    let { teamSort, teamMap } = this.props.team
+    if (teamSort.length === 0) teamSort = Object.keys(teamMap)
+    teamSort.forEach(teamName => {
+      let teamData = teamAlloted[teamName]
+      outStr += `\n#\n团队：${teamName}\n`
       if (teamData.needLeader) {
         outStr += `负责人：${teamData.leader || ''}\n`
       }
@@ -223,7 +232,7 @@ export default class Index extends Component {
         outStr.replace('，', '')
         outStr += `\n`
       }
-    }
+    })
     Taro.setClipboardData({
       data: outStr
     })
@@ -252,8 +261,10 @@ export default class Index extends Component {
 
   render () {
     let teamMap = this.state.teamAlloted
+    let { teamSort } = this.props.team
+    if (teamSort.length === 0) teamSort = Object.keys(teamMap)
     let hideIntro = Object.keys(teamMap).length !== 0
-    let teamListCards = Object.keys(teamMap).map(team => {
+    let teamListCards = teamSort.map(team => {
       return (
         <TeamCard teamData={teamMap[team]} key={team.name} justShow />
       )

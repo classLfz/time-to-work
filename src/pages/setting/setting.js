@@ -95,10 +95,6 @@ export default class Setting extends Component {
           <Text>分配后归档</Text>
           <Switch checked={allotAndArchive} onChange={this.allotAndSaveChange} />
         </View>
-
-        <View className='setting-notify'>
-          使用过程如遇到不合理的地方，需要改进的，请发送邮件到 classlfz@qq.com 告知。其他问题，请勿发邮件打扰，谢谢~
-        </View>
       </View>
     )
   }

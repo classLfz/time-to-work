@@ -1,9 +1,10 @@
 import Taro from '@tarojs/taro'
 
-import { UPDATE_TEAM_MAP } from '../constants/team'
+import { UPDATE_TEAM_MAP, UPDATE_TEAM_SORT } from '../constants/team'
 
 const INITIAL_STATE = {
-  teamMap: {}
+  teamMap: {},
+  teamSort: []
 }
 
 export default function team (state = INITIAL_STATE, action) {
@@ -12,6 +13,11 @@ export default function team (state = INITIAL_STATE, action) {
       return {
         ...state,
         teamMap: action.data
+      }
+    case UPDATE_TEAM_SORT:
+      return {
+        ...state,
+        teamSort: action.data
       }
     default:
       return state

@@ -5,7 +5,7 @@ import { connect } from '@tarojs/redux'
 
 import JobCard from '../../components/jobCard/jobCard.js'
 import NavHeader from '../../components/navHeader/navHeader.js'
-import { updateTeamMap } from '../../actions/team'
+import { updateTeamMap, updateTeamSort } from '../../actions/team'
 
 import './teamEdit.scss'
 
@@ -15,16 +15,13 @@ import './teamEdit.scss'
 }), (dispatch) => ({
   onUpdateTeamMap (data) {
     dispatch(updateTeamMap(data))
+  },
+  onUpdateTeamSort (data) {
+    dispatch(updateTeamSort(data))
   }
 }))
 
 export default class TeamEdit extends Component {
-  config = {
-    navigationBarTitleText: '编辑团队',
-    navigationBarBackgroundColor: '#00897B',
-    navigationBarTextStyle: 'white'
-  }
-
   constructor (props) {
     super(props)
     this.state = {
@@ -54,6 +51,13 @@ export default class TeamEdit extends Component {
       leaderSelected: staffNameList.indexOf(leader)
     })
   }
+
+  config = {
+    navigationBarTitleText: '编辑团队',
+    navigationBarBackgroundColor: '#00897B',
+    navigationBarTextStyle: 'white'
+  }
+
   /**
    * 展示岗位名称输入框
    */
@@ -133,9 +137,15 @@ export default class TeamEdit extends Component {
    */
   submit = (e) => {
     const formData = e.detail.value
-    let newTeamMap = JSON.parse(JSON.stringify(this.props.team.teamMap))
-    if (formData.name !== this.state.teamName) {
-      delete newTeamMap[this.state.teamName]
+    const { teamMap, teamSort } = this.props.team
+    const newTeamMap = JSON.parse(JSON.stringify(teamMap))
+    delete newTeamMap[this.state.teamName]
+    if (Object.keys(newTeamMap).filter(item => item.name === formData.name).length > 0) {
+      Taro.showModal({
+        title: '同名岗位已存在，请检查',
+        icon: 'none'
+      })
+      return
     }
     newTeamMap[formData.name] = {
       name: formData.name,
@@ -149,7 +159,12 @@ export default class TeamEdit extends Component {
     if (!newTeamMap[formData.name].needLeader) {
       newTeamMap[formData.name].leader = ''
     }
+    let newTeamSort = JSON.parse(JSON.stringify(teamSort))
+    if (newTeamSort.length === 0) newTeamSort = Object.keys(teamMap)
+    const index = newTeamSort.findIndex(item => item.name === this.state.teamName)
+    newTeamSort.splice(index, 1, formData.name)
     this.props.onUpdateTeamMap(newTeamMap)
+    this.props.onUpdateTeamSort(newTeamSort)
     Taro.navigateBack({ delta: 1 })
   }
   /**
@@ -162,9 +177,12 @@ export default class TeamEdit extends Component {
       success: (res) => {
         if (res.confirm) {
           const teamName = this.state.originalTeamName
-          let newTeamMap = JSON.parse(JSON.stringify(this.props.team.teamMap))
+          const newTeamMap = JSON.parse(JSON.stringify(this.props.team.teamMap))
+          const newTeamSort = JSON.parse(JSON.stringify(this.props.team.teamSort))
+          newTeamSort.splice(newTeamSort.findIndex(i => i === teamName), 1)
           delete newTeamMap[teamName]
           this.props.onUpdateTeamMap(newTeamMap)
+          this.props.onUpdateTeamSort(newTeamSort)
           Taro.navigateBack({ delta: 1 })
         }
       }
