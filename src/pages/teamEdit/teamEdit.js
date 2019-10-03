@@ -94,6 +94,13 @@ export default class TeamEdit extends Component {
     const newJobName = e.detail.value || ''
     if (newJobName) {
       let newTeamData = JSON.parse(JSON.stringify(this.state.teamData))
+      if (newTeamData[newJobName]) {
+        Taro.showToast({
+          title: '同名岗位已存在，请检查',
+          icon: 'none'
+        })
+        return
+      }
       newTeamData.jobs[newJobName] = {
         num: 1,
         rest: false,
@@ -137,18 +144,26 @@ export default class TeamEdit extends Component {
    */
   submit = (e) => {
     const formData = e.detail.value
-    const { teamMap, teamSort } = this.props.team
-    const newTeamMap = JSON.parse(JSON.stringify(teamMap))
-    delete newTeamMap[this.state.teamName]
-    if (Object.keys(newTeamMap).filter(item => item.name === formData.name).length > 0) {
-      Taro.showModal({
-        title: '同名岗位已存在，请检查',
+    const newName = formData.name.trim()
+    if (!newName) {
+      Taro.showToast({
+        title: '团队名称不能为空',
         icon: 'none'
       })
       return
     }
-    newTeamMap[formData.name] = {
-      name: formData.name,
+    const { teamMap, teamSort } = this.props.team
+    const newTeamMap = JSON.parse(JSON.stringify(teamMap))
+    delete newTeamMap[this.state.teamName]
+    if (Object.keys(newTeamMap).filter(item => item === newName).length > 0) {
+      Taro.showToast({
+        title: '同名团队已存在，请检查',
+        icon: 'none'
+      })
+      return
+    }
+    newTeamMap[newName] = {
+      name: newName,
       rest: !formData.rest,
       needLeader: formData.needLeader,
       leaderWork: formData.leaderWork,
@@ -156,13 +171,13 @@ export default class TeamEdit extends Component {
       jobs: this.state.teamData.jobs,
       workers: {}
     }
-    if (!newTeamMap[formData.name].needLeader) {
-      newTeamMap[formData.name].leader = ''
+    if (!newTeamMap[newName].needLeader) {
+      newTeamMap[newName].leader = ''
     }
     let newTeamSort = JSON.parse(JSON.stringify(teamSort))
     if (newTeamSort.length === 0) newTeamSort = Object.keys(teamMap)
     const index = newTeamSort.findIndex(item => item.name === this.state.teamName)
-    newTeamSort.splice(index, 1, formData.name)
+    newTeamSort.splice(index, 1, newName)
     this.props.onUpdateTeamMap(newTeamMap)
     this.props.onUpdateTeamSort(newTeamSort)
     Taro.navigateBack({ delta: 1 })

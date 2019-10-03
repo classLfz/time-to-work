@@ -17,12 +17,6 @@ import './staffEdit.scss'
 }))
 
 export default class StaffEdit extends Component {
-  config = {
-    navigationBarTitleText: '编辑职员',
-    navigationBarBackgroundColor: '#2196F3',
-    navigationBarTextStyle: 'white'
-  }
-
   constructor (props) {
     super(props)
     this.state = {
@@ -32,6 +26,23 @@ export default class StaffEdit extends Component {
       multiple: false,
       multipleCount: 2
     }
+  }
+
+  componentWillMount () {
+    // 从路由参数种获取职员信息
+    this.setState({
+      name: this.$router.params.name || '',
+      rest: this.$router.params.rest === 'true',
+      leave: this.$router.params.leave === 'true',
+      multiple: this.$router.params.multiple === 'true',
+      multipleCount: this.$router.params.multipleCount || 2
+    })
+  }
+
+  config = {
+    navigationBarTitleText: '编辑职员',
+    navigationBarBackgroundColor: '#2196F3',
+    navigationBarTextStyle: 'white'
   }
 
   /**
@@ -54,26 +65,31 @@ export default class StaffEdit extends Component {
     })
   }
 
-  componentWillMount () {
-    // 从路由参数种获取职员信息
-    this.setState({
-      name: this.$router.params.name || '',
-      rest: this.$router.params.rest === 'true',
-      leave: this.$router.params.leave === 'true',
-      multiple: this.$router.params.multiple === 'true',
-      multipleCount: this.$router.params.multipleCount || 2
-    })
-  }
   /**
    * 提交表单
    * @param {Object} e 事件
    */
   submit = (e) => {
     const formData = e.detail.value
+    const newName = formData.name.trim()
+    if (!newName) {
+      Taro.showToast({
+        title: '人员名称不能为空',
+        icon: 'none'
+      })
+      return
+    }
     const staffMap = this.props.staff.staffMap
     let newStaffMap = JSON.parse(JSON.stringify(staffMap))
     delete newStaffMap[this.state.name]
-    newStaffMap[formData.name] = {
+    if (Object.keys(newStaffMap).filter(item => item === newName).length > 0) {
+      Taro.showToast({
+        title: '同名人员已存在，请检查',
+        icon: 'none'
+      })
+      return
+    }
+    newStaffMap[newName] = {
       rest: formData.rest,
       leave: formData.leave,
       multiple: formData.multiple,

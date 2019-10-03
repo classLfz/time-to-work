@@ -79,6 +79,13 @@ export default class TeamCreate extends Component {
     const newJobName = e.detail.value || ''
     if (newJobName) {
       let newTeamData = JSON.parse(JSON.stringify(this.state.teamData))
+      if (newTeamData[newJobName]) {
+        Taro.showToast({
+          title: '同名岗位已存在，请检查',
+          icon: 'none'
+        })
+        return
+      }
       newTeamData.jobs[newJobName] = {
         num: 1,
         rest: false,
@@ -138,24 +145,25 @@ export default class TeamCreate extends Component {
    */
   submit = (e) => {
     const formData = e.detail.value
-    const { teamMap, teamSort } = this.props.team
-    let newTeamMap = JSON.parse(JSON.stringify(teamMap))
-    if (!formData.name.trim()) {
+    const newName = formData.name.trim()
+    if (!newName) {
       Taro.showToast({
         title: '团队名称不能为空',
         icon: 'none'
       })
       return
     }
-    if (newTeamMap[formData.name]) {
+    const { teamMap, teamSort } = this.props.team
+    let newTeamMap = JSON.parse(JSON.stringify(teamMap))
+    if (newTeamMap[newName]) {
       Taro.showToast({
-        title: '团队名称已存在，请检查',
+        title: '同名团队已存在，请检查',
         icon: 'none'
       })
       return
     }
-    newTeamMap[formData.name] = {
-      name: formData.name,
+    newTeamMap[newName] = {
+      name: newName,
       rest: !formData.rest,
       needLeader: formData.needLeader,
       leaderWork: this.state.leaderWork,
@@ -164,12 +172,12 @@ export default class TeamCreate extends Component {
       workers: []
     }
     if (!this.state.needLeader) {
-      newTeamMap[formData.name].leader = ''
+      newTeamMap[newName].leader = ''
     }
     let newTeamSort = teamSort.length === 0 ?
       Object.keys(newTeamMap) :
       JSON.parse(JSON.stringify(teamSort))
-    if (teamSort.length !== 0) newTeamSort.push(formData.name)
+    if (teamSort.length !== 0) newTeamSort.push(newName)
     this.props.onUpdateTeamMap(newTeamMap)
     this.props.onUpdateTeamSort(newTeamSort)
     Taro.navigateBack({ delta: 1 })

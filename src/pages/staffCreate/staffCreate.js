@@ -6,7 +6,6 @@ import { connect } from '@tarojs/redux'
 import { updateStaffMap } from '../../actions/staff'
 import NavHeader from '../../components/navHeader/navHeader.js'
 
-console.log(process.env.TARO_ENV)
 switch (process.env.TARO_ENV) {
   case 'weapp':
     require('./staffCreate.scss')
@@ -26,12 +25,6 @@ switch (process.env.TARO_ENV) {
 }))
 
 export default class StaffCreate extends Component {
-  config = {
-    navigationBarTitleText: '增加职员',
-    navigationBarBackgroundColor: '#2196F3',
-    navigationBarTextStyle: 'white'
-  }
-  
   constructor (props) {
     super (props)
     this.state = {
@@ -40,6 +33,12 @@ export default class StaffCreate extends Component {
     }
   }
 
+  config = {
+    navigationBarTitleText: '增加职员',
+    navigationBarBackgroundColor: '#2196F3',
+    navigationBarTextStyle: 'white'
+  }
+  
   /**
    * 处理是否多次分配发生变化
    * @param {Object} e 变化事件
@@ -66,9 +65,24 @@ export default class StaffCreate extends Component {
    */
   submit = (e) => {
     const formData = e.detail.value
+    const newName = formData.name.trim()
+    if (!newName) {
+      Taro.showToast({
+        title: '人员名称不能为空',
+        icon: 'none'
+      })
+      return
+    }
     const staffMap = this.props.staff.staffMap
     let newStaffMap = JSON.parse(JSON.stringify(staffMap))
-    newStaffMap[formData.name] = {
+    if (newStaffMap[newName]) {
+      Taro.showToast({
+        title: '同名人员已存在，请检查',
+        icon: 'none'
+      })
+      return
+    }
+    newStaffMap[newName] = {
       rest: formData.rest,
       leave: formData.leave,
       multiple: this.state.multiple,
