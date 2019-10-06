@@ -24,21 +24,28 @@ switch (process.env.TARO_ENV) {
 }))
 
 export default class Staff extends Component {
+  constructor (props) {
+    super(props)
+  }
+
   config = {
     navigationBarTitleText: '职员列表',
     navigationBarBackgroundColor: '#2196F3',
     navigationBarTextStyle: 'white'
   }
 
-  constructor (props) {
-    super(props)
-  }
   /**
    * 进入添加职员页面
    */
-  entryCreate = () => {
+  entryCreate () {
     Taro.navigateTo({
       url: `/pages/staffCreate/staffCreate`
+    })
+  }
+
+  entryGroup () {
+    Taro.navigateTo({
+      url: '/pages/staffGroup/staffGroup'
     })
   }
 
@@ -83,12 +90,13 @@ export default class Staff extends Component {
       <View className='staff-container'>
         <View className='staff-header'>
           <View className='staff-header-operator'>
-            <View className='icon-btn' onClick={this.entryCreate}>
-              <AtIcon
-                value='add-circle'
-                size='24'
-                color='#FFFFFF'>
-              </AtIcon>
+            <View className='staff-header-left'>
+              <View className='icon-btn' onClick={this.entryCreate}>
+                <AtIcon value='add-circle' size='24' color='#FFFFFF'></AtIcon>
+              </View>
+              <View className='icon-btn' onClick={this.entryGroup}>
+                <AtIcon value='user' size='24' color='#FFFFFF'></AtIcon>
+              </View>
             </View>
 
             <View className='icon-btn' onClick={this.clear}>

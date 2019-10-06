@@ -176,7 +176,7 @@ export default class TeamEdit extends Component {
     }
     let newTeamSort = JSON.parse(JSON.stringify(teamSort))
     if (newTeamSort.length === 0) newTeamSort = Object.keys(teamMap)
-    const index = newTeamSort.findIndex(item => item.name === this.state.teamName)
+    const index = newTeamSort.findIndex(item => item === this.state.teamName)
     newTeamSort.splice(index, 1, newName)
     this.props.onUpdateTeamMap(newTeamMap)
     this.props.onUpdateTeamSort(newTeamSort)

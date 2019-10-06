@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import Taro from '@tarojs/taro'
 
 import { naturalSort } from '../utils'

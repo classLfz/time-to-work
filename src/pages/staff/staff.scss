@@ -21,6 +21,15 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      .staff-header-left {
+        display: flex;
+        align-items: center;
+
+        .icon-btn {
+          margin-right: 24px;
+        }
+      }
     }
 
     .icon {

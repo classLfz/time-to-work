@@ -93,10 +93,7 @@ export default class Teams extends Component {
   }
 
   render () {
-    const {
-      teamMap,
-      teamSort
-    } = this.state
+    const { teamMap, teamSort } = this.state
     let teamListCards = null
     if (teamSort.length > 0) {
       teamListCards = teamSort.map(teamName => {

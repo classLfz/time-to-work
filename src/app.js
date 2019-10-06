@@ -112,6 +112,8 @@ class App extends Component {
       'pages/staff/staff',
       'pages/staffEdit/staffEdit',
       'pages/staffCreate/staffCreate',
+      'pages/staffGroup/staffGroup',
+      'pages/staffGroupEditor/staffGroupEditor',
       'pages/history/history',
       'pages/historyDetail/historyDetail',
       'pages/setting/setting'
@@ -133,13 +135,13 @@ class App extends Component {
         },
         {
           pagePath: 'pages/team/team',
-          text: '团队',
+          text: '岗位',
           iconPath: 'images/job_gray.png',
           selectedIconPath: 'images/job_blue.png'
         },
         {
           pagePath: 'pages/staff/staff',
-          text: '人员',
+          text: '职员',
           iconPath: 'images/people_gray.png',
           selectedIconPath: 'images/people_blue.png'
         },

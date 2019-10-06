@@ -4,7 +4,7 @@ import { AtIcon } from 'taro-ui'
 
 import { connect } from '@tarojs/redux'
 import { updateTeamMap, updateTeamSort } from '../../actions/team'
-import { updateStaffMap } from '../../actions/staff'
+import { updateStaffMap, updateStaffGroup } from '../../actions/staff'
 
 import resolveClipboardData from './resolveClipboardData.js'
 import allot from './allot.js'
@@ -34,6 +34,9 @@ switch (process.env.TARO_ENV) {
   },
   onUpdateStaffMap (data) {
     dispatch(updateStaffMap(data))
+  },
+  onUpdateStaffGroup (data) {
+    dispatch(updateStaffGroup(data))
   }
 }))
 
@@ -62,17 +65,19 @@ export default class Index extends Component {
   }
 
   componentDidShow () {
-    const { onUpdateTeamMap, onUpdateTeamSort, onUpdateStaffMap } = this.props
+    const { onUpdateTeamMap, onUpdateTeamSort, onUpdateStaffMap, onUpdateStaffGroup } = this.props
     let teamMap = Taro.getStorageSync('teams') || {}
     let teamSort = Taro.getStorageSync('teamSort') || []
     // console.log(teamSort)
     // Taro.setStorageSync('teamSort', [])
     let staffMap = Taro.getStorageSync('staff') || {}
+    let staffGroup = Taro.getStorageSync('staffGroup') || {}
     // 首次更新store状态
     if (!this.state.firstUpdated) {
       onUpdateTeamMap(teamMap)
       onUpdateTeamSort(teamSort)
       onUpdateStaffMap(staffMap)
+      onUpdateStaffGroup(staffGroup)
       this.setState({
         firstUpdated: true
       })
