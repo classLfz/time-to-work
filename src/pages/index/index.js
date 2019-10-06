@@ -167,8 +167,8 @@ export default class Index extends Component {
         resolve()
         return
       }
-      const teamMap = this.props.team.teamMap || {}
-      const staffMap = this.props.staff.staffMap || {}
+      const teamMap = JSON.parse(JSON.stringify(this.props.team.teamMap || {}))
+      const staffMap = JSON.parse(JSON.stringify(this.props.staff.staffMap || {}))
       const staffMapKeys = Object.keys(staffMap)
       const teamMapAlloted = {}
       for (let key in teamMap) {
@@ -194,19 +194,26 @@ export default class Index extends Component {
    * 分配工作
    */
   async allot () {
-    this.setState({
-      staffGroupsSelectOpened: false,
-    })
     const { team, staff } = this.props
     const { staffMap, staffGroup } = staff
     const { allotStaffGroups } = this.state
-    if (allotStaffGroups.length === 0) {
+    if (Object.keys(staffGroup).length === 0) {
       Taro.showToast({
         title: '请到职员页面添加职员小组',
         icon: 'none'
       })
       return
     }
+    if (allotStaffGroups.length === 0) {
+      Taro.showToast({
+        title: '请选择需要分配的职员小组',
+        icon: 'none'
+      })
+      return
+    }
+    this.setState({
+      staffGroupsSelectOpened: false,
+    })
     const teamMap = JSON.parse(JSON.stringify(team.teamMap))
     const allotStaffMap = {}
     allotStaffGroups.forEach(groupName => {
@@ -218,6 +225,7 @@ export default class Index extends Component {
     await this.animate()
     const result = allot(teamMap, allotStaffMap)
     this.setState({
+      teamAlloted: {},
       allotStaffGroups: []
     })
     if (result.type === 'error') {
@@ -313,6 +321,12 @@ export default class Index extends Component {
     })
   }
 
+  help () {
+    Taro.navigateTo({
+      url: '/pages/help/help'
+    })
+  }
+
   closeStaffGroupsSelector = () => {
     this.setState({
       staffGroupsSelectOpened: false,
@@ -395,6 +409,13 @@ export default class Index extends Component {
                 value='star'
                 size='40'
                 color='#C51162'>
+              </AtIcon>
+            </View>
+            <View className='icon-btn' onClick={this.help}>
+              <AtIcon
+                value='help'
+                size='40'
+                color='#43A047'>
               </AtIcon>
             </View>
           </View>

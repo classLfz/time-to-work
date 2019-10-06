@@ -116,7 +116,8 @@ class App extends Component {
       'pages/staffGroupEditor/staffGroupEditor',
       'pages/history/history',
       'pages/historyDetail/historyDetail',
-      'pages/setting/setting'
+      'pages/setting/setting',
+      'pages/help/help'
     ],
     window: {
       backgroundTextStyle: 'light',

@@ -1,5 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Switch} from '@tarojs/components'
+import { connect } from '@tarojs/redux'
+import { updateTeamMap, updateTeamSort } from '../../actions/team'
+import { updateStaffMap, updateStaffGroup } from '../../actions/staff'
 
 switch (process.env.TARO_ENV) {
   case 'weapp':
@@ -10,6 +13,24 @@ switch (process.env.TARO_ENV) {
     require('./setting-h5.scss')
     break
 }
+
+@connect(({ team, staff }) => ({
+  team,
+  staff
+}), (dispatch) => ({
+  onUpdateTeamMap (data) {
+    dispatch(updateTeamMap(data))
+  },
+  onUpdateTeamSort (data) {
+    dispatch(updateTeamSort(data))
+  },
+  onUpdateStaffMap (data) {
+    dispatch(updateStaffMap(data))
+  },
+  onUpdateStaffGroup (data) {
+    dispatch(updateStaffGroup(data))
+  }
+}))
 
 export default class Setting extends Component {
   constructor (props) {
@@ -84,6 +105,20 @@ export default class Setting extends Component {
       simpleClipboardMode: e.detail.value
     })
   }
+  clearStorage () {
+    Taro.showModal({
+      title: '操作不可逆！',
+      content: '确定要清空岗位以及职员的数据吗？',
+      success: (res) => {
+        if (res.confirm) {
+          this.props.onUpdateStaffMap({})
+          this.props.onUpdateStaffGroup({})
+          this.props.onUpdateTeamMap({})
+          this.props.onUpdateTeamSort([])
+        }
+      }
+    })
+  }
 
   render () {
     const { allotAndArchive, allotAndCopy, simpleClipboardMode } = this.state
@@ -109,6 +144,11 @@ export default class Setting extends Component {
         <View className='setting-item'>
           <Text>粘贴板文本简洁模式</Text>
           <Switch checked={simpleClipboardMode} onChange={this.simpleClipboardModeChange} />
+        </View>
+
+        <View className='setting-item'>
+          <Text>清空数据</Text>
+          <Text onClick={this.clearStorage}>执行</Text>
         </View>
       </View>
     )
