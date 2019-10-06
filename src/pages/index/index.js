@@ -244,19 +244,21 @@ export default class Index extends Component {
       })
       return
     }
-    let outStr = '分配好工作了：\n'
+    const simpleMode = Taro.getStorageSync('simpleClipboardMode') || false
+    let outStr = simpleMode ? '' : '分配好工作了：\n'
+    outStr += new Date().toLocaleString() + '\n'
     let { teamSort, teamMap } = this.props.team
     if (teamSort.length === 0) teamSort = Object.keys(teamMap)
     teamSort.forEach(teamName => {
       let teamData = teamAlloted[teamName]
-      outStr += `\n#\n团队：${teamName}\n`
+      outStr += simpleMode ? `\n${teamName}\n` : `\n#\n团队：${teamName}\n`
       if (teamData.needLeader) {
         outStr += `负责人：${teamData.leader || ''}\n`
       }
       let jobs = teamData.jobs
       for (let job in jobs) {
         let jobData = jobs[job]
-        outStr += `职位：${job}（${jobData.num}人）：`
+        outStr += simpleMode ? `${job}（${jobData.num}人）：` : `职位：${job}（${jobData.num}人）：`
         jobData.workers.forEach(worker => {
           outStr += `${worker}，`
         })

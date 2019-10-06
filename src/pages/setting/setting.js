@@ -12,18 +12,13 @@ switch (process.env.TARO_ENV) {
 }
 
 export default class Setting extends Component {
-  config = {
-    navigationBarTitleText: '设置',
-    navigationBarBackgroundColor: '#795548',
-    navigationBarTextStyle: 'white'
-  }
-
   constructor (props) {
     super(props)
     this.state = {
       allotInterval: '不限制',
       allotAndCopy: false,
       allotAndArchive: false,
+      simpleClipboardMode: false,
       intervalList: ['一天', '半天', '一小时', '不限制']
     }
   }
@@ -32,12 +27,21 @@ export default class Setting extends Component {
     const allotInterval = Taro.getStorageSync('allotInterval') || '不限制'
     const allotAndArchive = Taro.getStorageSync('allotAndArchive')
     const allotAndCopy = Taro.getStorageSync('allotAndCopy')
+    const simpleClipboardMode = Taro.getStorageSync('simpleClipboardMode') || false
     this.setState({
       allotInterval: allotInterval,
       allotAndArchive: allotAndArchive,
-      allotAndCopy: allotAndCopy
+      allotAndCopy: allotAndCopy,
+      simpleClipboardMode: simpleClipboardMode
     })
   }
+
+  config = {
+    navigationBarTitleText: '设置',
+    navigationBarBackgroundColor: '#795548',
+    navigationBarTextStyle: 'white'
+  }
+
   /**
    * 打开时间间隔选择框
    */
@@ -73,10 +77,16 @@ export default class Setting extends Component {
       allotAndArchive: e.detail.value
     })
   }
+  simpleClipboardModeChange = (e) => {
+    e.stopPropagation()
+    Taro.setStorageSync('simpleClipboardMode', e.detail.value)
+    this.setState({
+      simpleClipboardMode: e.detail.value
+    })
+  }
 
   render () {
-    const allotAndArchive = this.state.allotAndArchive
-    const allotAndCopy = this.state.allotAndCopy
+    const { allotAndArchive, allotAndCopy, simpleClipboardMode } = this.state
     return (
       <View className='setting-container'>
         <View className='setting-item' onClick={this.openTimeSheet}>
@@ -94,6 +104,11 @@ export default class Setting extends Component {
         <View className='setting-item'>
           <Text>分配后归档</Text>
           <Switch checked={allotAndArchive} onChange={this.allotAndSaveChange} />
+        </View>
+
+        <View className='setting-item'>
+          <Text>粘贴板文本简洁模式</Text>
+          <Switch checked={simpleClipboardMode} onChange={this.simpleClipboardModeChange} />
         </View>
       </View>
     )
