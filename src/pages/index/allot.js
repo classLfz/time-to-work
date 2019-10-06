@@ -59,7 +59,7 @@ export default function (teamMap, staffMap) {
       let cheatIndex = 0
       while (jobs[job].num > jobs[job].workers.length) {
         // 安排作弊人员
-        let cheatWorkers = jobs[job].cheatWorkers
+        let cheatWorkers = jobs[job].cheatWorkers || []
         if (cheatWorkers
             && cheatWorkers.length > 0
             && cheatWorkers[cheatIndex]

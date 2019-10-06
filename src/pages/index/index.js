@@ -161,10 +161,39 @@ export default class Index extends Component {
       })
     }
   }
+  animate (count = 0) {
+    return new Promise((resolve) => {
+      if (count >= 16) {
+        resolve()
+        return
+      }
+      const teamMap = this.props.team.teamMap || {}
+      const staffMap = this.props.staff.staffMap || {}
+      const staffMapKeys = Object.keys(staffMap)
+      const teamMapAlloted = {}
+      for (let key in teamMap) {
+        if (!teamMap[key].rest) {
+          teamMapAlloted[key] = teamMap[key]
+          const jobs = teamMapAlloted[key].jobs
+          for (let jobKey in jobs) {
+            jobs[jobKey].workers = [staffMapKeys[parseInt(Math.random() * staffMapKeys.length)]]
+          }
+        }
+      }
+      this.setState({
+        teamAlloted: teamMapAlloted
+      })
+      setTimeout(async () => {
+        count++
+        await this.animate(count)
+        resolve()
+      }, 80)
+    })
+  }
   /**
    * 分配工作
    */
-  allot = () => {
+  async allot () {
     this.setState({
       staffGroupsSelectOpened: false,
     })
@@ -186,7 +215,7 @@ export default class Index extends Component {
         allotStaffMap[staffName] = staffMap[staffName]
       })
     })
-
+    await this.animate()
     const result = allot(teamMap, allotStaffMap)
     this.setState({
       allotStaffGroups: []
@@ -198,30 +227,22 @@ export default class Index extends Component {
       })
       return
     }
-    Taro.showLoading({
-      title: '分配任务中...',
-      mask: true
-    }).then(() => {
+    this.setState({
+      teamAlloted: result.teamMap
+    })
+    if (this.state.allotAndArchive) {
       setTimeout(() => {
-        Taro.hideLoading()
-        this.setState({
-          teamAlloted: result.teamMap
-        })
-        if (this.state.allotAndArchive) {
-          setTimeout(() => {
-            this.archive()
-          }, 0)
-        }
-        if (this.state.allotAndCopy) {
-          setTimeout(() => {
-            this.copy()
-          }, 500)
-        }
-        Taro.showToast({
-          title: '分配工作完成',
-          icon: 'success'
-        })
-      }, 1000)
+        this.archive()
+      }, 0)
+    }
+    if (this.state.allotAndCopy) {
+      setTimeout(() => {
+        this.copy()
+      }, 500)
+    }
+    Taro.showToast({
+      title: '分配工作完成',
+      icon: 'success'
     })
   }
   /**
