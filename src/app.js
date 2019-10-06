@@ -110,7 +110,7 @@ class App extends Component {
       'pages/teamCreate/teamCreate',
       'pages/teamSort/teamSort',
       'pages/staff/staff',
-      'pages/staffEdit/staffEdit',
+      'pages/staffEditor/staffEditor',
       'pages/staffCreate/staffCreate',
       'pages/staffGroup/staffGroup',
       'pages/staffGroupEditor/staffGroupEditor',

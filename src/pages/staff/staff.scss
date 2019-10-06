@@ -2,6 +2,7 @@
   width: 100vw;
   height: 100vh;
   padding-top: 140px;
+  padding-bottom: 16px;
   font-size: 28px;
 
   .staff-header {
@@ -16,6 +17,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1;
 
     .staff-header-operator {
       display: flex;
@@ -43,12 +45,6 @@
       display: flex;
       justify-content: space-between;
     }
-
-    .title {
-      display: inline-block;
-      width: 100px;
-      text-align: center;
-    }
   }
 }
 .empty-container {
@@ -56,4 +52,13 @@
   justify-content: center;
   align-items: center;
   padding-top: 220px;
+}
+.tipper {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  color: gray;
+  padding-bottom: 8px;
+  position: fixed;
+  bottom: 0;
 }

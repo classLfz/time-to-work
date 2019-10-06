@@ -4,6 +4,7 @@ $height: 120px;
   width: 100%;
   height: $height;
   white-space: nowrap;
+  border-bottom: 1px solid #E0E0E0;
 }
 .staff-card-container {
   width: 100%;
@@ -12,33 +13,39 @@ $height: 120px;
   justify-content: space-between;
   align-items: center;
   padding: 0 24px;
-  border-bottom: 1px solid #E0E0E0;
   box-sizing: border-box;
 
-  .icon-container {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-
-    .icon {
-      width: 40px;
-      height: 40px;
-      margin-right: 20px;
-      
-      &:last-of-type {
-        margin-left: 24px;
-      }
-    }
+  .staff-groups {
+    max-width: 180px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
   }
 }
 
-.delete-btn {
-  width: 120px;
+.operators {
+  width: 300px;
   height: 100%;
   color: white;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #E53935;
+  background-color: #81D4FA;
+
+  .active {
+    background-color: #0288D1;
+  }
+
+  .warn {
+    background-color: #E53935;
+  }
+
+  .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100%;
+    color: white;
+  }
 }

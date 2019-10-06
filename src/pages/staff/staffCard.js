@@ -1,12 +1,11 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Image, Text, ScrollView } from '@tarojs/components'
+import { View, Text, ScrollView } from '@tarojs/components'
+import { AtTag } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 
 import { updateStaffMap } from '../../actions/staff'
 
 import './staffCard.scss'
-import checkIcon from '../../images/check_red.png'
-import unCheckIcon from '../../images/uncheck_gray.png'
 
 @connect(({ staff }) => ({
   staff
@@ -30,7 +29,7 @@ export default class StaffCard extends Component {
     const multiple = !!this.props.staffData.multiple
     const multipleCount = this.props.staffData.multipleCount || 2
     Taro.navigateTo({
-      url: `/pages/staffEdit/staffEdit?name=${name}&rest=${rest}&leave=${leave}&multiple=${multiple}&multipleCount=${multipleCount}`
+      url: `/pages/staffEditor/staffEditor?name=${name}&rest=${rest}&leave=${leave}&multiple=${multiple}&multipleCount=${multipleCount}`
     })
   }
   /**
@@ -83,28 +82,31 @@ export default class StaffCard extends Component {
   render () {
     const staffData = this.props.staffData || {}
     const staffName = this.props.staffName || ''
-    const restIconSrc = staffData.rest
-      ? checkIcon
-      : unCheckIcon
-
-    const leaveIconSrc = staffData.leave
-      ? checkIcon
-      : unCheckIcon
+    const groups = this.props.groups || []
+    const restClass = staffData.rest ? 'btn active' : 'btn'
+    const leaveClass = staffData.leave ? 'btn active' : 'btn'
     return (
       <ScrollView className='staff-card-scroll-view' scrollX scrollWithAnimation>
         <View className='staff-card-container'>
-          <Text onClick={this.entryEdit}>{staffName}</Text>
-          <View>
-            <View className='icon-container' onClick={this.toggleRest}>
-              <Image className='icon' src={restIconSrc} />
-            </View>
-            <View className='icon-container' onClick={this.toggleLeave}>
-              <Image className='icon' src={leaveIconSrc} />
-            </View>
+          <View onClick={this.entryEdit}>
+            <Text>{staffName}</Text>
+            {staffData.rest ? <AtTag size='small' type='primary' active disabled>休</AtTag> : ''}
+            {staffData.leave ? <AtTag size='small' type='primary' active disabled>假</AtTag> : ''}
+          </View>
+          <View className='staff-groups'>
+            {groups.join(', ')}
           </View>
         </View>
-        <View className='delete-btn' onClick={this.deleteStaff}>
-          删除
+        <View className='operators'>
+          <View className={restClass} onClick={this.toggleRest}>
+            休息
+          </View>
+          <View className={leaveClass} onClick={this.toggleLeave}>
+            请假
+          </View>
+          <View className='btn warn' onClick={this.deleteStaff}>
+            删除
+          </View>
         </View>
       </ScrollView>
     )

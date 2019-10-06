@@ -57,9 +57,10 @@ export default class HistoryDetail extends Component {
   render () {
     const teamMap = this.state.allotedData
     const timeStr = formatTime(this.state.time)
+    let i = 0
     const teamListCards = Object.keys(teamMap).map(team => {
       return (
-        <TeamCard teamData={teamMap[team]} key={team} justShow />
+        <TeamCard teamData={teamMap[team]} key={i++} justShow />
       )
     })
     const title = '归档记录详情'

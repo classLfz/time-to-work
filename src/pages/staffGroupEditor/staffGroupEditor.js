@@ -36,8 +36,8 @@ export default class StaffGroupCreate extends Component {
       groupName: groupName || '',
       staffList: staffList
     })
-    Taro.setTopBarText({
-      text: !!groupName ? '编辑职员小组' : '添加职员小组'
+    Taro.setNavigationBarTitle({
+      title: !!groupName ? '编辑职员小组' : '添加职员小组'
     })
   }
 
@@ -73,6 +73,22 @@ export default class StaffGroupCreate extends Component {
     })
   }
 
+  delete () {
+    Taro.showModal({
+      title: '操作不可逆',
+      content: '确定要删除该职员小组吗？',
+      success: (res) => {
+        if (res.confirm) {
+          const { groupName } = this.state
+          const newStaffGroup = JSON.parse(JSON.stringify(this.props.staff.staffGroup))
+          delete newStaffGroup[groupName]
+          this.props.onUpdateStaffGroup(newStaffGroup)
+          Taro.navigateBack({ delta: 1 })
+        }
+      }
+    })
+  }
+
   submit (e) {
     const formData = e.detail.value
     const newName = formData.name.trim()
@@ -85,7 +101,6 @@ export default class StaffGroupCreate extends Component {
     }
     const newStaffGroup = JSON.parse(JSON.stringify(this.state.staffGroup))
     const { edit, groupName } = this.state
-    console.log(newStaffGroup, edit, groupName)
     if (!edit && newStaffGroup[newName]) {
       Taro.showToast({
         title: '同名小组已存在，请检查',
@@ -108,20 +123,26 @@ export default class StaffGroupCreate extends Component {
     const staffMap = this.props.staff ? this.props.staff.staffMap : {}
     const staffList = this.state.staffList
     // 人员列表
+    let i = 0
     const staffListSelectEls = Object.keys(staffMap).sort().map(staff => {
       return (
-        <View className='tag' key={staff}>
+        <View className='tag' key={i++}>
           <AtTag className='tag' name={staff} active={staffList.includes(staff)} onClick={this.handleTagClick.bind(this)}>{staff}</AtTag>
         </View>
       )
     })
+    let j = 0
     const staffListEls = staffList.sort().map(staff => {
       return (
-        <View className='tag' key={staff}>
+        <View className='tag' key={j++}>
           <AtTag className='tag' name={staff} active>{staff}</AtTag>
         </View>
       )
     })
+    const deleteBtn = this.state.edit ? (
+      <Button type='warn' className='form-btn warn' onClick={this.delete}>删除</Button>
+    ) : ''
+
     return (
       <View className='page-container'>
         <Form onSubmit={this.submit} className='form-container'>
@@ -137,7 +158,7 @@ export default class StaffGroupCreate extends Component {
                 <AtIcon value='edit' size='24'></AtIcon>
               </View>
             </View>
-            <View>
+            <View className='tags-list'>
               {staffListEls}
             </View>
           </View>
@@ -146,13 +167,14 @@ export default class StaffGroupCreate extends Component {
             isOpened={this.state.staffPicking}
             title='选择小组人员'
             onClose={this.handlePickingClose}>
-            <View>
+            <View className='tags-list'>
               {staffListSelectEls}
             </View>
           </AtFloatLayout>
 
           <View className='form-btns'>
-            <Button type='primary' formType='submit' className='form-btn'>提交</Button>
+            {deleteBtn}
+            <Button type='primary' formType='submit' className='form-btn submit'>提交</Button>
           </View>
         </Form>
       </View>

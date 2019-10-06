@@ -52,14 +52,9 @@ export default class Teams extends Component {
     let teamSort = this.props.team.teamSort
     if (teamSort.length === 0) teamSort = Object.keys(teamMap)
     this.setState({
-      teamSort: []
+      teamMap: teamMap,
+      teamSort: teamSort
     })
-    setTimeout(() => {
-      this.setState({
-        teamMap: teamMap,
-        teamSort: teamSort
-      })
-    }, 50)
   }
   /**
    * 进入添加团队页面
@@ -96,9 +91,10 @@ export default class Teams extends Component {
     const { teamMap, teamSort } = this.state
     let teamListCards = null
     if (teamSort.length > 0) {
+      let i = 0
       teamListCards = teamSort.map(teamName => {
         return (
-          <TeamCard key={teamName} teamData={teamMap[teamName]} />
+          <TeamCard key={i++} teamData={teamMap[teamName]} />
         )
       })
     } else {

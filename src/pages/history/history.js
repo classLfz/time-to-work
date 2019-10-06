@@ -35,9 +35,10 @@ export default class History extends Component {
 
   render () {
     const historyKeyList = this.state.historyKeyList
+    let i = 0
     const cardList = historyKeyList.map(key => {
       return (
-        <HistoryCard key={key} keyData={key} onRefresh={this.refresh} />
+        <HistoryCard key={i++} keyData={key} onRefresh={this.refresh} />
       )
     })
     const title = '归档记录'

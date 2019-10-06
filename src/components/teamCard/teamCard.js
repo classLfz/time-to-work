@@ -28,12 +28,14 @@ export default class TeamCard extends Component {
     for (let job in jobMap) {
       jobList.push(Object.assign({name: job}, jobMap[job]))
     }
+    let i = 0
     const jobListCards = jobList.map(job => {
+      let j = 0
       const cards = job.workers.map(worker => {
-        return <Text className='worker-card' key={worker}>{worker}</Text>
+        return <Text className='worker-card' key={j++}>{worker}</Text>
       })
       return (
-        <View key={job.name} className='team-item'>
+        <View key={i++} className='team-item'>
           <Text>{job.name}</Text>
           <Text> ({job.num}人)：</Text>
           {cards}

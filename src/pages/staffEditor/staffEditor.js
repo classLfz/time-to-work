@@ -3,16 +3,19 @@ import { View, Text, Form, Input, Switch, Button } from '@tarojs/components'
 import { AtInputNumber } from 'taro-ui'
 
 import { connect } from '@tarojs/redux'
-import { updateStaffMap } from '../../actions/staff'
+import { updateStaffMap, updateStaffGroup } from '../../actions/staff'
 import NavHeader from '../../components/navHeader/navHeader.js'
 
-import './staffEdit.scss'
+import './staffEditor.scss'
 
 @connect(({ staff }) => ({
   staff
 }), (dispatch) => ({
   onUpdateStaffMap (data) {
     dispatch(updateStaffMap(data))
+  },
+  onUpdateStaffGroup (data) {
+    dispatch(updateStaffGroup(data))
   }
 }))
 
@@ -20,6 +23,7 @@ export default class StaffEdit extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      edit: false,
       name: '',
       rest: false,
       leave: false,
@@ -30,12 +34,17 @@ export default class StaffEdit extends Component {
 
   componentWillMount () {
     // 从路由参数种获取职员信息
+    const { name, rest, leave, multiple, multipleCount } = this.$router.params
     this.setState({
-      name: this.$router.params.name || '',
-      rest: this.$router.params.rest === 'true',
-      leave: this.$router.params.leave === 'true',
-      multiple: this.$router.params.multiple === 'true',
-      multipleCount: this.$router.params.multipleCount || 2
+      edit: !!name,
+      name: name || '',
+      rest: rest === 'true',
+      leave: leave === 'true',
+      multiple: multiple === 'true',
+      multipleCount: multipleCount || 2
+    })
+    Taro.setNavigationBarTitle({
+      title: !!name ? '编辑职员' : '添加职员'
     })
   }
 
@@ -79,15 +88,34 @@ export default class StaffEdit extends Component {
       })
       return
     }
-    const staffMap = this.props.staff.staffMap
+    const { staffMap, staffGroup } = this.props.staff
     let newStaffMap = JSON.parse(JSON.stringify(staffMap))
-    delete newStaffMap[this.state.name]
-    if (Object.keys(newStaffMap).filter(item => item === newName).length > 0) {
-      Taro.showToast({
-        title: '同名人员已存在，请检查',
-        icon: 'none'
-      })
-      return
+    const { edit, name } = this.state
+    if (edit) {
+      delete newStaffMap[name]
+      if (Object.keys(newStaffMap).filter(item => item === newName).length > 0) {
+        Taro.showToast({
+          title: '同名人员已存在，请检查',
+          icon: 'none'
+        })
+        return
+      }
+      if (name !== newName) {
+        for (let key in staffGroup) {
+          for (let i = 0; i < staffGroup[key].staffs.length; i++) {
+            if (staffGroup[key].staffs[i] === name) staffGroup[key].staffs[i] = newName
+          }
+        }
+        this.props.onUpdateStaffGroup(staffGroup)
+      }
+    } else {
+      if (newStaffMap[newName]) {
+        Taro.showToast({
+          title: '同名人员已存在，请检查',
+          icon: 'none'
+        })
+        return
+      }
     }
     newStaffMap[newName] = {
       rest: formData.rest,

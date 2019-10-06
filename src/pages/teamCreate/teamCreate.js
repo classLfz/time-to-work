@@ -209,10 +209,11 @@ export default class TeamCreate extends Component {
     }
     const teamDataObj = this.state.teamData || {}
     const jobs = teamDataObj.jobs || {}
+    let i = 0
     const jobListCards = Object.keys(jobs).sort(naturalSort).map(job => {
       return (
         <JobCard
-          key={job}
+          key={i++}
           jobName={job}
           jobData={jobs[job]}
           onJobChange={this.handleJobChange} />

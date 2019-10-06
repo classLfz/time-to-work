@@ -269,9 +269,10 @@ export default class Index extends Component {
     let { teamSort } = this.props.team
     if (teamSort.length === 0) teamSort = Object.keys(teamMap)
     let hideIntro = Object.keys(teamMap).length !== 0
+    let i = 0
     let teamListCards = teamSort.map(team => {
       return (
-        <TeamCard teamData={teamMap[team]} key={team.name} justShow />
+        <TeamCard teamData={teamMap[team]} key={i++} justShow />
       )
     })
     return (

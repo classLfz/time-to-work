@@ -2,6 +2,7 @@
   width: 100vw;
   height: 100vh;
   padding-top: 200px;
+  padding-bottom: 16px;
   font-size: 32px;
 
   .staff-header {
@@ -17,6 +18,7 @@
     top: 0;
     left: 0;
     box-sizing: border-box;
+    z-index: 1;
 
     .staff-header-operator {
       display: flex;
@@ -49,4 +51,13 @@
   justify-content: center;
   align-items: center;
   padding-top: 220px;
+}
+.tipper {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  color: gray;
+  padding-bottom: 8px;
+  position: fixed;
+  bottom: 0;
 }

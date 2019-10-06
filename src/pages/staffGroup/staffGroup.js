@@ -46,15 +46,28 @@ export default class StaffGroup extends Component {
     })
   }
 
+  clear () {
+    Taro.showModal({
+      title: '清空职员小组列表',
+      content: '操作不可逆，确定要清空职员小组列表吗？',
+      success: (res) => {
+        if (res.confirm) {
+          this.props.onUpdateStaffGroup({})
+          this.refresh()
+        }
+      }
+    })
+  }
+
   render() {
     const { staffGroup } = this.state
     let staffGroupListCards = null
     const staffGroupKeys = Object.keys(staffGroup)
     if (staffGroupKeys.length > 0) {
+      let i = 0
       staffGroupListCards = staffGroupKeys.map(groupName => {
         return (
-          // <View key={groupName}>{groupName}</View>
-          <StaffGroupCard key={groupName} groupData={staffGroup[groupName]}></StaffGroupCard>
+          <StaffGroupCard key={i++} groupData={staffGroup[groupName]}></StaffGroupCard>
         )
       })
     } else {
@@ -69,6 +82,10 @@ export default class StaffGroup extends Component {
         <View className='header'>
           <View onClick={this.entryGroupCreate}>
             <AtIcon value='add-circle' size='24' color='#FFFFFF'></AtIcon>
+          </View>
+
+          <View onClick={this.clear}>
+            <AtIcon value='trash' size='24' color='#FFFFFF'></AtIcon>
           </View>
         </View>
         <View className='staff-group-list'>

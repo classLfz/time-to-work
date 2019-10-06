@@ -19,8 +19,9 @@ export default class staffGroupCard extends Component {
   render () {
     const groupData = this.props.groupData || {}
     const staffList = groupData.staffs || []
+    let i = 0
     const staffListEls = staffList.map(staffName => {
-      return <Text key={staffName} className='staff-item'>{staffName}</Text>
+      return <Text key={i++} className='staff-item'>{staffName}</Text>
     })
     return (
       <View className='staff-card-container' data-name={groupData.name} onClick={this.entryStaffGroupEdit}>

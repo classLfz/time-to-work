@@ -150,16 +150,18 @@ export default class JobCard extends Component {
     const jobData = this.props.jobData || {}
     const workers = jobData.workers || []
     const cheatWorkers = jobData.cheatWorkers || []
+    let k = 0
     const workerList = workers.map(worker => {
       return (
-        <Text className='worker-card' key={worker} name={worker}>{worker}</Text>
+        <Text className='worker-card' key={k++} name={worker}>{worker}</Text>
       )
     })
     const staffMap = this.props.staff ? this.props.staff.staffMap : {}
     // 人员名单列表视图
+    let i = 0
     const staffList = Object.keys(staffMap).sort().map(staff => {
       return (
-        <View className='tag' key={staff}>
+        <View className='tag' key={i++}>
           <AtTag
             className='tag'
             name={staff}
@@ -171,9 +173,10 @@ export default class JobCard extends Component {
       )
     })
     // 作弊人员名单列表视图
+    let j = 0
     const cheatStaffList = Object.keys(staffMap).map(staff => {
       return (
-        <View className='tag' key={staff}>
+        <View className='tag' key={j++}>
           <AtTag
             className='tag'
             name={staff}

@@ -107,13 +107,8 @@ export default class TeamEdit extends Component {
         workers: []
       }
       this.setState({
-        teamData: {}
+        teamData: newTeamData
       })
-      setTimeout(() => {
-        this.setState({
-          teamData: newTeamData
-        })
-      }, 100)
     }
     this.setState({
       addJob: false
@@ -234,10 +229,11 @@ export default class TeamEdit extends Component {
     const teamDataObj = this.state.teamData || {}
     const jobs = teamDataObj.jobs || {}
     const staff = this.props.staff
+    let i = 0
     const jobListCards = Object.keys(jobs).sort().map(job => {
       return (
         <JobCard
-          key={job}
+          key={i++}
           jobName={job}
           jobData={jobs[job]}
           staff={staff}

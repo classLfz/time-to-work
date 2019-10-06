@@ -34,11 +34,9 @@ export default class TeamSort extends Component {
     if (teamSort.length === 0) {
       teamSort = Object.keys(teamMap)
     }
-    setTimeout(() => {
-      this.setState({
-        teamSort: teamSort
-      })
-    }, 50)
+    this.setState({
+      teamSort: teamSort
+    })
   }
 
   handleItemTouchend (e) {
@@ -65,7 +63,7 @@ export default class TeamSort extends Component {
       return (
         <MovableView
           className='team-box'
-          key={teamName}
+          key={i}
           direction='vertical'
           y={y}
           data-team={teamName}

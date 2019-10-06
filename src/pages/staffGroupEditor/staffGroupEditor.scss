@@ -24,6 +24,13 @@
   flex-direction: column;
   padding: 0 24px;
 }
+.tags-list {
+  display: flex;
+
+  .tag {
+    margin-right: 8px;
+  }
+}
 .title {
   font-weight: bold;
   display: flex;
@@ -49,6 +56,13 @@
   .form-btn {
     width: 100%;
     margin: 0 24px;
+  }
+
+  .submit {
     background-color: #0D47A1;
+  }
+
+  .warn {
+    background-color: #D32F2F;
   }
 }

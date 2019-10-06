@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtIcon } from 'taro-ui'
-import { updateStaffMap } from '../../actions/staff'
+import { updateStaffMap, updateStaffGroup } from '../../actions/staff'
 import StaffCard from './staffCard'
 
 switch (process.env.TARO_ENV) {
@@ -20,6 +20,9 @@ switch (process.env.TARO_ENV) {
 }), (dispatch) => ({
   onUpdateStaffMap (data) {
     dispatch(updateStaffMap(data))
+  },
+  onUpdateStaffGroup (data) {
+    dispatch(updateStaffGroup(data))
   }
 }))
 
@@ -39,7 +42,7 @@ export default class Staff extends Component {
    */
   entryCreate () {
     Taro.navigateTo({
-      url: `/pages/staffCreate/staffCreate`
+      url: `/pages/staffEditor/staffEditor`
     })
   }
 
@@ -59,20 +62,31 @@ export default class Staff extends Component {
       success: (res) => {
         if (res.confirm) {
           this.props.onUpdateStaffMap({})
+          const { staffGroup } = this.props.staff
+          for (let key in staffGroup) {
+            staffGroup[key].staffs = []
+          }
+          this.props.onUpdateStaffGroup(staffGroup)
         }
       }
     })
   }
 
   render () {
-    const staffMap = JSON.parse(JSON.stringify(this.props.staff.staffMap)) || {}
     let staffMapCards = null
-    const staffMapKeys = Object.keys(staffMap)
+    const { staffMap, staffGroup } = this.props.staff
+    const staffMapVal = JSON.parse(JSON.stringify(staffMap)) || {}
+    const staffMapKeys = Object.keys(staffMapVal)
     if (staffMapKeys.length > 0) {
+      let i = 0
       staffMapCards = staffMapKeys.map(staff => {
-        const staffData = staffMap[staff] || {}
+        const staffData = staffMapVal[staff] || {}
+        const groups = []
+        Object.keys(staffGroup).forEach(key => {
+          if (staffGroup[key].staffs.includes(staff)) groups.push(key)
+        })
         return (
-          <StaffCard key={staff} staffName={staff} staffData={staffData} />
+          <StaffCard key={i++} staffName={staff} staffData={staffData} groups={groups} />
         )
       })
     } else {
@@ -110,13 +124,11 @@ export default class Staff extends Component {
 
           <View className='operator'>
             <View>姓名</View>
-            <View>
-              <Text className='title'>休息</Text>
-              <Text className='title'>请假</Text>
-            </View>
+            <View>所在小组</View>
           </View>
         </View>
         {staffMapCards}
+        <View className='tipper'>将职员往右滑动，可进行快捷操作</View>
       </View>
     )
   }
