@@ -51,7 +51,9 @@ export default class TeamSort extends Component {
     this.setState({
       teamSort: []
     })
-    this.refresh()
+    setTimeout(() => {
+      this.refresh()
+    }, 0)
   }
 
   render () {
@@ -63,7 +65,7 @@ export default class TeamSort extends Component {
       return (
         <MovableView
           className='team-box'
-          key={i}
+          key={teamName}
           direction='vertical'
           y={y}
           data-team={teamName}

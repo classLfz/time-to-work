@@ -4,13 +4,18 @@ import { AtInputNumber } from 'taro-ui'
 
 import { connect } from '@tarojs/redux'
 import { updateStaffMap, updateStaffGroup } from '../../actions/staff'
+import { updateTeamMap } from '../../actions/team'
 import NavHeader from '../../components/navHeader/navHeader.js'
 
 import './staffEditor.scss'
 
-@connect(({ staff }) => ({
+@connect(({ team, staff }) => ({
+  team,
   staff
 }), (dispatch) => ({
+  onUpdateTeamMap (data) {
+    dispatch(updateTeamMap(data))
+  },
   onUpdateStaffMap (data) {
     dispatch(updateStaffMap(data))
   },
@@ -107,6 +112,17 @@ export default class StaffEdit extends Component {
           }
         }
         this.props.onUpdateStaffGroup(staffGroup)
+        const newTeamMap = JSON.parse(JSON.stringify(this.props.team.teamMap || {}))
+        Object.keys(newTeamMap).forEach(teamName => {
+          if (newTeamMap[teamName].leader === name) newTeamMap[teamName].leader = newName
+          Object.keys(newTeamMap[teamName].jobs).forEach(jobName => {
+            const workers = newTeamMap[teamName].jobs[jobName].workers
+            for (let i = 0; i < workers.length; i++) {
+              if (workers[i] === name) workers[i] = newName
+            }
+          })
+        })
+        this.props.onUpdateTeamMap(newTeamMap)
       }
     } else {
       if (newStaffMap[newName]) {

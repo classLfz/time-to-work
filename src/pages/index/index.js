@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
-import { AtIcon } from 'taro-ui'
+import { View, Button } from '@tarojs/components'
+import { AtIcon, AtCheckbox, AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui'
 
 import { connect } from '@tarojs/redux'
 import { updateTeamMap, updateTeamSort } from '../../actions/team'
@@ -54,7 +54,9 @@ export default class Index extends Component {
       },
       allotIntervalTime: 0,
       allotAndCopy: false,
-      allotAndArchive: false
+      allotAndArchive: false,
+      staffGroupsSelectOpened: false,
+      allotStaffGroups: []
     }
   }
 
@@ -68,8 +70,6 @@ export default class Index extends Component {
     const { onUpdateTeamMap, onUpdateTeamSort, onUpdateStaffMap, onUpdateStaffGroup } = this.props
     let teamMap = Taro.getStorageSync('teams') || {}
     let teamSort = Taro.getStorageSync('teamSort') || []
-    // console.log(teamSort)
-    // Taro.setStorageSync('teamSort', [])
     let staffMap = Taro.getStorageSync('staff') || {}
     let staffGroup = Taro.getStorageSync('staffGroup') || {}
     // 首次更新store状态
@@ -152,19 +152,45 @@ export default class Index extends Component {
         })
         return
       }
-      this.allot()
+      this.setState({
+        staffGroupsSelectOpened: true
+      })
     } else {
-      this.allot()
+      this.setState({
+        staffGroupsSelectOpened: true
+      })
     }
   }
   /**
    * 分配工作
    */
   allot = () => {
+    this.setState({
+      staffGroupsSelectOpened: false,
+    })
     const { team, staff } = this.props
-    let teamMap = JSON.parse(JSON.stringify(team.teamMap))
-    let staffMap = JSON.parse(JSON.stringify(staff.staffMap))
-    const result = allot(teamMap, staffMap)
+    const { staffMap, staffGroup } = staff
+    const { allotStaffGroups } = this.state
+    if (allotStaffGroups.length === 0) {
+      Taro.showToast({
+        title: '请到职员页面添加职员小组',
+        icon: 'none'
+      })
+      return
+    }
+    const teamMap = JSON.parse(JSON.stringify(team.teamMap))
+    const allotStaffMap = {}
+    allotStaffGroups.forEach(groupName => {
+      const groupStaffs = staffGroup[groupName].staffs
+      groupStaffs.forEach(staffName => {
+        allotStaffMap[staffName] = staffMap[staffName]
+      })
+    })
+
+    const result = allot(teamMap, allotStaffMap)
+    this.setState({
+      allotStaffGroups: []
+    })
     if (result.type === 'error') {
       Taro.showToast({
         title: result.message,
@@ -264,6 +290,19 @@ export default class Index extends Component {
     })
   }
 
+  closeStaffGroupsSelector = () => {
+    this.setState({
+      staffGroupsSelectOpened: false,
+      allotStaffGroups: []
+    })
+  }
+
+  handleAllotStaffGroupsChange = (value) => {
+    this.setState({
+      allotStaffGroups: value
+    })
+  }
+
   render () {
     let teamMap = this.state.teamAlloted
     let { teamSort } = this.props.team
@@ -275,6 +314,15 @@ export default class Index extends Component {
         <TeamCard teamData={teamMap[team]} key={i++} justShow />
       )
     })
+
+    const staffGroup = this.props.staff.staffGroup || {}
+    const staffGroupOptions = Object.keys(staffGroup).map(groupName => {
+      return {
+        value: groupName,
+        label: `${groupName}（${staffGroup[groupName].staffs.length}人）`
+      }
+    })
+
     return (
       <View className='index-container'>
         <View className='index-header'>
@@ -328,6 +376,20 @@ export default class Index extends Component {
             </View>
           </View>
         </View>
+
+        <AtModal isOpened={this.state.staffGroupsSelectOpened}>
+          <AtModalHeader>选择分配小组</AtModalHeader>
+          <AtModalContent>
+            {staffGroupOptions.length === 0 ?
+              <View>暂无职员小组</View> :
+              <AtCheckbox options={staffGroupOptions} selectedList={this.state.allotStaffGroups} onChange={this.handleAllotStaffGroupsChange}></AtCheckbox>
+            }
+          </AtModalContent>
+          <AtModalAction>
+            <Button onClick={this.closeStaffGroupsSelector}>取消</Button>
+            <Button onClick={this.allot}>确定</Button>
+          </AtModalAction>
+        </AtModal>
       </View>
     )
   }
