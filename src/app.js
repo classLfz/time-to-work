@@ -135,7 +135,7 @@ class App extends Component {
         },
         {
           pagePath: 'pages/team/team',
-          text: '岗位',
+          text: '团队',
           iconPath: 'images/job_gray.png',
           selectedIconPath: 'images/job_blue.png'
         },
