@@ -103,7 +103,7 @@ export default class JobCard extends Component {
   openCheatSelector = (e) => {
     e.stopPropagation()
     let cheatClickCount = this.state.cheatClickCount
-    if (cheatClickCount > 7) {
+    if (cheatClickCount > 1) {
       this.setState({
         cheatClickCount: 0,
         cheatWorkerPicking: true
@@ -198,7 +198,7 @@ export default class JobCard extends Component {
             </AtIcon>
           </View>
 
-          {/* <View className='cheat-btn' onClick={this.openCheatSelector}></View> */}
+          <View className='cheat-btn' onClick={this.openCheatSelector}></View>
         </View>
         <View className='job-item'>
           <Text className='title'>职位名称</Text>

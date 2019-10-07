@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import { AtIcon } from 'taro-ui'
+import { AtIcon, AtList, AtListItem } from 'taro-ui'
 import { updateTeamMap, updateTeamSort } from '../../actions/team'
 import TeamCard from '../../components/teamCard/teamCard'
 
@@ -31,7 +31,8 @@ export default class Teams extends Component {
     super(props)
     this.state = {
       teamMap: {},
-      teamSort: []
+      teamSort: [],
+      currentTeam: ''
     }
   }
   
@@ -59,9 +60,23 @@ export default class Teams extends Component {
   /**
    * 进入添加团队页面
    */
-  entryCreate () {
+  entryTeamCreate () {
     Taro.navigateTo({
       url: `/pages/teamCreate/teamCreate`
+    })
+  }
+
+  entryTeamEdit = () => {
+    const { currentTeam } = this.state
+    if (!currentTeam) {
+      Taro.showToast({
+        title: '请选择团队进行编辑',
+        icon: 'none'
+      })
+      return
+    }
+    Taro.navigateTo({
+      url: `/pages/teamEdit/teamEdit?teamName=${currentTeam}`
     })
   }
 
@@ -87,17 +102,52 @@ export default class Teams extends Component {
     })
   }
 
+  prev = () => {
+    let { currentTeam, teamSort, teamMap } = this.state
+    if (teamSort.length === 0) teamSort = Object.keys(teamMap)
+    const index = teamSort.findIndex(i => i === currentTeam)
+    let newCurrentTeam = teamSort[index - 1]
+    if (currentTeam && index <= 0) {
+      newCurrentTeam = ''
+    }
+    if (!currentTeam && teamSort.length >= 1) {
+      newCurrentTeam = teamSort[teamSort.length - 1]
+    }
+    this.setState({
+      currentTeam: newCurrentTeam
+    })
+    if (Taro.getStorageSync('defaultSelect')) {
+      Taro.setStorageSync('currentTeam', newCurrentTeam)
+    }
+  }
+
+  next = () => {
+    let { currentTeam, teamSort, teamMap } = this.state
+    if (teamSort.length === 0) teamSort = Object.keys(teamMap)
+    const index = teamSort.findIndex(i => i === currentTeam)
+    let newCurrentTeam = teamSort[index + 1]
+    if (currentTeam && index + 1 >= teamSort.length) {
+      newCurrentTeam = ''
+    }
+    this.setState({
+      currentTeam: newCurrentTeam
+    })
+    if (Taro.getStorageSync('defaultSelect')) {
+      Taro.setStorageSync('currentTeam', newCurrentTeam)
+    }
+  }
+
   render () {
-    const { teamMap, teamSort } = this.state
+    const { teamMap, teamSort, currentTeam } = this.state
     let teamListCards = null
-    if (teamSort.length > 0) {
+    if (teamSort.length > 0 && !currentTeam) {
       let i = 0
       teamListCards = teamSort.map(teamName => {
         return (
           <TeamCard key={i++} teamData={teamMap[teamName]} />
         )
       })
-    } else {
+    } else if (Object.keys(teamMap).length === 0) {
       teamListCards = (
         <View className='empty-container'>
           <AtIcon
@@ -107,36 +157,59 @@ export default class Teams extends Component {
             onClick={this.entryCreate}></AtIcon>
         </View>
       )
+    } else {
+      const currentTeamVal = teamMap[currentTeam]
+      let i = 0
+      const jobKeys = Object.keys(currentTeamVal.jobs || {})
+      const jobListEls = jobKeys.map(jobName => {
+        return (
+          <AtListItem key={i++} title={jobName} extraText={`${currentTeamVal.jobs[jobName].num}人`}></AtListItem>
+        )
+      })
+      teamListCards = (
+        <AtList>
+          <AtListItem title='团队名称' extraText={currentTeamVal.name}></AtListItem>
+          {currentTeamVal.needLeader ? <AtListItem title='负责人' extraText={currentTeamVal.leader}></AtListItem> : ''}
+          <AtListItem title='岗位：' disabled></AtListItem>
+          {jobListEls}
+        </AtList>
+      )
     }
     return (
       <View className='team-container'>
         <View className='team-header'>
-          <View className='team-header-left'>
-            <View className='icon-btn' onClick={this.entryCreate}>
-              <AtIcon
-                value='add-circle'
-                size='24'
-                color='#FFFFFF'>
-              </AtIcon>
+          <View className='team-header-top'>
+            <View className='team-header-left'>
+              <View className='icon-btn' onClick={this.entrySort}>
+                <AtIcon
+                  value='numbered-list'
+                  size='24'
+                  color='#FFFFFF'>
+                </AtIcon>
+              </View>
             </View>
-            <View className='icon-btn' onClick={this.entrySort}>
+
+            <View className='icon-btn' onClick={this.clear}>
               <AtIcon
-                value='numbered-list'
+                value='trash'
                 size='24'
-                color='#FFFFFF'>
+                color='#e0e0e0'>
               </AtIcon>
             </View>
           </View>
-
-          <View className='icon-btn' onClick={this.clear}>
-            <AtIcon
-              value='trash'
-              size='24'
-              color='#e0e0e0'>
-            </AtIcon>
+          <View className='team-header-bottom'>
+            { currentTeam ? `当前团队：${currentTeam}` : '所有团队列表' }
           </View>
         </View>
         {teamListCards}
+
+        <View className='operators'>
+          <AtIcon className='btn' value='chevron-left' size='40' color='#AD1457' onClick={this.prev}></AtIcon>
+          <AtIcon className='btn' value='add' size='36' color='#C62828' onClick={this.entryTeamCreate}></AtIcon>
+          <AtIcon className='btn' value='edit' size='36' color='#C62828' onClick={this.entryTeamEdit}></AtIcon>
+          <AtIcon className='btn' value='chevron-right' size='40' color='#6A1B9A' onClick={this.next}></AtIcon>
+        </View>
+        {/* <View className='tipper'>当前选择团队，分配时则默认为当前团队</View> */}
       </View>
     )
   }

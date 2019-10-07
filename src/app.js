@@ -52,7 +52,7 @@ class App extends Component {
         })
       })
     }
-    
+
     try {
       // 检查储存容量，并作出处理
       let info = Taro.getStorageInfoSync()
@@ -111,8 +111,6 @@ class App extends Component {
       'pages/teamSort/teamSort',
       'pages/staff/staff',
       'pages/staffEditor/staffEditor',
-      'pages/staffCreate/staffCreate',
-      'pages/staffGroup/staffGroup',
       'pages/staffGroupEditor/staffGroupEditor',
       'pages/history/history',
       'pages/historyDetail/historyDetail',

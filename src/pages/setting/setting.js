@@ -49,11 +49,13 @@ export default class Setting extends Component {
     const allotAndArchive = Taro.getStorageSync('allotAndArchive')
     const allotAndCopy = Taro.getStorageSync('allotAndCopy')
     const simpleClipboardMode = Taro.getStorageSync('simpleClipboardMode') || false
+    const defaultSelect = Taro.getStorageSync('defaultSelect') || false
     this.setState({
       allotInterval: allotInterval,
       allotAndArchive: allotAndArchive,
       allotAndCopy: allotAndCopy,
-      simpleClipboardMode: simpleClipboardMode
+      simpleClipboardMode: simpleClipboardMode,
+      defaultSelect: defaultSelect
     })
   }
 
@@ -105,6 +107,13 @@ export default class Setting extends Component {
       simpleClipboardMode: e.detail.value
     })
   }
+  defaultSelectChange = (e) => {
+    e.stopPropagation()
+    Taro.setStorageSync('defaultSelect', e.detail.value)
+    this.setState({
+      defaultSelect: e.detail.value
+    })
+  }
   clearStorage () {
     Taro.showModal({
       title: '操作不可逆！',
@@ -121,7 +130,7 @@ export default class Setting extends Component {
   }
 
   render () {
-    const { allotAndArchive, allotAndCopy, simpleClipboardMode } = this.state
+    const { allotAndArchive, allotAndCopy, defaultSelect, simpleClipboardMode } = this.state
     return (
       <View className='setting-container'>
         <View className='setting-item' onClick={this.openTimeSheet}>
@@ -144,6 +153,11 @@ export default class Setting extends Component {
         <View className='setting-item'>
           <Text>粘贴板文本简洁模式</Text>
           <Switch checked={simpleClipboardMode} onChange={this.simpleClipboardModeChange} />
+        </View>
+
+        <View className='setting-item'>
+          <Text>团队&职员小组当前页为默认选择</Text>
+          <Switch checked={defaultSelect} onChange={this.defaultSelectChange} />
         </View>
 
         <View className='setting-item'>

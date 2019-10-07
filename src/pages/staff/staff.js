@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtIcon } from 'taro-ui'
 import { updateStaffMap, updateStaffGroup } from '../../actions/staff'
@@ -29,6 +29,9 @@ switch (process.env.TARO_ENV) {
 export default class Staff extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      currentGroup: ''
+    }
   }
 
   config = {
@@ -46,9 +49,23 @@ export default class Staff extends Component {
     })
   }
 
-  entryGroup () {
+  entryGroupCreate () {
     Taro.navigateTo({
-      url: '/pages/staffGroup/staffGroup'
+      url: '/pages/staffGroupEditor/staffGroupEditor'
+    })
+  }
+
+  entryGroupEdit = () => {
+    const { currentGroup } = this.state
+    if (!currentGroup) {
+      Taro.showToast({
+        title: '请选择小组进行编辑',
+        icon: 'none'
+      })
+      return
+    }
+    Taro.navigateTo({
+      url: `/pages/staffGroupEditor/staffGroupEditor?groupName=${currentGroup}`
     })
   }
 
@@ -58,7 +75,7 @@ export default class Staff extends Component {
   clear () {
     Taro.showModal({
       title: '清空职员列表',
-      content: '操作不可逆，确定要清空职员列表吗？',
+      content: '操作不可逆，确定要清空所有职员信息吗？',
       success: (res) => {
         if (res.confirm) {
           this.props.onUpdateStaffMap({})
@@ -72,21 +89,61 @@ export default class Staff extends Component {
     })
   }
 
+  prev = () => {
+    const { currentGroup } = this.state
+    const staffGroup = this.props.staff.staffGroup || {}
+    const staffGroupKeys = Object.keys(staffGroup)
+    const index = staffGroupKeys.findIndex(i => i === currentGroup)
+    let newCurrentGroup = staffGroupKeys[index - 1]
+    if (currentGroup && index <= 0) {
+      newCurrentGroup = ''
+    }
+    if (!currentGroup && staffGroupKeys.length >= 1) {
+      newCurrentGroup = staffGroupKeys[staffGroupKeys.length - 1]
+    }
+    this.setState({
+      currentGroup: newCurrentGroup
+    })
+    if (Taro.getStorageSync('defaultSelect')) {
+      Taro.setStorageSync('currentStaffGroup', newCurrentGroup)
+    }
+  }
+
+  next = () => {
+    const { currentGroup } = this.state
+    const staffGroup = this.props.staff.staffGroup || {}
+    const staffGroupKeys = Object.keys(staffGroup)
+    const index = staffGroupKeys.findIndex(i => i === currentGroup)
+    let newCurrentGroup = staffGroupKeys[index + 1]
+    if (currentGroup && index + 1 >= staffGroupKeys.length) {
+      newCurrentGroup = ''
+    }
+    this.setState({
+      currentGroup: newCurrentGroup
+    })
+    if (Taro.getStorageSync('defaultSelect')) {
+      Taro.setStorageSync('currentStaffGroup', newCurrentGroup)
+    }
+  }
+
   render () {
     let staffMapCards = null
+    const { currentGroup } = this.state
     const { staffMap, staffGroup } = this.props.staff
-    const staffMapVal = JSON.parse(JSON.stringify(staffMap)) || {}
-    const staffMapKeys = Object.keys(staffMapVal)
+    let currentStaffMap = {}
+    if (staffGroup[currentGroup] && staffGroup[currentGroup].staffs) {
+      staffGroup[currentGroup].staffs.forEach(staffName => {
+        if (staffMap[staffName]) currentStaffMap[staffName] = staffMap[staffName]
+      })
+    }
+    if (!currentGroup) currentStaffMap = JSON.parse(JSON.stringify(staffMap))
+    const staffMapKeys = Object.keys(currentStaffMap)
     if (staffMapKeys.length > 0) {
       let i = 0
       staffMapCards = staffMapKeys.map(staff => {
-        const staffData = staffMapVal[staff] || {}
-        const groups = []
-        Object.keys(staffGroup).forEach(key => {
-          if (staffGroup[key].staffs.includes(staff)) groups.push(key)
-        })
+        const staffData = currentStaffMap[staff] || {}
         return (
-          <StaffCard key={i++} staffName={staff} staffData={staffData} groups={groups} />
+          <StaffCard key={i++} staffName={staff} staffData={staffData} />
         )
       })
     } else {
@@ -108,9 +165,6 @@ export default class Staff extends Component {
               <View className='icon-btn' onClick={this.entryCreate}>
                 <AtIcon value='add-circle' size='24' color='#FFFFFF'></AtIcon>
               </View>
-              <View className='icon-btn' onClick={this.entryGroup}>
-                <AtIcon value='user' size='24' color='#FFFFFF'></AtIcon>
-              </View>
             </View>
 
             <View className='icon-btn' onClick={this.clear}>
@@ -123,12 +177,18 @@ export default class Staff extends Component {
           </View>
 
           <View className='operator'>
-            <View>姓名</View>
-            <View>所在小组</View>
+            { currentGroup ? <View>当前小组：{currentGroup}</View> : '所有职员列表' }
           </View>
         </View>
         {staffMapCards}
-        <View className='tipper'>将职员往右滑动，可进行快捷操作</View>
+
+        <View className='operators'>
+          <AtIcon className='btn' value='chevron-left' size='40' color='#AD1457' onClick={this.prev}></AtIcon>
+          <AtIcon className='btn' value='add' size='36' color='#C62828' onClick={this.entryGroupCreate}></AtIcon>
+          <AtIcon className='btn' value='edit' size='36' color='#C62828' onClick={this.entryGroupEdit}></AtIcon>
+          <AtIcon className='btn' value='chevron-right' size='40' color='#6A1B9A' onClick={this.next}></AtIcon>
+        </View>
+        <View className='tipper'>将职员往左滑动，可进行快捷操作</View>
       </View>
     )
   }

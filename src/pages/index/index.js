@@ -56,17 +56,21 @@ export default class Index extends Component {
       allotAndCopy: false,
       allotAndArchive: false,
       staffGroupsSelectOpened: false,
-      allotStaffGroups: []
+      allotStaffGroups: [],
+      teamSelectOpened: false,
+      allotTeams: []
     }
   }
 
   config = {
-    navigationBarTitleText: '分配工作',
+    navigationBarTitleText: '该干活了',
     navigationBarBackgroundColor: '#5E35B1',
     navigationBarTextStyle: 'white'
   }
 
   componentDidShow () {
+    Taro.setStorageSync('currentTeam', '')
+    Taro.setStorageSync('currentStaffGroup', '')
     const { onUpdateTeamMap, onUpdateTeamSort, onUpdateStaffMap, onUpdateStaffGroup } = this.props
     let teamMap = Taro.getStorageSync('teams') || {}
     let teamSort = Taro.getStorageSync('teamSort') || []
@@ -152,22 +156,29 @@ export default class Index extends Component {
         })
         return
       }
+      if (Taro.getStorageSync('defaultSelect')) {
+        this.allot()
+        return
+      }
       this.setState({
-        staffGroupsSelectOpened: true
+        teamSelectOpened: true
       })
     } else {
+      if (Taro.getStorageSync('defaultSelect')) {
+        this.allot()
+        return
+      }
       this.setState({
-        staffGroupsSelectOpened: true
+        teamSelectOpened: true
       })
     }
   }
-  animate (count = 0) {
+  animate (teamMap, count = 0) {
     return new Promise((resolve) => {
       if (count >= 16) {
         resolve()
         return
       }
-      const teamMap = JSON.parse(JSON.stringify(this.props.team.teamMap || {}))
       const staffMap = JSON.parse(JSON.stringify(this.props.staff.staffMap || {}))
       const staffMapKeys = Object.keys(staffMap)
       const teamMapAlloted = {}
@@ -185,7 +196,7 @@ export default class Index extends Component {
       })
       setTimeout(async () => {
         count++
-        await this.animate(count)
+        await this.animate(teamMap, count)
         resolve()
       }, 80)
     })
@@ -196,37 +207,59 @@ export default class Index extends Component {
   async allot () {
     const { team, staff } = this.props
     const { staffMap, staffGroup } = staff
-    const { allotStaffGroups } = this.state
-    if (Object.keys(staffGroup).length === 0) {
-      Taro.showToast({
-        title: '请到职员页面添加职员小组',
-        icon: 'none'
+    const { teamMap } = team
+    let allotTeamMap = {}
+    let allotStaffMap = {}
+    if (!Taro.getStorageSync('defaultSelect')) {
+      const { allotStaffGroups, allotTeams } = this.state
+      if (Object.keys(staffGroup).length === 0) {
+        Taro.showToast({
+          title: '请到职员页面添加职员小组',
+          icon: 'none'
+        })
+        return
+      }
+      if (allotStaffGroups.length === 0) {
+        Taro.showToast({
+          title: '请选择需要分配的职员小组',
+          icon: 'none'
+        })
+        return
+      }
+      this.setState({
+        staffGroupsSelectOpened: false
       })
-      return
+      const teamMapVal = JSON.parse(JSON.stringify(teamMap))
+      allotStaffMap = {}
+      allotStaffGroups.forEach(groupName => {
+        const groupStaffs = staffGroup[groupName].staffs
+        groupStaffs.forEach(staffName => {
+          allotStaffMap[staffName] = staffMap[staffName]
+        })
+      })
+      allotTeamMap = {}
+      allotTeams.forEach(teamName => {
+        allotTeamMap[teamName] = teamMapVal[teamName]
+      })
+    } else {
+      const currentTeam = Taro.getStorageSync('currentTeam') || false
+      allotTeamMap = currentTeam ? JSON.parse(JSON.stringify({ [currentTeam]: teamMap[currentTeam] })) : JSON.parse(JSON.stringify(teamMap))
+      const currentStaffGroup = Taro.getStorageSync('currentStaffGroup') || false
+      if (currentStaffGroup) {
+        staffGroup[currentStaffGroup].staffs.forEach(staffName => {
+          allotStaffMap[staffName] = staffMap[staffName]
+        })
+      } else {
+        allotStaffMap = JSON.parse(JSON.stringify(staffMap))
+      }
     }
-    if (allotStaffGroups.length === 0) {
-      Taro.showToast({
-        title: '请选择需要分配的职员小组',
-        icon: 'none'
-      })
-      return
-    }
-    this.setState({
-      staffGroupsSelectOpened: false,
-    })
-    const teamMap = JSON.parse(JSON.stringify(team.teamMap))
-    const allotStaffMap = {}
-    allotStaffGroups.forEach(groupName => {
-      const groupStaffs = staffGroup[groupName].staffs
-      groupStaffs.forEach(staffName => {
-        allotStaffMap[staffName] = staffMap[staffName]
-      })
-    })
-    await this.animate()
-    const result = allot(teamMap, allotStaffMap)
+    await this.animate(JSON.parse(JSON.stringify(allotTeamMap)))
+
+    const result = allot(JSON.parse(JSON.stringify(allotTeamMap)), JSON.parse(JSON.stringify(allotStaffMap)))
     this.setState({
       teamAlloted: {},
-      allotStaffGroups: []
+      allotStaffGroups: [],
+      allotTeams: []
     })
     if (result.type === 'error') {
       Taro.showToast({
@@ -327,10 +360,18 @@ export default class Index extends Component {
     })
   }
 
+  closeTeamMapSelector = () => {
+    this.setState({
+      teamSelectOpened: false,
+      allotTeams: []
+    })
+  }
+
   closeStaffGroupsSelector = () => {
     this.setState({
       staffGroupsSelectOpened: false,
-      allotStaffGroups: []
+      allotStaffGroups: [],
+      allotTeams: []
     })
   }
 
@@ -340,16 +381,50 @@ export default class Index extends Component {
     })
   }
 
+  handleAllotTeamMapChange = (value) => {
+    this.setState({
+      allotTeams: value
+    })
+  }
+
+  openStaffSelector = () => {
+    const { allotTeams } = this.state
+    const { team } = this.props
+    const { teamMap } = team
+    if (Object.keys(teamMap).length === 0) {
+      Taro.showToast({
+        title: '请到团队页面添加团队',
+        icon: 'none'
+      })
+      return
+    }
+    if (Object.keys(allotTeams).length === 0) {
+      Taro.showToast({
+        title: '请选择团队',
+        icon: 'none'
+      })
+      return
+    }
+    this.setState({
+      staffGroupsSelectOpened: true,
+      teamSelectOpened: false
+    })
+  }
+
   render () {
-    let teamMap = this.state.teamAlloted
-    let { teamSort } = this.props.team
-    if (teamSort.length === 0) teamSort = Object.keys(teamMap)
-    let hideIntro = Object.keys(teamMap).length !== 0
+    let teamMapAlloted = this.state.teamAlloted
+    let { teamSort, teamMap } = this.props.team
+    if (teamSort.length === 0) teamSort = Object.keys(teamMapAlloted)
+    let hideIntro = Object.keys(teamMapAlloted).length !== 0
     let i = 0
     let teamListCards = teamSort.map(team => {
-      return (
-        <TeamCard teamData={teamMap[team]} key={i++} justShow />
-      )
+      if (teamMapAlloted[team]) {
+        return (
+          <TeamCard teamData={teamMapAlloted[team]} key={i++} justShow />
+        )
+      } else {
+        return ''
+      }
     })
 
     const staffGroup = this.props.staff.staffGroup || {}
@@ -359,6 +434,22 @@ export default class Index extends Component {
         label: `${groupName}（${staffGroup[groupName].staffs.length}人）`
       }
     })
+
+    const teamOptions = teamSort.map(teamName => {
+      let staffCount = 0
+      if (teamMap[teamName]) {
+        const jobKeys = Object.keys(teamMap[teamName].jobs)
+        jobKeys.forEach(jobName => {
+          staffCount += parseInt(teamMap[teamName].jobs[jobName].num)
+        })
+      }
+      return {
+        value: teamName,
+        label: `${teamName}（需${staffCount}人）`
+      }
+    })
+
+    const now = new Date()
 
     return (
       <View className='index-container'>
@@ -370,6 +461,8 @@ export default class Index extends Component {
               color='#FFFFFF'>
             </AtIcon>
           </View>
+
+          <View>{`${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`}</View>
         </View>
         <View className='content'>
           <View hidden={hideIntro}>
@@ -422,7 +515,7 @@ export default class Index extends Component {
         </View>
 
         <AtModal isOpened={this.state.staffGroupsSelectOpened}>
-          <AtModalHeader>选择分配小组</AtModalHeader>
+          <AtModalHeader>选择分配职员小组</AtModalHeader>
           <AtModalContent>
             {staffGroupOptions.length === 0 ?
               <View>暂无职员小组</View> :
@@ -432,6 +525,20 @@ export default class Index extends Component {
           <AtModalAction>
             <Button onClick={this.closeStaffGroupsSelector}>取消</Button>
             <Button onClick={this.allot}>确定</Button>
+          </AtModalAction>
+        </AtModal>
+
+        <AtModal isOpened={this.state.teamSelectOpened}>
+          <AtModalHeader>选择分配团队</AtModalHeader>
+          <AtModalContent>
+            {teamOptions.length === 0 ?
+              <View>暂无团队</View> :
+              <AtCheckbox options={teamOptions} selectedList={this.state.allotTeams} onChange={this.handleAllotTeamMapChange}></AtCheckbox>
+            }
+          </AtModalContent>
+          <AtModalAction>
+            <Button onClick={this.closeTeamMapSelector}>取消</Button>
+            <Button onClick={this.openStaffSelector}>确定</Button>
           </AtModalAction>
         </AtModal>
       </View>

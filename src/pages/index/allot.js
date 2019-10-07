@@ -21,7 +21,7 @@ export default function (teamMap, staffMap) {
   // 去除指定人员
   for (let team in teamMap) {
     // 团队不分配，人员需要参与其他分配
-    if (teamMap[team].rest) continue
+    // if (teamMap[team].rest) continue
     // 根据用户设置去除负责人
     if (teamMap[team].needLeader && teamMap[team].leader && !teamMap[team].leaderWork) {
       delete staffMap[teamMap[team].leader]
@@ -52,7 +52,7 @@ export default function (teamMap, staffMap) {
     }
     let jobs = teamMap[team].jobs
     // 团队不做分配
-    if (teamMap[team].rest) continue
+    // if (teamMap[team].rest) continue
     for (let job in jobs) {
       // 职位休息or人员达标
       if (jobs[job].rest || jobs[job].num <= jobs[job].workers.length) continue
@@ -88,11 +88,11 @@ export default function (teamMap, staffMap) {
     }
   }
   // 删除不参与分配的团队信息，不进行展示
-  for (let team in teamMap) {
-    if (teamMap[team].rest) {
-      delete teamMap[team]
-    }
-  }
+  // for (let team in teamMap) {
+  //   if (teamMap[team].rest) {
+  //     delete teamMap[team]
+  //   }
+  // }
   return {
     type: 'success',
     teamMap

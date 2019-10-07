@@ -43,7 +43,7 @@ export default class StaffGroupCreate extends Component {
 
   config = {
     navigationBarTitleText: '添加职员小组',
-    navigationBarBackgroundColor: '#0D47A1',
+    navigationBarBackgroundColor: '#2196F3',
     navigationBarTextStyle: 'white'
   }
 
@@ -140,7 +140,7 @@ export default class StaffGroupCreate extends Component {
       )
     })
     const deleteBtn = this.state.edit ? (
-      <Button type='warn' className='form-btn warn' onClick={this.delete}>删除</Button>
+      <Button type='warn' className='form-btn' onClick={this.delete}>删除</Button>
     ) : ''
 
     return (
@@ -174,7 +174,7 @@ export default class StaffGroupCreate extends Component {
 
           <View className='form-btns'>
             {deleteBtn}
-            <Button type='primary' formType='submit' className='form-btn submit'>提交</Button>
+            <Button type='primary' formType='submit' className='form-btn'>提交</Button>
           </View>
         </Form>
       </View>

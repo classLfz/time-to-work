@@ -82,20 +82,20 @@ export default class StaffCard extends Component {
   render () {
     const staffData = this.props.staffData || {}
     const staffName = this.props.staffName || ''
-    const groups = this.props.groups || []
+    // const groups = this.props.groups || []
     const restClass = staffData.rest ? 'btn active' : 'btn'
     const leaveClass = staffData.leave ? 'btn active' : 'btn'
     return (
       <ScrollView className='staff-card-scroll-view' scrollX scrollWithAnimation>
-        <View className='staff-card-container'>
-          <View onClick={this.entryEdit}>
+        <View className='staff-card-container' onClick={this.entryEdit}>
+          <View>
             <Text>{staffName}</Text>
             {staffData.rest ? <AtTag size='small' type='primary' active disabled>休</AtTag> : ''}
             {staffData.leave ? <AtTag size='small' type='primary' active disabled>假</AtTag> : ''}
           </View>
-          <View className='staff-groups'>
+          {/* <View className='staff-groups'>
             {groups.join(', ')}
-          </View>
+          </View> */}
         </View>
         <View className='operators'>
           <View className={restClass} onClick={this.toggleRest}>

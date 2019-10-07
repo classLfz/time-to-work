@@ -38,7 +38,7 @@ export default class TeamCreate extends Component {
         name: '',
         needLeader: false,
         leader: '',
-        rest: false,
+        // rest: false,
         workers: [],
         jobs: {}
       },
@@ -164,7 +164,7 @@ export default class TeamCreate extends Component {
     }
     newTeamMap[newName] = {
       name: newName,
-      rest: !formData.rest,
+      // rest: !formData.rest,
       needLeader: formData.needLeader,
       leaderWork: this.state.leaderWork,
       leader: this.state.staffNameList[this.state.leaderSelected],
@@ -247,10 +247,10 @@ export default class TeamCreate extends Component {
 
           {leaderSelector}
 
-          <View className='form-item'>
+          {/* <View className='form-item'>
             <Text className='title'>是否参与分配</Text>
             <Switch name='rest' checked={!teamDataObj.rest} />
-          </View>
+          </View> */}
 
           <View className='job-list'>
             <View className='title'>
